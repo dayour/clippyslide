@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoE Framework — ClippySlide</title>
+<style>
+  :root{
+    --cyan:#39B0FF; --peri:#818EFF; --mag:#CA5BCD; --coral:#F77181;
+    --white:#f3f5f7; --muted:#7c8694;
+    --mono:"Cascadia Code","Consolas",ui-monospace,monospace;
+    --grad-title:linear-gradient(90deg,#F77181,#CA5BCD 50%,#818EFF);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#000;overflow:hidden;
+    font-family:"Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;}
+
+  /* ── Layer 1 · presentation (full-bleed reproduction, top-anchored, scaled) ── */
+  #viewport{position:fixed;inset:0;background:#000;overflow:hidden;}
+  #frameWrap{position:absolute;left:50%;top:0;width:1280px;height:720px;
+    transform:translateX(-50%) scale(var(--s,1));transform-origin:top center;
+    background:#000;}
+  #slideFrame{width:1280px;height:720px;border:0;display:block;background:#000;}
+
+  /* invisible edge click-zones for prev/next */
+  .navzone{position:fixed;top:0;bottom:0;width:12%;z-index:600;cursor:pointer;background:transparent;border:0;outline:0;}
+  .navzone.left{left:0;} .navzone.right{right:0;}
+
+  /* ── Layer 2 · viewport-grid measurement border (toggle: G) ── */
+  #measure{position:absolute;left:50%;top:0;width:1280px;height:720px;
+    transform:translateX(-50%) scale(var(--s,1));transform-origin:top center;
+    z-index:680;pointer-events:none;display:none;}
+  body.measure #measure{display:block;}
+  #measure .edge{position:absolute;background:rgba(57,176,255,.55);}
+  #measure .edge.t{top:0;left:0;right:0;height:1px;}
+  #measure .edge.b{bottom:0;left:0;right:0;height:1px;}
+  #measure .edge.l{top:0;bottom:0;left:0;width:1px;}
+  #measure .edge.r{top:0;bottom:0;right:0;width:1px;}
+  #measure .tick{position:absolute;background:rgba(202,91,205,.7);}
+  #measure .tick.cx{left:50%;top:0;bottom:0;width:1px;transform:translateX(-.5px);}
+  #measure .tick.cy{top:50%;left:0;right:0;height:1px;transform:translateY(-.5px);}
+  #measure .dim{position:absolute;font-family:var(--mono);font-size:11px;color:#9eeaff;
+    background:rgba(3,5,18,.8);border:1px solid rgba(57,176,255,.4);padding:2px 6px;border-radius:5px;}
+  #measure .dim.stage{left:6px;top:6px;}
+  #measure .dim.safe{right:6px;bottom:30px;color:#9fffc6;border-color:rgba(34,197,94,.4);}
+
+  /* ── Layer 3 · floating header tilebar (recedes; hover/idle controlled) ── */
+  .floating-header{
+    position:fixed;top:0;left:0;right:0;height:34px;z-index:700;
+    display:flex;align-items:center;gap:8px;padding:0 12px;
+    background:linear-gradient(180deg,rgba(0,0,0,.80) 0%,rgba(0,0,0,.32) 64%,transparent 100%);
+    opacity:.42;transition:opacity .4s ease;}
+  .floating-header:hover{opacity:1;}
+  .floating-header.hidden{opacity:0;pointer-events:none;}
+  .brand{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+    background:var(--grad-title);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.9;}
+  .page-title{font-size:12px;font-weight:600;color:var(--muted);margin-right:auto;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:38vw;}
+  .header-stat{font-family:var(--mono);font-size:10.5px;color:var(--muted);
+    padding:2px 7px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(255,255,255,.03);}
+  .header-btn{height:23px;padding:0 8px;font-size:11px;font-weight:600;color:var(--muted);
+    background:transparent;border:1px solid rgba(255,255,255,.10);border-radius:7px;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;
+    transition:color .15s,border-color .15s,background .15s;}
+  .header-btn:hover{color:#fff;border-color:rgba(255,255,255,.30);background:rgba(255,255,255,.06);}
+  .header-btn:disabled{opacity:.3;cursor:not-allowed;}
+  .header-sep{width:1px;height:16px;background:rgba(255,255,255,.10);}
+
+  #hint{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:650;
+    font-size:11px;color:var(--muted);font-family:var(--mono);
+    background:rgba(3,5,18,.55);border:1px solid rgba(255,255,255,.07);
+    padding:4px 11px;border-radius:999px;transition:opacity .5s ease;}
+</style>
+</head>
+<body class="measure">
+  <!-- Layer 1: the reproduction, full-bleed -->
+  <div id="viewport">
+    <div id="frameWrap"><iframe id="slideFrame" title="slide"></iframe></div>
+  </div>
+
+  <!-- Layer 2: measurement border (matches the scaled stage exactly) -->
+  <div id="measure">
+    <div class="edge t"></div><div class="edge b"></div><div class="edge l"></div><div class="edge r"></div>
+    <div class="tick cx"></div><div class="tick cy"></div>
+    <div class="dim stage" id="dimStage">stage 1280×720</div>
+    <div class="dim safe" id="dimSafe">safe</div>
+  </div>
+
+  <button class="navzone left"  id="zoneLeft"  aria-label="Previous slide"></button>
+  <button class="navzone right" id="zoneRight" aria-label="Next slide"></button>
+
+  <!-- Layer 3: floating header tilebar (separate layer, nothing else) -->
+  <header class="floating-header" id="bar">
+    <span class="brand">ClippySlide</span>
+    <span class="page-title" id="deckTitle">CoE Framework</span>
+    <span class="header-stat" id="vpStat">vp</span>
+    <button class="header-btn" id="btnPrev" type="button" title="Previous (left arrow)">&lsaquo;</button>
+    <span class="header-stat" id="counter">1 / 24</span>
+    <button class="header-btn" id="btnNext" type="button" title="Next (right arrow)">&rsaquo;</button>
+    <span class="header-sep"></span>
+    <button class="header-btn" id="btnMeasure" type="button" title="Toggle measure grid (G)">grid</button>
+    <button class="header-btn" id="btnPresent" type="button" title="Present (F)">present</button>
+  </header>
+
+  <div id="hint">&larr;/&rarr; navigate &middot; F present &middot; H hide bar &middot; G grid</div>
+
+<script>
+(function(){
+  "use strict";
+  var SLIDES = [];
+  for (var n = 1; n <= 24; n++){
+    SLIDES.push(n === 7 ? "slides/07-orchestration.html"
+                        : "deck/" + (n < 10 ? "0"+n : ""+n) + ".html");
+  }
+  var TOTAL = SLIDES.length, idx = 0;
+
+  var frame   = document.getElementById("slideFrame");
+  var counter = document.getElementById("counter");
+  var vpStat  = document.getElementById("vpStat");
+  var dimStage= document.getElementById("dimStage");
+  var dimSafe = document.getElementById("dimSafe");
+  var bar     = document.getElementById("bar");
+  var btnPrev = document.getElementById("btnPrev");
+  var btnNext = document.getElementById("btnNext");
+
+  function fit(){
+    var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+    document.documentElement.style.setProperty("--s", s);
+    var sw = Math.round(1280 * s), sh = Math.round(720 * s);
+    vpStat.textContent = window.innerWidth + "x" + window.innerHeight + " | x" + s.toFixed(3);
+    dimStage.textContent = "stage 1280x720 -> " + sw + "x" + sh;
+    dimSafe.textContent = "scaled " + sw + "x" + sh + "  (16:9)";
+  }
+
+  function show(i){
+    idx = Math.max(0, Math.min(TOTAL - 1, i));
+    frame.src = SLIDES[idx];
+    counter.textContent = (idx + 1) + " / " + TOTAL;
+    btnPrev.disabled = (idx === 0);
+    btnNext.disabled = (idx === TOTAL - 1);
+  }
+  function next(){ if (idx < TOTAL - 1) show(idx + 1); }
+  function prev(){ if (idx > 0) show(idx - 1); }
+
+  btnPrev.onclick = prev;
+  btnNext.onclick = next;
+  document.getElementById("zoneLeft").onclick  = prev;
+  document.getElementById("zoneRight").onclick = next;
+
+  function toggleFullscreen(){
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(function(){});
+    else document.exitFullscreen().catch(function(){});
+  }
+  document.getElementById("btnPresent").onclick = toggleFullscreen;
+
+  function toggleMeasure(){ document.body.classList.toggle("measure"); }
+  document.getElementById("btnMeasure").onclick = toggleMeasure;
+
+  var barHidden = false;
+  function setBar(h){ barHidden = h; bar.classList.toggle("hidden", h); }
+
+  document.addEventListener("keydown", function(e){
+    switch(e.key){
+      case "ArrowRight": case "PageDown": case " ": e.preventDefault(); next(); break;
+      case "ArrowLeft":  case "PageUp": e.preventDefault(); prev(); break;
+      case "Home": show(0); break;
+      case "End": show(TOTAL - 1); break;
+      case "f": case "F": toggleFullscreen(); break;
+      case "g": case "G": toggleMeasure(); break;
+      case "h": case "H": setBar(!barHidden); break;
+      case "Escape": if (document.fullscreenElement) document.exitFullscreen(); break;
+    }
+  });
+
+  // Header recedes on idle, returns on mouse move.
+  var idleTimer = null;
+  function armIdle(){
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(function(){ setBar(true); }, 2800);
+  }
+  document.addEventListener("mousemove", function(){
+    if (barHidden) setBar(false);
+    armIdle();
+  });
+
+  window.addEventListener("resize", fit);
+  fit(); show(0); armIdle();
+  setTimeout(function(){ var h=document.getElementById("hint"); if(h) h.style.opacity="0"; }, 4200);
+})();
+</script>
+</body>
+</html>

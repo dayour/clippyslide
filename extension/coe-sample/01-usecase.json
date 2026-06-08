@@ -1,0 +1,81 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "Container",
+      "id": "coe-stage",
+      "height": "stretch",
+      "items": [
+        {
+          "type": "ColumnSet",
+          "height": "stretch",
+          "columns": [
+            {
+              "type": "Column",
+              "width": 62,
+              "spacing": "None",
+              "items": [
+                {
+                  "type": "Container",
+                  "id": "coe-panel-blue",
+                  "height": "stretch",
+                  "items": [
+                    { "type": "TextBlock", "id": "coe-kicker", "text": "DESIGN  ·  STEP 02", "size": "Medium", "spacing": "None" },
+                    { "type": "TextBlock", "id": "coe-title-magenta", "text": "Use Case Description", "size": "ExtraLarge", "weight": "Bolder", "wrap": true, "spacing": "Small" },
+                    { "type": "TextBlock", "text": "Define the agent's job-to-be-done before you build. Capture the trigger that starts it, the plan it follows, and the grounding it needs to act reliably and safely.", "wrap": true, "isSubtle": true, "spacing": "Small" },
+                    { "type": "TextBlock", "id": "coe-h2-under", "text": "Orchestration", "size": "Large", "weight": "Bolder", "spacing": "Large" },
+                    {
+                      "type": "ColumnSet", "spacing": "Small",
+                      "columns": [
+                        { "type": "Column", "width": "stretch", "items": [ { "type": "Container", "id": "coe-pill-blue", "items": [ { "type": "TextBlock", "text": "Trigger", "horizontalAlignment": "Center", "wrap": true } ] } ] },
+                        { "type": "Column", "width": "auto", "verticalContentAlignment": "Center", "items": [ { "type": "TextBlock", "text": "→", "weight": "Bolder" } ] },
+                        { "type": "Column", "width": "stretch", "items": [ { "type": "Container", "id": "coe-pill-mag", "items": [ { "type": "TextBlock", "text": "Plan", "horizontalAlignment": "Center", "wrap": true } ] } ] },
+                        { "type": "Column", "width": "auto", "verticalContentAlignment": "Center", "items": [ { "type": "TextBlock", "text": "→", "weight": "Bolder" } ] },
+                        { "type": "Column", "width": "stretch", "items": [ { "type": "Container", "id": "coe-pill-blue--2", "items": [ { "type": "TextBlock", "text": "Act", "horizontalAlignment": "Center", "wrap": true } ] } ] }
+                      ]
+                    },
+                    { "type": "Container", "id": "coe-divider", "spacing": "Large", "items": [ { "type": "TextBlock", "text": " ", "size": "Small" } ] },
+                    { "type": "TextBlock", "id": "coe-h2-under--2", "text": "Grounding", "size": "Large", "weight": "Bolder", "spacing": "Medium" },
+                    {
+                      "type": "ColumnSet", "spacing": "Small",
+                      "columns": [
+                        { "type": "Column", "width": "stretch", "items": [ { "type": "Container", "id": "coe-tile", "items": [ { "type": "TextBlock", "text": "Knowledge", "horizontalAlignment": "Center", "wrap": true } ] } ] },
+                        { "type": "Column", "width": "stretch", "items": [ { "type": "Container", "id": "coe-tile--2", "items": [ { "type": "TextBlock", "text": "Tools", "horizontalAlignment": "Center", "wrap": true } ] } ] },
+                        { "type": "Column", "width": "stretch", "items": [ { "type": "Container", "id": "coe-tile--3", "items": [ { "type": "TextBlock", "text": "Instructions", "horizontalAlignment": "Center", "wrap": true } ] } ] }
+                      ]
+                    },
+                    { "type": "TextBlock", "id": "coe-h2-under--3", "text": "Example", "size": "Large", "weight": "Bolder", "spacing": "Large" },
+                    { "type": "TextBlock", "text": "A customer emails support  →  the agent drafts a grounded reply from the knowledge base  →  logs the interaction to CRM and flags anything it could not answer.", "wrap": true, "isSubtle": true, "spacing": "Small" }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Column",
+              "width": 38,
+              "spacing": "Medium",
+              "items": [
+                {
+                  "type": "Container",
+                  "id": "coe-panel-hero",
+                  "height": "stretch",
+                  "items": [
+                    { "type": "TextBlock", "id": "coe-kicker--2", "text": "OUTCOME", "size": "Medium", "spacing": "None" },
+                    { "type": "TextBlock", "text": "What good looks like", "size": "Large", "weight": "Bolder", "wrap": true, "spacing": "Small" },
+                    { "type": "Container", "spacing": "Medium", "separator": true, "items": [ { "type": "TextBlock", "text": "Single, unambiguous trigger", "wrap": true } ] },
+                    { "type": "Container", "spacing": "Medium", "separator": true, "items": [ { "type": "TextBlock", "text": "Deterministic plan with guardrails", "wrap": true } ] },
+                    { "type": "Container", "spacing": "Medium", "separator": true, "items": [ { "type": "TextBlock", "text": "Grounded in approved knowledge", "wrap": true } ] },
+                    { "type": "Container", "spacing": "Medium", "separator": true, "items": [ { "type": "TextBlock", "text": "Tools scoped least-privilege", "wrap": true } ] },
+                    { "type": "Container", "spacing": "Medium", "separator": true, "items": [ { "type": "TextBlock", "text": "Evaluated before promotion", "wrap": true } ] }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

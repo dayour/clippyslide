@@ -1,0 +1,55 @@
+.hero{
+  position:relative;
+  padding:6rem 1rem 5rem;
+  background:
+    radial-gradient(46% 70% at 96% 4%, rgba(122,72,182,.45) 0%, transparent 60%),
+    radial-gradient(38% 60% at 2% 104%, rgba(108,60,170,.32) 0%, transparent 60%),
+    #000;
+  overflow:hidden;
+  text-align:center;
+}
+.heroInner{max-width:860px;margin:0 auto;}
+.kicker{
+  font-weight:700;letter-spacing:.18em;font-size:.85rem;
+  background:linear-gradient(90deg,#F77181,#CA5BCD 50%,#818EFF);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.title{
+  font-size:4.5rem;line-height:1;font-weight:800;margin:.4rem 0 0;
+  background:linear-gradient(90deg,#F77181 0%,#CA5BCD 50%,#818EFF 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.tagline{color:rgba(255,255,255,.82);font-size:1.12rem;margin:1rem auto 0;max-width:680px;}
+.swatches{display:flex;gap:10px;justify-content:center;margin:1.6rem 0;}
+.swatch{width:46px;height:46px;border-radius:10px;box-shadow:0 0 18px rgba(80,140,255,.28);}
+.buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:1.4rem;}
+.primaryBtn,.ghostBtn{
+  padding:.7rem 1.4rem;border-radius:10px;font-weight:600;text-decoration:none;transition:all .15s;
+}
+.primaryBtn{
+  color:#fff;border:1px solid rgba(202,91,205,.5);
+  background:linear-gradient(135deg,rgba(247,113,129,.28),rgba(202,91,205,.28));
+}
+.primaryBtn:hover{color:#fff;border-color:rgba(202,91,205,.9);text-decoration:none;}
+.ghostBtn{color:#9eeaff;border:1px solid rgba(0,212,255,.28);background:rgba(0,212,255,.06);}
+.ghostBtn:hover{color:#fff;border-color:rgba(0,212,255,.6);text-decoration:none;}
+
+.main{background:#0a0a0e;padding:4rem 1rem;}
+.grid{
+  max-width:1040px;margin:0 auto;display:grid;gap:18px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+}
+.card{
+  display:block;padding:1.4rem 1.5rem;border-radius:16px;text-decoration:none;
+  background:radial-gradient(120% 130% at 18% 0%, rgba(129,142,255,.10), rgba(57,176,255,.05)), #000;
+  border:1px solid rgba(129,142,255,.28);
+  transition:border-color .15s, box-shadow .15s, transform .15s;
+}
+.card:hover{
+  text-decoration:none;border-color:rgba(202,91,205,.55);
+  box-shadow:0 0 26px rgba(80,140,255,.18);transform:translateY(-2px);
+}
+.card h3{color:#fff;margin:0 0 .5rem;font-weight:700;}
+.card p{color:rgba(255,255,255,.72);margin:0;font-size:.95rem;}
+
+@media (max-width:600px){ .title{font-size:3rem;} }

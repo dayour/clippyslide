@@ -1,0 +1,129 @@
+{
+  "title": "CoE Framework — ClippySlide",
+  "description": "Oceaneering CoE deck reproduced in the ClippySlide design system.",
+  "version": "1.0.0",
+  "theme": "clippyslide",
+  "generated": "2026-06-08",
+  "slides": [
+    {
+      "n": 1,
+      "file": "01.html",
+      "archetype": "title"
+    },
+    {
+      "n": 2,
+      "file": "02.html",
+      "archetype": "diagram"
+    },
+    {
+      "n": 3,
+      "file": "03.html",
+      "archetype": "panelGrid"
+    },
+    {
+      "n": 4,
+      "file": "04.html",
+      "archetype": "guidance"
+    },
+    {
+      "n": 5,
+      "file": "05.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 6,
+      "file": "06.html",
+      "archetype": "diagram"
+    },
+    {
+      "n": 7,
+      "file": "../slides/07-orchestration.html",
+      "archetype": "diagram (bespoke)"
+    },
+    {
+      "n": 8,
+      "file": "08.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 9,
+      "file": "09.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 10,
+      "file": "10.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 11,
+      "file": "11.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 12,
+      "file": "12.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 13,
+      "file": "13.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 14,
+      "file": "14.html",
+      "archetype": "demo"
+    },
+    {
+      "n": 15,
+      "file": "15.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 16,
+      "file": "16.html",
+      "archetype": "healthmatrix"
+    },
+    {
+      "n": 17,
+      "file": "17.html",
+      "archetype": "checklist"
+    },
+    {
+      "n": 18,
+      "file": "18.html",
+      "archetype": "lifecycle"
+    },
+    {
+      "n": 19,
+      "file": "19.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 20,
+      "file": "20.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 21,
+      "file": "21.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 22,
+      "file": "22.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 23,
+      "file": "23.html",
+      "archetype": "feature"
+    },
+    {
+      "n": 24,
+      "file": "24.html",
+      "archetype": "cta"
+    }
+  ]
+}

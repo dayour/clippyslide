@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# docusaurus build output
+website/build/
+website/.docusaurus/
+website/.cache-loader/
+
+# logs
+*.log
+npm-debug.log*
+
+# os / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# scratch
+*.tmp
+scratch/

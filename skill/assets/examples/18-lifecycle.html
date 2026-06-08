@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<title>TileSlide — Lifecycle</title>
+<link rel="stylesheet" href="../clippyslide.css">
+<style>
+  html,body{margin:0;background:#000;}
+  .h1{position:absolute;left:24px;top:16px;font-weight:700;font-size:38px;color:#fff;}
+  .note{position:absolute;left:24px;top:104px;width:360px;}
+  .note .t{font-size:18px;color:#fff;margin-bottom:2px;}
+  .col{position:absolute;display:flex;flex-direction:column;gap:12px;}
+  .col .cs-env{width:386px;}
+</style></head>
+<body>
+  <div class="cs-stage cs-stage--glow">
+    <div class="h1">Agent Lifecycle Management with Power Platform</div>
+    <div class="note">
+      <div class="t">Typical pattern:</div>
+      <div class="cs-body" style="color:#fff;">As use cases and adoption increases, trust boundaries can be shifted</div>
+    </div>
+
+    <!-- Column 1 -->
+    <div class="col" style="left:12px;top:282px;">
+      <div class="cs-env dev"     style="height:74px;"><span class="name">Environment: HR</span><span class="ver">vNext Dev</span></div>
+      <div class="cs-env sandbox" style="height:74px;"><span class="name">Environment: HR</span><span class="ver">vNext Sandbox</span></div>
+      <div class="cs-env dev"     style="height:74px;"><span class="name">Environment: Legal</span><span class="ver">vNext Dev</span></div>
+      <div class="cs-env sandbox" style="height:74px;"><span class="name">Environment: Legal</span><span class="ver">vNext Sandbox</span></div>
+    </div>
+
+    <!-- Column 2 -->
+    <div class="col" style="left:432px;top:204px;">
+      <div class="cs-env dev"     style="height:72px;"><span class="name">Environment: Business Analyst</span><span class="ver">vNext Dev</span></div>
+      <div class="cs-env sandbox" style="height:72px;"><span class="name">Environment: Business Analyst</span><span class="ver">vNext Sandbox</span></div>
+      <div class="cs-env dev"     style="height:72px;"><span class="name">Environment: Operations</span><span class="ver">vNext Dev</span></div>
+      <div class="cs-env sandbox" style="height:72px;"><span class="name">Environment: Operations</span><span class="ver">vNext Sandbox</span></div>
+      <div class="cs-env prod"    style="height:72px;"><span class="name">Environment: MVP Ring1</span><span class="ver">vNext Prod</span></div>
+    </div>
+
+    <!-- Column 3 -->
+    <div class="col" style="left:858px;top:118px;">
+      <div class="cs-env dev"     style="height:66px;"><span class="name">Environment:</span><span class="ver">vNext Dev</span></div>
+      <div class="cs-env sandbox" style="height:66px;"><span class="name">Environment:</span><span class="ver">vNext Sandbox</span></div>
+      <div class="cs-env prod"    style="height:66px;"><span class="name">Environment: All Users NAM</span><span class="ver">vNext Prod</span></div>
+      <div class="cs-env dev"     style="height:66px;"><span class="name">Environment:</span><span class="ver">vNext Dev</span></div>
+      <div class="cs-env sandbox" style="height:66px;"><span class="name">Environment:</span><span class="ver">vNext Sandbox</span></div>
+      <div class="cs-env prod"    style="height:66px;"><span class="name">Environment: All Users</span><span class="ver">vNext Prod</span></div>
+    </div>
+
+    <div class="cs-health"><span class="lbl">Configuration/validation health</span></div>
+  </div>
+</body></html>

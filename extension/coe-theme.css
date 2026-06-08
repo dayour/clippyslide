@@ -1,0 +1,107 @@
+/* ════════════════════════════════════════════════════════════════════════
+   clippyslide-coe  ·  TileSlide CoE theme for the AgentCard Presenter
+   Reproduces CoE_Framework.pptx aesthetic on flow-layout Adaptive Cards.
+   Scoped under [data-theme="clippyslide-coe"]; activate via post-render
+   DOM decoration that copies AC element id "coe-<role>" -> data-coe-role.
+   Gradient borders use the mask-ring trick so AC's own padding is untouched.
+   ════════════════════════════════════════════════════════════════════════ */
+
+[data-theme="clippyslide-coe"]{
+  --cs-peri:#818EFF; --cs-cyan:#39B0FF; --cs-coral:#F77181; --cs-mag:#CA5BCD;
+  --cs-grad-blue: linear-gradient(135deg,#818EFF,#39B0FF);
+  --cs-grad-hero: linear-gradient(135deg,#F77181 0%,#CA5BCD 48%,#818EFF 100%);
+  --cs-grad-title:linear-gradient(90deg,#F77181 0%,#CA5BCD 50%,#818EFF 100%);
+  --cs-grad-health:linear-gradient(90deg,#E33B3B 0%,#E8932F 22%,#E7D63B 44%,#A9D63B 68%,#22C24E 100%);
+  background:#000;
+  font-family:"Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+
+/* ── Canvas: pure black + signature violet corner glows on the card root ── */
+[data-theme="clippyslide-coe"] .ac-adaptiveCard{
+  background:
+    radial-gradient(46% 70% at 96% 4%,  rgba(122,72,182,.45) 0%, transparent 60%),
+    radial-gradient(38% 60% at 2% 104%, rgba(108,60,170,.32) 0%, transparent 60%),
+    #000 !important;
+}
+
+/* ── Defeat the app's !important slide-shell so the canvas reads pure black ── */
+#main-host[data-theme="clippyslide-coe"] > div,
+#main-host[data-theme="clippyslide-coe"] > div > div{
+  background:#000 !important;
+  border-color:rgba(80,140,255,.25) !important;
+  box-shadow:0 0 26px rgba(80,140,255,.18) !important;
+}
+
+/* ── Gradient-border panels (ring via mask; AC padding preserved) ── */
+[data-theme="clippyslide-coe"] [data-coe-role^="panel"]{
+  position:relative; border-radius:16px;
+  background:radial-gradient(120% 130% at 18% 0%,
+      rgba(129,142,255,.10) 0%, rgba(57,176,255,.08) 100%) !important;
+}
+[data-theme="clippyslide-coe"] [data-coe-role^="panel"]::before{
+  content:""; position:absolute; inset:0; border-radius:16px; padding:1.6px;
+  background:var(--cs-grad-blue);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+}
+[data-theme="clippyslide-coe"] [data-coe-role="panel-hero"]{
+  background:radial-gradient(130% 130% at 80% 30%,
+      rgba(202,91,205,.14) 0%, rgba(129,142,255,.08) 55%, rgba(57,176,255,.05) 100%) !important;
+}
+[data-theme="clippyslide-coe"] [data-coe-role="panel-hero"]::before{ background:var(--cs-grad-hero); }
+[data-theme="clippyslide-coe"] [data-coe-role="panel-white"]{ background:#FFFFFF !important; }
+[data-theme="clippyslide-coe"] [data-coe-role="panel-white"]::before{ display:none; }
+[data-theme="clippyslide-coe"] [data-coe-role="panel-white"] .ac-textBlock{ color:#14161D !important; }
+
+/* ── Magenta gradient title ── */
+[data-theme="clippyslide-coe"] [data-coe-role="title-magenta"]{
+  background:var(--cs-grad-title); -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent !important;
+  font-weight:800 !important; white-space:normal !important; text-overflow:clip !important;
+}
+[data-theme="clippyslide-coe"] [data-coe-role="kicker"]{
+  color:#39B0FF !important; font-weight:700 !important; letter-spacing:1px;
+}
+[data-theme="clippyslide-coe"] [data-coe-role="h2-under"]{
+  color:#fff !important; font-weight:700 !important;
+  text-decoration:underline; text-underline-offset:5px; text-decoration-thickness:2px;
+}
+
+/* ── Rainbow health bar ── */
+[data-theme="clippyslide-coe"] [data-coe-role="healthbar"]{
+  background:var(--cs-grad-health) !important; border-radius:8px;
+}
+[data-theme="clippyslide-coe"] [data-coe-role="healthbar"] .ac-textBlock{
+  color:#fff !important; text-shadow:0 1px 2px rgba(0,0,0,.45); font-weight:600 !important;
+}
+
+/* ── Lifecycle environment cards ── */
+[data-theme="clippyslide-coe"] [data-coe-role="env-dev"]{
+  background:linear-gradient(135deg,#A85546,#5E2A22) !important; border:1px solid #C77866; border-radius:8px;
+}
+[data-theme="clippyslide-coe"] [data-coe-role="env-sandbox"]{
+  background:linear-gradient(135deg,#4E6E96,#2A3F5C) !important; border:1px solid #7C9AC2; border-radius:8px;
+}
+[data-theme="clippyslide-coe"] [data-coe-role="env-prod"]{
+  background:linear-gradient(135deg,#1E1410,#0A0A0A) !important; border:1.5px solid #2FA84F; border-radius:8px;
+}
+[data-theme="clippyslide-coe"] [data-coe-role^="env"] .ac-textBlock{ color:#fff !important; }
+
+/* ── Pills + light tiles ── */
+[data-theme="clippyslide-coe"] [data-coe-role="pill-blue"]{ background:#1666C7 !important; border-radius:8px; }
+[data-theme="clippyslide-coe"] [data-coe-role="pill-mag"]{  background:#C746B8 !important; border-radius:8px; }
+[data-theme="clippyslide-coe"] [data-coe-role^="pill"] .ac-textBlock{ color:#fff !important; font-weight:600 !important; }
+[data-theme="clippyslide-coe"] [data-coe-role="tile"]{ background:#CFE8F7 !important; border-radius:8px; }
+[data-theme="clippyslide-coe"] [data-coe-role="tile"] .ac-textBlock{ color:#14161D !important; font-weight:500 !important; }
+
+/* ── Gradient divider rule with magenta end dots ── */
+[data-theme="clippyslide-coe"] [data-coe-role="divider"]{
+  position:relative; height:2px; border-radius:2px; background:var(--cs-grad-blue) !important; margin:6px 0;
+}
+[data-theme="clippyslide-coe"] [data-coe-role="divider"]::before,
+[data-theme="clippyslide-coe"] [data-coe-role="divider"]::after{
+  content:""; position:absolute; top:50%; width:7px; height:7px; border-radius:50%;
+  transform:translateY(-50%); background:#CA5BCD;
+}
+[data-theme="clippyslide-coe"] [data-coe-role="divider"]::before{ left:-2px; }
+[data-theme="clippyslide-coe"] [data-coe-role="divider"]::after{ right:-2px; }

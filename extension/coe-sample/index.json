@@ -1,0 +1,20 @@
+{
+  "title": "ClippySlide CoE Sample",
+  "description": "Two slides demonstrating the clippyslide-coe theme — premium black canvas, glowing gradient-border panels, magenta-gradient titles, rainbow health bar, and lifecycle environment cards. Authored as plain Adaptive Cards; panels are marked with coe-<role> ids that the presenter's decorateCoe pass styles.",
+  "version": "1.0.0",
+  "theme": "clippyslide-coe",
+  "cards": [
+    {
+      "id": "coe-01-usecase",
+      "title": "Use Case Description",
+      "file": "01-usecase.json",
+      "description": "Blue gradient-border panel · cyan kicker · magenta title · underlined h2 · trigger/plan/act pills · gradient divider · knowledge/tools tiles"
+    },
+    {
+      "id": "coe-02-lifecycle",
+      "title": "Agent Lifecycle",
+      "file": "02-lifecycle.json",
+      "description": "Hero gradient-border panel · environment cards (dev/sandbox/prod) · rainbow health bar"
+    }
+  ]
+}
