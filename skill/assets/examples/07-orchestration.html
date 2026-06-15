@@ -1,87 +1,71 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
-<title>TileSlide — Orchestration</title>
+<title>Clippyflow -- Orchestration</title>
 <link rel="stylesheet" href="../clippyslide.css">
 <style>
-  html,body{margin:0;background:#000;}
-  .outer{left:40px;top:48px;width:818px;height:626px;}
-  .outer > .cs-in{padding:22px 26px;}
-  .title{font-weight:800;font-size:44px;line-height:1;margin-bottom:14px;
-         background:var(--cs-grad-title);-webkit-background-clip:text;background-clip:text;color:transparent;width:max-content;}
-  .white{position:relative;width:100%;height:506px;background:#fff;border-radius:12px;overflow:hidden;}
-  .white-pad{position:absolute;inset:16px 18px 16px 56px;display:flex;flex-direction:column;}
-  .orx2{position:absolute;left:14px;top:150px;height:330px;width:28px;
-        writing-mode:vertical-rl;transform:rotate(180deg);
-        display:flex;align-items:center;justify-content:center;
-        font-size:19px;color:#14161D;border-left:2px solid #14161D;}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:black;}
+  .outer{left:40px;top:48px;width:818px;height:626px;padding:22px 26px;}
+  .title{font-size:44px;line-height:1;margin-bottom:14px;}
+  .diagram{left:26px;top:92px;width:766px;height:506px;padding:16px 18px 16px 56px;overflow:hidden;}
+  .orx2{position:absolute;left:14px;top:150px;height:330px;width:28px;}
   .pills{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;height:50px;}
   .divider-row{display:grid;grid-template-columns:1fr 3fr;gap:14px;align-items:center;height:40px;margin-top:8px;}
-  .dlabel{display:flex;align-items:center;gap:10px;color:#14161D;font-size:18px;white-space:nowrap;}
-  .dlabel .cs-divider{flex:1;}
-  .tiles{flex:1;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;grid-template-rows:repeat(4,1fr);gap:12px;margin-top:8px;}
-  .k1{grid-column:1;grid-row:1;}.k2{grid-column:1;grid-row:2;}
-  .k3{grid-column:1;grid-row:3;}.k4{grid-column:1;grid-row:4;}
-  .t1{grid-column:2;grid-row:1/3;}.t2{grid-column:3;grid-row:1/3;}.t3{grid-column:4;grid-row:1/3;}
-  .t4{grid-column:2;grid-row:3/5;}.t5{grid-column:3;grid-row:3/5;}.t6{grid-column:4;grid-row:3/5;}
-
-  .conn-title{position:absolute;left:930px;top:112px;font-weight:800;font-size:28px;
-              background:var(--cs-grad-title);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .dlabel{display:flex;align-items:center;gap:10px;color:var(--cf-fg);font-size:18px;white-space:nowrap;}
+  .dlabel .cf-divider{flex:1;}
+  .tiles{height:360px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;grid-template-rows:repeat(4,1fr);gap:12px;margin-top:8px;}
+  .k1{grid-column:1;grid-row:1}.k2{grid-column:1;grid-row:2}.k3{grid-column:1;grid-row:3}.k4{grid-column:1;grid-row:4}
+  .t1{grid-column:2;grid-row:1/3}.t2{grid-column:3;grid-row:1/3}.t3{grid-column:4;grid-row:1/3}.t4{grid-column:2;grid-row:3/5}.t5{grid-column:3;grid-row:3/5}.t6{grid-column:4;grid-row:3/5}
+  .conn-title{position:absolute;left:930px;top:112px;font-size:28px;}
   .conn{position:absolute;left:924px;top:152px;width:302px;display:flex;flex-direction:column;gap:14px;}
-  .arrow{position:absolute;left:872px;top:392px;color:var(--cs-cyan);font-size:34px;}
-  .ico.a{background:linear-gradient(135deg,#8B5CF6,#3B82F6);}
-  .ico.b{background:linear-gradient(135deg,#EC4899,#8B5CF6);}
-  .ico.c{background:linear-gradient(135deg,#F77181,#39B0FF);}
-  .ico.d{background:linear-gradient(135deg,#22C24E,#0F9ED5);}
-  .ico.e{background:linear-gradient(135deg,#CA5BCD,#818EFF);}
+  .bridge{position:absolute;left:872px;top:386px;width:42px;height:18px;border-top:2px solid var(--nitrous);border-bottom:2px solid var(--nitrous);box-shadow:var(--cf-glow-nitrous);}
+  .bridge::before,.bridge::after{content:"";position:absolute;top:50%;width:8px;height:8px;border-radius:50%;background:var(--nitrous-strong);transform:translateY(-50%);}
+  .bridge::before{left:-2px}.bridge::after{right:-2px}
+  .ico.a{background:linear-gradient(135deg,var(--clippy-purple),var(--clippy-blue));}
+  .ico.b{background:linear-gradient(135deg,var(--clippy-magenta),var(--clippy-purple));}
+  .ico.c{background:linear-gradient(135deg,var(--clippy-magenta),var(--clippy-cyan-br));}
+  .ico.d{background:linear-gradient(135deg,var(--clippy-green-br),var(--clippy-cyan));}
+  .ico.e{background:linear-gradient(135deg,var(--clippy-magenta),var(--clippy-purple));}
 </style></head>
 <body>
-  <div class="cs-stage cs-stage--glow">
-    <div class="cs-accent-left" style="top:300px;height:150px;"></div>
-
-    <!-- outer blue gradient-border panel -->
-    <div class="cs-panel blue outer">
-      <div class="cs-in">
-        <div class="title">Copilot Studio Agent</div>
-        <div class="white">
-          <div class="orx2">Orchestrator</div>
-          <div class="white-pad">
-            <div class="pills">
-              <div class="cs-pill blue">Topic</div>
-              <div class="cs-pill blue">Topic</div>
-              <div class="cs-pill mag">Agent</div>
-              <div class="cs-pill mag">Agent</div>
-            </div>
-            <div class="divider-row">
-              <div class="dlabel">Knowledge <span class="cs-divider"></span></div>
-              <div class="dlabel"><span style="flex:1" class="cs-divider"></span> Tools <span class="cs-divider"></span></div>
-            </div>
-            <div class="tiles">
-              <div class="cs-tile k1">Public websites</div>
-              <div class="cs-tile k2">SharePoint</div>
-              <div class="cs-tile k3">Dataverse</div>
-              <div class="cs-tile k4">Files</div>
-              <div class="cs-tile t1">Connector</div>
-              <div class="cs-tile t2">Flow</div>
-              <div class="cs-tile t3">Prompt</div>
-              <div class="cs-tile t4">MCP</div>
-              <div class="cs-tile t5">Computer use</div>
-              <div class="cs-tile t6">Rest API</div>
-            </div>
-          </div>
+  <div class="cf-stage">
+    <div class="cf-accent-left" style="top:300px;height:150px;"></div>
+    <section class="cf-panel spectrum outer" aria-label="Copilot Studio Agent orchestration diagram">
+      <div class="cf-title title">Copilot Studio Agent</div>
+      <div class="cf-panel solid diagram">
+        <div class="cf-orx orx2">Orchestrator</div>
+        <div class="pills">
+          <div class="cf-pill cyan">Topic</div>
+          <div class="cf-pill cyan">Topic</div>
+          <div class="cf-pill magenta">Agent</div>
+          <div class="cf-pill magenta">Agent</div>
+        </div>
+        <div class="divider-row">
+          <div class="dlabel">Knowledge <span class="cf-divider"></span></div>
+          <div class="dlabel"><span class="cf-divider"></span> Tools <span class="cf-divider"></span></div>
+        </div>
+        <div class="tiles">
+          <div class="cf-tile k1">Public websites</div>
+          <div class="cf-tile k2">SharePoint</div>
+          <div class="cf-tile k3">Dataverse</div>
+          <div class="cf-tile k4">Files</div>
+          <div class="cf-tile t1">Connector</div>
+          <div class="cf-tile t2">Flow</div>
+          <div class="cf-tile t3">Prompt</div>
+          <div class="cf-tile t4">MCP</div>
+          <div class="cf-tile t5">Computer use</div>
+          <div class="cf-tile t6">Rest API</div>
         </div>
       </div>
-    </div>
-
-    <div class="arrow">&#8646;</div>
-
-    <!-- connected agents -->
-    <div class="conn-title">Connected agent</div>
+    </section>
+    <div class="bridge" aria-hidden="true"></div>
+    <div class="cf-title conn-title">Connected agent</div>
     <div class="conn">
-      <div class="cs-agentcard"><span class="ico a"></span>Copilot Studio agents</div>
-      <div class="cs-agentcard"><span class="ico b"></span>M365 Agents SDK</div>
-      <div class="cs-agentcard"><span class="ico c"></span><b>AI Foundry agents</b></div>
-      <div class="cs-agentcard"><span class="ico d"></span>Fabric Data agents</div>
-      <div class="cs-agentcard"><span class="ico e"></span>Agent2Agent</div>
+      <div class="cf-agentcard"><span class="ico a"></span>Copilot Studio agents</div>
+      <div class="cf-agentcard"><span class="ico b"></span>M365 Agents SDK</div>
+      <div class="cf-agentcard"><span class="ico c"></span><strong>AI Foundry agents</strong></div>
+      <div class="cf-agentcard"><span class="ico d"></span>Fabric Data agents</div>
+      <div class="cf-agentcard"><span class="ico e"></span>Agent2Agent</div>
     </div>
   </div>
 </body></html>

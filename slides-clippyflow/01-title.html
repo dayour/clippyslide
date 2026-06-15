@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<title>Clippyflow -- Agent Orchestration</title>
+<link rel="stylesheet" href="../design-system/clippyslide.css">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;background:black;}
+  .wm{position:absolute;left:74px;top:84px;width:720px;height:590px;opacity:.18;filter:blur(.25px);pointer-events:none;color:var(--nitrous);}
+  .wm path{stroke:currentColor;stroke-width:2;fill:none;vector-effect:non-scaling-stroke;}
+  .wm .soft{stroke:var(--cf-fg-soft);opacity:.42;}
+  .block{position:absolute;left:360px;top:226px;width:760px;}
+  .block .cf-kicker{margin-bottom:88px;}
+  .sub{font-weight:700;font-size:42px;line-height:1.12;color:var(--cf-fg-soft);letter-spacing:-.4px;}
+  .main{font-size:58px;margin-top:2px;line-height:1.02;}
+  .mark-glow{position:absolute;left:118px;top:136px;width:516px;height:430px;border:1.5px solid var(--nitrous-rim);border-radius:42% 58% 48% 52%;box-shadow:var(--cf-glow-nitrous);opacity:.34;}
+  .fine-line{position:absolute;left:360px;top:408px;width:318px;height:2px;}
+</style></head>
+<body>
+  <div class="cf-stage cf-stage--hero">
+    <div class="mark-glow"></div>
+    <svg class="wm" viewBox="0 0 200 200" aria-hidden="true">
+      <path d="M100 18 C150 40 168 96 150 150 C132 188 68 188 50 150 C32 96 50 40 100 18 Z"/>
+      <path class="soft" d="M100 40 C60 70 60 130 100 168 C140 130 140 70 100 40 Z"/>
+      <path d="M62 96 C82 86 118 86 138 96"/>
+      <path class="soft" d="M58 124 C82 112 118 112 142 124"/>
+    </svg>
+    <div class="block">
+      <div class="cf-kicker">COPILOT AGENT DEVELOPMENT</div>
+      <div class="cf-divider fine-line"></div>
+      <div class="sub">Clippyflow</div>
+      <div class="cf-title main">Agent Orchestration</div>
+    </div>
+  </div>
+</body></html>

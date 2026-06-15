@@ -1,0 +1,95 @@
+# ========================================================================
+# TileSlide Profile - v1.0
+# Authoring profile for the TileSlide design system. Consumed by the
+# `tileslide` Clawpilot skill and the tileslide UI extension. This is the
+# human/agent-facing contract: what the system is, how to use it, the rules.
+# ========================================================================
+apiVersion: tileslide/v1
+kind: DesignProfile
+metadata:
+  name: TileSlide
+  version: 1.0.0
+  source: CoE_Framework.pptx (Oceaneering, 01FY26)
+  extractedBy: verbatim OOXML gradient extraction
+  authors: [dayour]
+
+principles:
+  - Pure-black canvas with generous negative space; never a flat grey.
+  - The signature is the glowing gradient BORDER, not a solid stroke.
+  - Panel bodies glow from within (border colors @ 10% alpha radial over black).
+  - Titles are magenta-gradient and bold; section sub-heads are underlined.
+  - One coral accent bar may bleed partially off the left edge.
+  - Zero emoji. High contrast. Premium, dark, restrained.
+
+palette:
+  periwinkle: "#818EFF"
+  cyan:       "#39B0FF"
+  coral:      "#F77181"
+  magenta:    "#CA5BCD"
+  tileLight:  "#CFE8F7"
+  pillBlue:   "#1666C7"
+  pillMagenta:"#C746B8"
+  greenPanel: "#3F8A2E"
+
+gradients:
+  blueBorder:  "linear 135deg #818EFF -> #39B0FF"
+  heroBorder:  "linear 135deg #F77181 -> #CA5BCD@48% -> #818EFF"
+  titleText:   "linear 90deg  #F77181 -> #CA5BCD@50% -> #818EFF"
+  panelFill:   "radial #818EFF -> #39B0FF @ alpha 0.10 over #000"
+  healthBar:   "linear 90deg #E33B3B -> #E8932F -> #E7D63B -> #A9D63B -> #22C24E"
+  envDev:      "linear 135deg #7C3B30 -> #46201B"
+  envSandbox:  "linear 135deg #3E597A -> #22344B"
+
+geometry: { radius: 16px, radiusSmall: 10px, border: 1.6px, pad: 20px }
+type:
+  family: "Segoe UI Variable, Segoe UI, system-ui, sans-serif"
+  mono:   "Cascadia Code, Consolas, monospace"
+  scale:  { title: 46, kicker: 30, h2: 22, label: 17, body: 16, mono: 14 }
+  titleWeight: 800
+
+components:   # css class -> purpose
+  cs-stage:        Canvas 1280x720 black.
+  "cs-stage--title": Title-slide dual violet glow.
+  "cs-stage--glow":  Content-slide top-right violet glow.
+  "cs-panel.blue":   Blue gradient-border panel.
+  "cs-panel.hero":   3-stop coral->magenta->periwinkle border panel.
+  "cs-panel.white":  White inner panel for diagram slides.
+  cs-accent-left:    Coral bar bleeding off left edge.
+  cs-title:          Magenta-gradient bold display title.
+  "cs-h2.under":     Underlined section sub-header.
+  "cs-pill.blue/.mag": Topic (blue) / Agent (magenta) diagram pills.
+  cs-tile:           Light-blue knowledge/tools tile.
+  cs-orx:            Vertical Orchestrator rail label.
+  cs-divider:        Gradient knowledge|tools divider with end dots.
+  cs-greenpanel:     Side green bullet panel.
+  cs-agentcard:      White connected-agent card (icon + label).
+  "cs-env.dev/.sandbox/.prod": Lifecycle environment cards.
+  cs-health:         Bottom rainbow health bar.
+
+archetypes:
+  title:               { slides: [1],  layout: dual-glow + watermark + kicker/title }
+  panelGrid:           { slides: [3],  layout: gradient-border tile grid }
+  orchestratorDiagram: { slides: [2,6,7], layout: white inner panel + pills + light tiles + side panel }
+  contentPanel:        { slides: [4,5,8,9,10,11,12,13,15,17,19,20,21], layout: title + body panels }
+  lifecycleHealthBar:  { slides: [16,18], layout: env card columns + rainbow health bar }
+  ctaBootcamp:         { slides: [22,23,24], layout: outcomes + register CTA }
+
+qa:   # the visual-validation checklist every TileSlide artifact must pass
+  - Background is pure black (no grey haze) with correct glow placement.
+  - Gradient borders read as gradients, not solid; ~1.6-2px; soft outer glow present.
+  - Panel bodies show the faint inner radial glow, not flat fill.
+  - Title uses the magenta gradient; no underline on display titles.
+  - No element within 0.5in of the canvas edge unless an intentional bleed.
+  - Tiles/columns aligned on a consistent grid; even gaps.
+  - Contrast AA on all text; no light-on-light or dark-on-dark.
+  - Zero emoji anywhere.
+
+commands:   # the 8-command skill surface
+  - new:      Scaffold a deck from an archetype.
+  - extract:  Pull design tokens from a reference .pptx (OOXML gradient extraction).
+  - theme:    Apply/swap a token theme on a deck.
+  - add-slide: Add a slide of a given archetype.
+  - render:   HTML/slide -> PNG via Edge headless.
+  - validate: Run the qa checklist (content + visual sub-agent pass).
+  - export:   Deck -> standalone HTML or .pptx.
+  - present:  Presenter mode in the tileslide UI extension.

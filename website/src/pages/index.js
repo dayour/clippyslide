@@ -5,19 +5,20 @@ import Layout from '@theme/Layout';
 import styles from './index.module.css';
 
 const TOKENS = [
-  {label: 'periwinkle', hex: '#818EFF'},
-  {label: 'cyan', hex: '#39B0FF'},
-  {label: 'coral', hex: '#F77181'},
-  {label: 'magenta', hex: '#CA5BCD'},
+  {label: 'cyan', hex: '#00CFE6'},
+  {label: 'nitrous', hex: '#2986FF'},
+  {label: 'purple', hex: '#7B3DFF'},
+  {label: 'magenta', hex: '#DF29FF'},
+  {label: 'green', hex: '#1EAE79'},
 ];
 
 const CARDS = [
-  {title: 'Design System', to: '/design-system/tokens', body: 'A CSS component library plus token profiles (JSON / XML / YAML), extracted verbatim from real OOXML.'},
-  {title: 'Reproduction Method', to: '/reproduction/methodology', body: 'A .pptx is a zip of XML. Read the gradient stops, don\u2019t eyeball them. The whole philosophy.'},
-  {title: 'Deck Generator', to: '/generator/overview', body: 'One content model, ten archetype renderers, a zero-dependency Node script \u2192 the full 24-slide deck.'},
+  {title: 'ClippyFlow Design System', to: '/design-system/tokens', body: 'A deep-navy spectrum canvas, translucent cards, nitrous structure, and ClippyFlow token profiles.'},
+  {title: 'Legacy CoE Extraction', to: '/reproduction/methodology', body: 'The original OOXML extraction method remains documented and available as legacy assets.'},
+  {title: 'Deck Generator', to: '/generator/overview', body: 'One content model, ten archetype renderers, and a zero-dependency Node script for the ClippyFlow deck.'},
   {title: 'Presenter', to: '/presenter/overview', body: 'Full-bleed slides on a viewport grid with a single floating header layer. No chrome.'},
-  {title: 'Clawpilot Skill', to: '/skill/overview', body: 'Eight commands that encode the extract \u2192 build \u2192 render \u2192 validate \u2192 present loop.'},
-  {title: 'TileSlide Extension', to: '/extension/coe-theme', body: 'A theme that puts the CoE look on live, editable Adaptive Cards.'},
+  {title: 'Clawpilot Skill', to: '/skill/overview', body: 'Eight commands that encode the build, render, validate, export, and present loop.'},
+  {title: 'TileSlide Extension', to: '/extension/coe-theme', body: 'The legacy CoE theme for live, editable Adaptive Cards.'},
 ];
 
 export default function Home() {
@@ -26,7 +27,7 @@ export default function Home() {
     <Layout title="ClippySlide" description={siteConfig.tagline}>
       <header className={styles.hero}>
         <div className={styles.heroInner}>
-          <div className={styles.kicker}>COPILOT AGENT DEVELOPMENT</div>
+          <div className={styles.kicker}>CLIPPYFLOW DEFAULT</div>
           <h1 className={styles.title}>ClippySlide</h1>
           <p className={styles.tagline}>{siteConfig.tagline}</p>
           <div className={styles.swatches}>

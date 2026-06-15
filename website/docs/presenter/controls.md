@@ -11,8 +11,8 @@ The presenter is keyboard-first, with a fallback header and invisible edge click
 
 | Key | Action |
 | --- | --- |
-| `→` `Space` `PageDown` | next slide |
-| `←` `PageUp` | previous slide |
+| `->` `Space` `PageDown` | next slide |
+| `<-` `PageUp` | previous slide |
 | `Home` | first slide |
 | `End` | last slide |
 | `F` | toggle **present** (fullscreen) |
@@ -22,9 +22,9 @@ The presenter is keyboard-first, with a fallback header and invisible edge click
 
 ## Mouse
 
-- **Header buttons** — `‹` / `›` step, `present` goes fullscreen, `grid` toggles the overlay.
-- **Edge click-zones** — the left and right 12% of the screen are invisible prev/next buttons, so you can click-advance without aiming at the header.
-- **Mouse-move** — reveals the header if it has auto-hidden.
+- **Header buttons** -- `‹` / `›` step, `present` goes fullscreen, `grid` toggles the overlay.
+- **Edge click-zones** -- the left and right 12% of the screen are invisible prev/next buttons, so you can click-advance without aiming at the header.
+- **Mouse-move** -- reveals the header if it has auto-hidden.
 
 ## Presenting
 
@@ -35,7 +35,7 @@ Press `F` (or the `present` button) to go fullscreen. In presentation:
 - Press `G` to drop the measurement grid if it's on.
 
 :::tip Clean present recipe
-Open the presenter → `G` to turn the grid off → `F` to go fullscreen → present with `←/→`. The header will fade on its own.
+Open the presenter -> `G` to turn the grid off -> `F` to go fullscreen -> present with `<-/->`. The header will fade on its own.
 :::
 
 ## Opening from `file://`

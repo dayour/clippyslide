@@ -4,7 +4,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'ClippySlide',
-  tagline: 'A token-extracted slide design system — premium black-canvas decks, reproduced from real OOXML, not vibe-coded.',
+  tagline: 'A ClippyFlow-first slide design system for premium, dark, agentic presentations.',
   favicon: 'img/favicon.ico',
 
   future: {
@@ -73,7 +73,7 @@ const config = {
             items: [
               {label: 'Introduction', to: '/intro'},
               {label: 'Quick Start', to: '/quick-start'},
-              {label: 'Design System', to: '/design-system/tokens'},
+              {label: 'ClippyFlow Tokens', to: '/design-system/tokens'},
             ],
           },
           {

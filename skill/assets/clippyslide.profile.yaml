@@ -1,95 +1,126 @@
-# ════════════════════════════════════════════════════════════════════════
-# TileSlide Profile · v1.0
-# Authoring profile for the TileSlide design system. Consumed by the
-# `tileslide` Clawpilot skill and the tileslide UI extension. This is the
-# human/agent-facing contract: what the system is, how to use it, the rules.
-# ════════════════════════════════════════════════════════════════════════
-apiVersion: tileslide/v1
+# ========================================================================
+# Clippyflow Profile - v1.0
+# Authoring contract for the Clippyflow theme -- the ClippySlide brand-flagship
+# look. Consumed by the `/clippyflow-design` Clawpilot skill. This is the
+# human/agent-facing source of truth: what the theme is, the rules, the QA.
+# Clippyflow is the default ClippySlide theme; legacy CoE assets remain available separately.
+# ========================================================================
+apiVersion: clippyflow/v1
 kind: DesignProfile
 metadata:
-  name: TileSlide
+  name: Clippyflow
   version: 1.0.0
-  source: CoE_Framework.pptx (Oceaneering, 01FY26)
-  extractedBy: verbatim OOXML gradient extraction
+  source: Clippyflow Theme #18 (ClippyClaw theme registry)
+  extends: ClippySlide dark system
   authors: [dayour]
 
 principles:
-  - Pure-black canvas with generous negative space; never a flat grey.
-  - The signature is the glowing gradient BORDER, not a solid stroke.
-  - Panel bodies glow from within (border colors @ 10% alpha radial over black).
-  - Titles are magenta-gradient and bold; section sub-heads are underlined.
-  - One coral accent bar may bleed partially off the left edge.
-  - Zero emoji. High contrast. Premium, dark, restrained.
+  - Deep-navy SPECTRUM canvas -- magenta top-left, cyan center, green bottom-right
+    over a deep-navy gradient. Never a flat black or flat grey.
+  - Surfaces are translucent deep navy so the spectrum sweep peeks through.
+  - The full logo spectrum (cyan/blue/purple/magenta/green) carries meaning &
+    data; ONE electric nitrous-blue (214deg) carries STRUCTURE.
+  - Nitrous = thin rims, focus rings, scrollbars, dividers, section underlines.
+    It is never a chart/data hue.
+  - Brand-action / CTA fill is cyan (186deg), not nitrous.
+  - Titles are spectrum-gradient and bold; section sub-heads get the nitrous underline.
+  - Zero emoji. High contrast (AA). Premium, dark, restrained.
 
-palette:
-  periwinkle: "#818EFF"
-  cyan:       "#39B0FF"
-  coral:      "#F77181"
-  magenta:    "#CA5BCD"
-  tileLight:  "#CFE8F7"
-  pillBlue:   "#1666C7"
-  pillMagenta:"#C746B8"
-  greenPanel: "#3F8A2E"
+spectrum:        # mode-invariant logo hues
+  cyan:    "hsl(186,100%,45%)"   # fills
+  cyanBr:  "hsl(186,100%,58%)"   # CTA / brand-action
+  blue:    "hsl(206,100%,42%)"   # links
+  purple:  "hsl(257,100%,62%)"   # primary
+  magenta: "hsl(291,100%,58%)"   # danger / accent
+  green:   "hsl(142,71%,40%)"    # success
+  orange:  "hsl(28,100%,55%)"    # warning / chart-5 (NOT a brand hue)
+
+nitrous:         # THE structural accent -- 214deg, between cyan and blue
+  base:       "hsl(214,100%,58%)"
+  strong:     "hsl(214,100%,64%)"     # hover/focus
+  glow:       "hsla(214,100%,60%,.40)" # active-card halo
+  rim:        "hsla(214,100%,60%,.55)" # solid-feeling thin outline
+  tint:       "hsla(214,100%,60%,.28)" # subtle border/separator
+  thumb:      "hsla(214,100%,64%,.32)" # scrollbar rest
+  thumbHover: "hsla(214,100%,64%,.50)" # scrollbar hover
+
+surfaces:
+  navy:     "hsl(200,16%,8%)"
+  navyDeep: "hsl(206,30%,5%)"
+  card:     "hsla(200,16%,12%,.94)"   # translucent
+  tile:     "hsla(200,18%,16%,.92)"
 
 gradients:
-  blueBorder:  "linear 135deg #818EFF -> #39B0FF"
-  heroBorder:  "linear 135deg #F77181 -> #CA5BCD@48% -> #818EFF"
-  titleText:   "linear 90deg  #F77181 -> #CA5BCD@50% -> #818EFF"
-  panelFill:   "radial #818EFF -> #39B0FF @ alpha 0.10 over #000"
-  healthBar:   "linear 90deg #E33B3B -> #E8932F -> #E7D63B -> #A9D63B -> #22C24E"
-  envDev:      "linear 135deg #7C3B30 -> #46201B"
-  envSandbox:  "linear 135deg #3E597A -> #22344B"
+  spectrum: "linear 100deg cyan -> nitrous@26% -> purple@60% -> magenta"
+  title:    "linear 92deg  cyan64 -> nitrous70@32% -> purple76@64% -> magenta72"
+  action:   "linear 135deg cyanBr -> blue   (CTA fill; never nitrous)"
+  health:   "linear 90deg  magenta -> purple -> nitrous -> cyan -> green"
+  appBg:    "radial magenta(TL) + cyan(center) + green(BR) over linear navyDeep->navy"
 
-geometry: { radius: 16px, radiusSmall: 10px, border: 1.6px, pad: 20px }
+charts:   # full brand spectrum, NO nitrous
+  chart1: cyan
+  chart2: green
+  chart3: magenta
+  chart4: purple
+  chart5: orange
+
+geometry: { radius: 16px, radiusSmall: 10px, rim: 1.5px, pad: 20px }
 type:
   family: "Segoe UI Variable, Segoe UI, system-ui, sans-serif"
   mono:   "Cascadia Code, Consolas, monospace"
   scale:  { title: 46, kicker: 30, h2: 22, label: 17, body: 16, mono: 14 }
   titleWeight: 800
 
-components:   # css class -> purpose
-  cs-stage:        Canvas 1280x720 black.
-  "cs-stage--title": Title-slide dual violet glow.
-  "cs-stage--glow":  Content-slide top-right violet glow.
-  "cs-panel.blue":   Blue gradient-border panel.
-  "cs-panel.hero":   3-stop coral->magenta->periwinkle border panel.
-  "cs-panel.white":  White inner panel for diagram slides.
-  cs-accent-left:    Coral bar bleeding off left edge.
-  cs-title:          Magenta-gradient bold display title.
-  "cs-h2.under":     Underlined section sub-header.
-  "cs-pill.blue/.mag": Topic (blue) / Agent (magenta) diagram pills.
-  cs-tile:           Light-blue knowledge/tools tile.
-  cs-orx:            Vertical Orchestrator rail label.
-  cs-divider:        Gradient knowledge|tools divider with end dots.
-  cs-greenpanel:     Side green bullet panel.
-  cs-agentcard:      White connected-agent card (icon + label).
-  "cs-env.dev/.sandbox/.prod": Lifecycle environment cards.
-  cs-health:         Bottom rainbow health bar.
+components:   # css class -> purpose  (prefix cf-)
+  cf-stage:          Canvas 1280x720, deep-navy spectrum background.
+  "cf-stage--hero":  Stronger 4-stop spectrum bloom for title/hero slides.
+  cf-panel:          Translucent navy surface + thin nitrous rim that glows.
+  "cf-panel.spectrum": Spectrum gradient-border hero panel.
+  "cf-panel.solid":  Opaque inner surface for diagram slides.
+  cf-accent-left:    Spectrum accent bar bleeding off the left edge.
+  cf-title:          Spectrum-gradient bold display title.
+  cf-kicker:         Spectrum-gradient uppercase kicker.
+  "cf-h2.under":     Nitrous-underlined section sub-header.
+  "cf-pill.cyan/.purple/.magenta/.nitrous": Diagram pills (topic/agent/etc).
+  cf-tile:           Knowledge/tools tile (navy + nitrous tint border).
+  cf-orx:            Vertical Orchestrator rail label (nitrous left border).
+  cf-divider:        Nitrous rule divider with end dots.
+  cf-swatch:         Spectrum/nitrous color swatch for token boards.
+  cf-chip:           Nitrous-tint pill chip.
+  cf-badge:          Status/identity badge with nitrous dot.
+  cf-agentcard:      Connected-agent card (icon + label).
+  "cf-env.dev/.sandbox/.prod": Lifecycle env cards (magenta/nitrous/green spine).
+  cf-health:         Bottom brand-spectrum health/progress bar.
+  cf-scroll:         Nitrous custom scrollbar for scroll regions.
+  cf-focusable:      Nitrous focus-visible ring.
 
 archetypes:
-  title:               { slides: [1],  layout: dual-glow + watermark + kicker/title }
-  panelGrid:           { slides: [3],  layout: gradient-border tile grid }
-  orchestratorDiagram: { slides: [2,6,7], layout: white inner panel + pills + light tiles + side panel }
-  contentPanel:        { slides: [4,5,8,9,10,11,12,13,15,17,19,20,21], layout: title + body panels }
-  lifecycleHealthBar:  { slides: [16,18], layout: env card columns + rainbow health bar }
-  ctaBootcamp:         { slides: [22,23,24], layout: outcomes + register CTA }
+  title:               { layout: hero spectrum bloom + watermark + kicker/title }
+  spectrumBoard:       { layout: swatch row + nitrous-rule explainer + chips + health bar }
+  orchestratorDiagram: { layout: solid inner panel + pills + tiles + orchestrator rail + connected-agent column }
+  contentPanel:        { layout: spectrum title + body panels }
+  lifecycleHealthBar:  { layout: env card columns + brand-spectrum health bar }
 
-qa:   # the visual-validation checklist every TileSlide artifact must pass
-  - Background is pure black (no grey haze) with correct glow placement.
-  - Gradient borders read as gradients, not solid; ~1.6-2px; soft outer glow present.
-  - Panel bodies show the faint inner radial glow, not flat fill.
-  - Title uses the magenta gradient; no underline on display titles.
-  - No element within 0.5in of the canvas edge unless an intentional bleed.
-  - Tiles/columns aligned on a consistent grid; even gaps.
-  - Contrast AA on all text; no light-on-light or dark-on-dark.
-  - Zero emoji anywhere.
+qa:   # every Clippyflow artifact must pass this checklist
+  - Background shows the deep-navy SPECTRUM (magenta TL / cyan center / green BR),
+    not flat black or grey.
+  - Surfaces are translucent -- the spectrum peeks through behind cards.
+  - Nitrous rims/dividers/underlines read clearly against the navy (the #1 failure
+    mode is low-contrast dark-on-dark -- verify the rim is actually visible).
+  - Nitrous appears ONLY as structure; it is absent from any chart/data fill.
+  - CTA / brand-action fills are cyan, not nitrous.
+  - Title uses the spectrum gradient; no underline on display titles.
+  - Charts use cyan/green/magenta/purple/orange (no nitrous).
+  - Contrast AA on all text. Zero emoji anywhere.
+  - No raw hex literals in slide markup for brand colors -- only cf- classes / tokens.
 
-commands:   # the 8-command skill surface
-  - new:      Scaffold a deck from an archetype.
-  - extract:  Pull design tokens from a reference .pptx (OOXML gradient extraction).
-  - theme:    Apply/swap a token theme on a deck.
-  - add-slide: Add a slide of a given archetype.
-  - render:   HTML/slide -> PNG via Edge headless.
-  - validate: Run the qa checklist (content + visual sub-agent pass).
-  - export:   Deck -> standalone HTML or .pptx.
-  - present:  Presenter mode in the tileslide UI extension.
+commands:   # the /clippyflow-design skill surface
+  - new:       Scaffold a Clippyflow deck from an archetype.
+  - add-slide: Add a slide of a given archetype (cf- components only).
+  - theme:     Retune the palette -- change nitrous or a spectrum hue in ONE place
+               (clippyflow.css :root) and the whole system cascades.
+  - render:    HTML -> PNG via Edge headless (isolated profile, absolute path).
+  - validate:  Run this qa checklist + a fresh-eyes visual sub-agent pass.
+  - export:    Deck -> standalone HTML.
+  - present:   Presenter mode (cf-scroll nitrous scrollbar; full-bleed slides).
+  - compare:   Render the same slide with the legacy CoE assets and Clippyflow side by side.

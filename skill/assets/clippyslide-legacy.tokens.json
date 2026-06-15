@@ -1,0 +1,58 @@
+{
+  "$schema": "https://darbotlm.github.io/tileslide/schema/tokens-1.0.json",
+  "name": "TileSlide",
+  "version": "1.0.0",
+  "source": {
+    "deck": "CoE_Framework.pptx",
+    "account": "Oceaneering",
+    "engagement": "01FY26",
+    "extractedFrom": "ppt/slides/slide3.xml + theme1.xml",
+    "method": "verbatim OOXML gradient-stop extraction"
+  },
+  "canvas": { "width": 1280, "height": 720, "ratio": "16:9", "inches": [13.333, 7.5], "background": "#000000" },
+  "color": {
+    "periwinkle": "#818EFF",
+    "cyan": "#39B0FF",
+    "coral": "#F77181",
+    "magenta": "#CA5BCD",
+    "tileLight": "#CFE8F7",
+    "pillBlue": "#1666C7",
+    "pillMagenta": "#C746B8",
+    "greenPanel": "#3F8A2E",
+    "ink": "#14161D",
+    "white": "#FFFFFF"
+  },
+  "gradient": {
+    "blueBorder":  { "type": "linear", "angle": 135, "stops": [ {"pos": 0, "color": "#818EFF"}, {"pos": 100, "color": "#39B0FF"} ] },
+    "heroBorder":  { "type": "linear", "angle": 135, "stops": [ {"pos": 0, "color": "#F77181"}, {"pos": 48, "color": "#CA5BCD"}, {"pos": 100, "color": "#818EFF"} ] },
+    "titleText":   { "type": "linear", "angle": 90, "stops": [ {"pos": 0, "color": "#F77181"}, {"pos": 50, "color": "#CA5BCD"}, {"pos": 100, "color": "#818EFF"} ] },
+    "panelFillBlue": { "type": "radial", "alpha": 0.10, "stops": [ {"pos": 0, "color": "#818EFF"}, {"pos": 100, "color": "#39B0FF"} ], "note": "same border colors at 10% alpha over black = the inner glow" },
+    "panelFillHero": { "type": "radial", "alpha": 0.14, "stops": [ {"pos": 0, "color": "#CA5BCD"}, {"pos": 55, "color": "#818EFF"}, {"pos": 100, "color": "#39B0FF"} ] },
+    "healthBar":   { "type": "linear", "angle": 90, "stops": [ {"pos": 0, "color": "#E33B3B"}, {"pos": 22, "color": "#E8932F"}, {"pos": 44, "color": "#E7D63B"}, {"pos": 68, "color": "#A9D63B"}, {"pos": 100, "color": "#22C24E"} ] },
+    "envDev":      { "type": "linear", "angle": 135, "stops": [ {"pos": 0, "color": "#7C3B30"}, {"pos": 100, "color": "#46201B"} ] },
+    "envSandbox":  { "type": "linear", "angle": 135, "stops": [ {"pos": 0, "color": "#3E597A"}, {"pos": 100, "color": "#22344B"} ] }
+  },
+  "geometry": { "radius": 16, "radiusSmall": 10, "borderWidth": 1.6, "pad": 20, "cornerPctSource": 3.708 },
+  "glow": { "blue": "0 0 18px rgba(80,140,255,.28)", "hero": "0 0 22px rgba(202,91,205,.34)" },
+  "type": {
+    "family": "Segoe UI Variable, Segoe UI, system-ui, sans-serif",
+    "mono": "Cascadia Code, Consolas, monospace",
+    "scale": { "title": 46, "kicker": 30, "h2": 22, "label": 17, "body": 16, "mono": 14 },
+    "titleWeight": 800,
+    "titleUnderline": "section sub-headers only"
+  },
+  "components": [
+    "stage", "stage--glow", "stage--title", "panel.blue", "panel.hero", "panel.white",
+    "accent-left", "title", "title.white", "kicker", "h2.under", "label", "body",
+    "pill.blue", "pill.mag", "tile", "orx", "divider", "greenpanel", "agentcard",
+    "env.dev", "env.sandbox", "env.prod", "health"
+  ],
+  "archetypes": {
+    "title": ["slide1"],
+    "panelGrid": ["slide3"],
+    "orchestratorDiagram": ["slide2", "slide6", "slide7"],
+    "contentPanel": ["slide4","slide5","slide8","slide9","slide10","slide11","slide12","slide13","slide15","slide17","slide19","slide20","slide21"],
+    "lifecycleHealthBar": ["slide16","slide18"],
+    "ctaBootcamp": ["slide22","slide23","slide24"]
+  }
+}

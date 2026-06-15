@@ -5,23 +5,23 @@ title: CSS Reference
 
 # CSS Reference
 
-The complete `clippyslide.css` source is the canonical reference. This page summarises the public surface so you don't have to read the file to use it. The file lives at [`design-system/clippyslide.css`](https://github.com/dayour/clippyslide/blob/main/design-system/clippyslide.css) and is mirrored in the skill at `skill/assets/clippyslide.css` — the two **must stay in sync**.
+The canonical CSS file is [`design-system/clippyslide.css`](https://github.com/dayour/clippyslide/blob/main/design-system/clippyslide.css). It is the default ClippyFlow entrypoint and is mirrored in the skill at `skill/assets/clippyslide.css`.
 
-## CSS custom properties
-
-All tokens are declared on `:root` so you can override them per-deck:
+## Core custom properties
 
 ```css
 :root{
-  --cs-peri:#818EFF; --cs-cyan:#39B0FF; --cs-coral:#F77181; --cs-mag:#CA5BCD;
-  --cs-grad-blue:  linear-gradient(135deg,#818EFF,#39B0FF);
-  --cs-grad-hero:  linear-gradient(135deg,#F77181 0%,#CA5BCD 48%,#818EFF 100%);
-  --cs-grad-title: linear-gradient(90deg,#F77181 0%,#CA5BCD 50%,#818EFF 100%);
-  --cs-grad-health:linear-gradient(90deg,#E33B3B,#E8932F 22%,#E7D63B 44%,#A9D63B 68%,#22C24E);
-  --cs-radius:16px; --cs-radius-sm:10px; --cs-border:1.6px; --cs-pad:20px;
-  --cs-glow-blue:0 0 18px rgba(80,140,255,.28);
-  --cs-glow-hero:0 0 22px rgba(202,91,205,.34);
-  --cs-font:"Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;
+  --clippy-cyan:hsl(186,100%,45%);
+  --clippy-cyan-br:hsl(186,100%,58%);
+  --clippy-blue:hsl(206,100%,42%);
+  --clippy-purple:hsl(257,100%,62%);
+  --clippy-magenta:hsl(291,100%,58%);
+  --clippy-green:hsl(142,71%,40%);
+  --nitrous:hsl(214,100%,58%);
+  --nitrous-rim:hsla(214,100%,60%,.55);
+  --cf-surface:hsla(200,16%,12%,.94);
+  --cf-grad-spectrum:linear-gradient(100deg,var(--clippy-cyan),var(--nitrous),var(--clippy-purple),var(--clippy-magenta));
+  --cf-grad-title:linear-gradient(92deg,hsl(186,100%,64%),hsl(214,100%,70%),hsl(257,100%,76%),hsl(291,100%,72%));
 }
 ```
 
@@ -29,38 +29,53 @@ All tokens are declared on `:root` so you can override them per-deck:
 
 | Class | Type | Notes |
 | --- | --- | --- |
-| `.cs-stage` | container | 1280×720 black canvas |
-| `.cs-stage--glow` | modifier | content-slide corner glows |
-| `.cs-stage--title` | modifier | stronger title glows |
-| `.cs-panel` | container | gradient ring; needs a `.cs-in` child |
-| `.cs-panel.blue` `.hero` `.white` | modifier | ring style |
-| `.cs-in` | container | the black body + radial glow |
-| `.cs-accent-left` | decoration | coral bar bleeding off-left |
-| `.cs-title` `.cs-title.white` | text | gradient / solid title |
-| `.cs-kicker` `.cs-h2` `.cs-h2.under` | text | eyebrow / subhead |
-| `.cs-label` `.cs-body` `.cs-mono` | text | label / body / mono |
-| `.cs-pill.blue` `.cs-pill.mag` | primitive | process pill |
-| `.cs-tile` | primitive | light tile |
-| `.cs-orx` | primitive | vertical rail label |
-| `.cs-divider` | primitive | gradient rule + dots |
-| `.cs-greenpanel` | container | green side panel |
-| `.cs-agentcard` | container | white agent card |
-| `.cs-env.dev` `.sandbox` `.prod` | container | environment card |
-| `.cs-health` | container | rainbow bar; `.lbl` for the caption |
+| `.cf-stage` | container | 1280x720 ClippyFlow canvas |
+| `.cf-stage--hero` | modifier | stronger hero bloom |
+| `.cf-panel` | container | translucent navy surface with nitrous rim |
+| `.cf-panel.spectrum` | modifier | spectrum-rim hero surface |
+| `.cf-panel.solid` | modifier | opaque nested surface |
+| `.cf-accent-left` | decoration | spectrum accent bar |
+| `.cf-title` / `.cf-title.white` | text | gradient or solid title |
+| `.cf-kicker` / `.cf-h2` / `.cf-h2.under` | text | eyebrow and subhead |
+| `.cf-label` / `.cf-body` / `.cf-mono` | text | label, body, mono |
+| `.cf-pill.*` | primitive | process pill variants |
+| `.cf-tile` | primitive | diagram tile |
+| `.cf-orx` | primitive | vertical rail label |
+| `.cf-divider` | primitive | nitrous rule with dots |
+| `.cf-agentcard` | container | connected-agent card |
+| `.cf-env.dev` / `.sandbox` / `.prod` | container | environment card |
+| `.cf-health` | container | spectrum health bar |
+| `.cf-chip` / `.cf-badge` | primitive | compact metadata |
+| `.cf-scroll` | utility | nitrous scrollbar |
+| `.cf-focusable` | utility | focus-visible ring |
+
+## Compatibility aliases
+
+The generator emits stable ClippySlide layout patterns. `clippyslide.css` includes compatibility aliases so those layouts render as ClippyFlow:
+
+| Alias | Purpose |
+| --- | --- |
+| `.cf-stage--title` / `.cf-stage--glow` | Generated title/content stage modifiers |
+| `.cf-panel.blue` / `.cf-panel.hero` / `.cf-panel.white` | Generated panel variants |
+| `.cf-panel > .cf-in` | Generated inner-panel wrapper |
+| `.cf-pill.blue` / `.cf-pill.mag` | Generated pill variants |
+| `.cf-greenpanel` | Generated side panel |
 
 ## Positioning model
 
-Slides are **absolute layouts at a fixed 1280×720**. You position by `left` / `top` / `width` / `height` in pixels, exactly like PowerPoint placeholders. The [presenter](/presenter/overview) scales the whole stage to the viewport with a single `transform: scale()`, so authoring is always in slide pixels.
+Slides are absolute layouts at a fixed 1280x720. Position by `left`, `top`, `width`, and `height` in pixels, matching PowerPoint placeholder thinking:
 
 ```html
-<div class="cs-panel blue" style="left:80px;top:120px;width:520px;height:300px">…</div>
+<div class="cf-panel spectrum" style="left:80px;top:120px;width:520px;height:300px">...</div>
 ```
 
-## Keeping the two copies in sync
+The [presenter](/presenter/overview) scales the stage with a single transform, so authoring remains in slide pixels.
 
-There are two physical copies of this CSS:
+## Keeping copies in sync
 
-1. `design-system/clippyslide.css` — used by the deck and presenter.
-2. `skill/assets/clippyslide.css` — bundled with the Clawpilot skill.
+There are two canonical copies:
 
-The [Design Guardian automation](/automation/design-guardian) diffs them weekly and flags drift. If you edit one, edit both.
+1. `design-system/clippyslide.css` for decks, the presenter, and docs.
+2. `skill/assets/clippyslide.css` for the Clawpilot skill.
+
+If you edit one, edit both. The legacy CoE CSS remains as `clippyslide-legacy.css`.

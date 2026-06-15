@@ -11,14 +11,14 @@ How the `clippyslide-coe` theme wires into the TileSlide app. This is a record o
 
 The app is a single-file Tauri/Vite frontend. The theme adds:
 
-1. **`THEMES` registry + `coeHostConfig`** — defined next to the existing Fluent host config.
-2. **`state.theme`** — deck-level, defaults to `fluent-dark`.
-3. **`renderCardToHost(hostId, payload, { themeName })`** — applies the theme's host config, sets `data-theme` on the host, and runs `decorateCoe()` after render. Only the **main slide host** is themed; the toolbar/sidebar/status chrome stays neutral.
+1. **`THEMES` registry + `coeHostConfig`** -- defined next to the existing Fluent host config.
+2. **`state.theme`** -- deck-level, defaults to `fluent-dark`.
+3. **`renderCardToHost(hostId, payload, { themeName })`** -- applies the theme's host config, sets `data-theme` on the host, and runs `decorateCoe()` after render. Only the **main slide host** is themed; the toolbar/sidebar/status chrome stays neutral.
 4. **A Theme toggle** in the toolbar (`cycle_theme`) and persistence through save / load / sample-load / **export**.
 5. **A bundled CoE sample deck** at `src/decks/coe-sample/` and a `#load=coe` deep-link.
 
 :::tip Export fidelity
-The app's HTML export scrapes the first `<style>` block — so keeping the CoE CSS inside that block means exported decks carry the theme automatically. The export's render function also embeds the active theme's host config and the `decorateCoe` pass, so a themed deck round-trips without the app.
+The app's HTML export scrapes the first `<style>` block -- so keeping the CoE CSS inside that block means exported decks carry the theme automatically. The export's render function also embeds the active theme's host config and the `decorateCoe` pass, so a themed deck round-trips without the app.
 :::
 
 ## Backend (`src-tauri/src/deck.rs`)
@@ -43,7 +43,7 @@ Plus the standalone HTML exporter pins `adaptivecards@3.0.4` (not `@latest`) so 
 
 | File | Demonstrates |
 | --- | --- |
-| `01-usecase.json` | blue panel, cyan kicker, magenta title, underlined h2, Trigger→Plan→Act pills, divider, knowledge/tools tiles |
+| `01-usecase.json` | blue panel, cyan kicker, magenta title, underlined h2, Trigger->Plan->Act pills, divider, knowledge/tools tiles |
 | `02-lifecycle.json` | hero panel, dev/sandbox/prod environment cards, rainbow health bar |
 
 Both wrap their content in a transparent `coe-stage` container so panels size to content instead of inheriting the slide's full height.
@@ -56,7 +56,7 @@ The theme was validated in isolation (an HTML harness rendering the two sample c
 
 Two ways to present a ClippySlide deck:
 
-- The [**viewport-grid presenter**](/presenter/overview) — for the pixel-faithful HTML deck. This is the canonical, clean present path.
-- The **TileSlide extension** — for live, editable Adaptive-Card decks that need in-app authoring.
+- The [**viewport-grid presenter**](/presenter/overview) -- for the pixel-faithful HTML deck. This is the canonical, clean present path.
+- The **TileSlide extension** -- for live, editable Adaptive-Card decks that need in-app authoring.
 
 They share the look, not the layout engine.

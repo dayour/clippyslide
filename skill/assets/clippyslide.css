@@ -1,173 +1,298 @@
-/* ════════════════════════════════════════════════════════════════════════
-   TileSlide Design System  ·  v1.0
-   Extracted verbatim from CoE_Framework.pptx (Oceaneering, 01FY26).
-   Pure-black canvas · glowing gradient-border panels · magenta-gradient titles.
-   Every value below is a real token lifted from the source deck XML.
-   ════════════════════════════════════════════════════════════════════════ */
+/* ========================================================================
+   Clippyflow Design System  -  v1.0  -  the ClippySlide brand-flagship theme
+   Deep-navy spectrum canvas - full logo spectrum (cyan/blue/purple/magenta/green)
+   - ONE electric nitrous-blue (214deg) accent for rims, focus, scrollbars, dividers.
+   Every color traces to a token below -- no raw hex in components.
+   Class prefix: cf-   (legacy CoE assets remain available separately.)
+   ======================================================================== */
 
-:root {
-  /* ── Core gradient ramp (the signature 4 colors) ── */
-  --cs-peri:  #818EFF;   /* periwinkle */
-  --cs-cyan:  #39B0FF;   /* cyan-blue  */
-  --cs-coral: #F77181;   /* coral-pink */
-  --cs-mag:   #CA5BCD;   /* magenta    */
+:root{
+  /* -- Brand spectrum (mode-invariant logo hues) -- */
+  --clippy-cyan:     hsl(186,100%,45%);
+  --clippy-cyan-br:  hsl(186,100%,58%);   /* brighter cyan -- CTA / brand-action fill */
+  --clippy-blue:     hsl(206,100%,42%);
+  --clippy-purple:   hsl(257,100%,62%);
+  --clippy-magenta:  hsl(291,100%,58%);
+  --clippy-green:    hsl(142,71%,40%);
+  --clippy-green-br: hsl(142,71%,48%);
+  --clippy-orange:   hsl(28,100%,55%);     /* status warning / chart-5 (NOT in brand spectrum) */
 
-  /* ── Gradients ── */
-  --cs-grad-blue: linear-gradient(135deg, var(--cs-peri), var(--cs-cyan));
-  --cs-grad-hero: linear-gradient(135deg, var(--cs-coral) 0%, var(--cs-mag) 48%, var(--cs-peri) 100%);
-  --cs-grad-title: linear-gradient(90deg, var(--cs-coral) 0%, var(--cs-mag) 50%, var(--cs-peri) 100%);
-  --cs-grad-health: linear-gradient(90deg,#E33B3B 0%,#E8932F 22%,#E7D63B 44%,#A9D63B 68%,#22C24E 100%);
+  /* -- Nitrous accent (THE structural accent -- outlines, focus, scrollbars, rims) -- */
+  --nitrous:             hsl(214,100%,58%);
+  --nitrous-strong:      hsl(214,100%,64%);
+  --nitrous-glow:        hsla(214,100%,60%,.40);
+  --nitrous-rim:         hsla(214,100%,60%,.55);
+  --nitrous-tint:        hsla(214,100%,60%,.28);
+  --nitrous-thumb:       hsla(214,100%,64%,.32);
+  --nitrous-thumb-hover: hsla(214,100%,64%,.50);
 
-  /* ── Surfaces ── */
-  --cs-black: #000000;
-  --cs-ink:   #07070C;   /* near-black panel base */
-  --cs-white-panel: #FFFFFF;
-  --cs-tile-light:  #CFE8F7;  /* knowledge/tools tiles */
-  --cs-pill-blue:   #1666C7;
-  --cs-pill-mag:    #C746B8;
+  /* -- Surfaces (translucent deep navy so the spectrum peeks through) -- */
+  --cf-navy:        hsl(200,16%,8%);
+  --cf-navy-deep:   hsl(206,30%,5%);
+  --cf-surface:     hsla(200,16%,12%,.94);   /* card body */
+  --cf-surface-2:   hsla(200,18%,16%,.92);   /* nested tile */
+  --cf-surface-3:   hsla(200,18%,20%,.90);
 
-  /* ── Environment card gradients (lifecycle) ── */
-  --cs-env-dev:     linear-gradient(135deg,#A85546 0%,#5E2A22 100%);  /* brick-red */
-  --cs-env-sandbox: linear-gradient(135deg,#4E6E96 0%,#2A3F5C 100%);  /* steel-blue */
+  /* -- Foreground -- */
+  --cf-fg:      #EAF2FB;
+  --cf-fg-soft: rgba(234,242,251,.78);
+  --cf-fg-dim:  rgba(234,242,251,.52);
 
-  /* ── Foreground ── */
-  --cs-fg:        #FFFFFF;
-  --cs-fg-soft:   rgba(255,255,255,.82);
-  --cs-fg-dim:    rgba(255,255,255,.60);
-  --cs-ink-fg:    #14161D;   /* text on white inner panel */
+  /* -- Spectrum gradients -- */
+  --cf-grad-spectrum: linear-gradient(100deg,
+      var(--clippy-cyan) 0%, var(--nitrous) 26%, var(--clippy-purple) 60%, var(--clippy-magenta) 100%);
+  --cf-grad-title: linear-gradient(92deg,
+      hsl(186,100%,64%) 0%, hsl(214,100%,70%) 32%, hsl(257,100%,76%) 64%, hsl(291,100%,72%) 100%);
+  --cf-grad-cyan:   linear-gradient(135deg, var(--clippy-cyan), var(--clippy-blue));
+  --cf-grad-action: linear-gradient(135deg, var(--clippy-cyan-br), var(--clippy-blue));
+  --cf-grad-health: linear-gradient(90deg,
+      var(--clippy-magenta) 0%, var(--clippy-purple) 26%, var(--nitrous) 50%,
+      var(--clippy-cyan) 74%, var(--clippy-green-br) 100%);
+  --cf-cyan: var(--clippy-cyan-br);
+  --cf-grad-blue: var(--cf-grad-spectrum);
+  --cf-grad-hero: var(--cf-grad-spectrum);
 
-  /* ── Geometry ── */
-  --cs-radius:    16px;
-  --cs-radius-sm: 10px;
-  --cs-border:    1.6px;     /* gradient border thickness (≈2px @ source) */
-  --cs-pad:       20px;
+  /* -- App background: magenta TL -> cyan center -> green BR over deep navy -- */
+  --cf-bg:
+    radial-gradient(58% 70% at 6% 2%,    hsla(291,100%,58%,.22) 0%, transparent 56%),
+    radial-gradient(72% 82% at 50% 50%,  hsla(186,100%,52%,.13) 0%, transparent 62%),
+    radial-gradient(58% 70% at 98% 102%, hsla(142,71%,46%,.22) 0%, transparent 56%),
+    linear-gradient(158deg, var(--cf-navy-deep) 0%, var(--cf-navy) 100%);
 
-  /* ── Glow shadows ── */
-  --cs-glow-blue: 0 0 18px rgba(80,140,255,.28);
-  --cs-glow-hero: 0 0 22px rgba(202,91,205,.34);
+  /* -- Geometry -- */
+  --cf-radius:    16px;
+  --cf-radius-sm: 10px;
+  --cf-rim:       1.5px;
+  --cf-pad:       20px;
 
-  --cs-font: "Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;
+  /* -- Glow shadows -- */
+  --cf-glow-nitrous: 0 0 22px var(--nitrous-glow);
+  --cf-glow-spectrum: 0 0 26px hsla(257,100%,62%,.26);
+
+  /* -- Charts (full brand spectrum, NO nitrous) -- */
+  --cf-chart-1: var(--clippy-cyan);
+  --cf-chart-2: var(--clippy-green);
+  --cf-chart-3: var(--clippy-magenta);
+  --cf-chart-4: var(--clippy-purple);
+  --cf-chart-5: var(--clippy-orange);
+
+  /* -- Status -- */
+  --cf-success: var(--clippy-green-br);
+  --cf-warning: var(--clippy-orange);
+  --cf-danger:  var(--clippy-magenta);
+
+  --cf-font:"Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;
+  --cf-mono:"Cascadia Code","Consolas",ui-monospace,monospace;
 }
 
-/* ════ Canvas ════ */
-.cs-stage{
+/* ==== Canvas ==== */
+.cf-stage{
   position:relative; width:1280px; height:720px; overflow:hidden;
-  background:var(--cs-black); color:var(--cs-fg);
-  font-family:var(--cs-font); -webkit-font-smoothing:antialiased;
+  color:var(--cf-fg); font-family:var(--cf-font); background:var(--cf-bg);
+  -webkit-font-smoothing:antialiased; color-scheme:dark;
 }
-/* subtle content-slide glow (top-right violet) */
-.cs-stage--glow{
+/* optional stronger spectrum bloom for title/hero slides */
+.cf-stage--hero{
   background:
-    radial-gradient(46% 70% at 96% 4%,  rgba(122,72,182,.55) 0%, transparent 60%),
-    radial-gradient(38% 60% at 2% 104%, rgba(108,60,170,.40) 0%, transparent 60%),
-    var(--cs-black);
+    radial-gradient(54% 64% at 4% 0%,    hsla(291,100%,58%,.32) 0%, transparent 56%),
+    radial-gradient(64% 74% at 52% 46%,  hsla(186,100%,54%,.18) 0%, transparent 62%),
+    radial-gradient(58% 70% at 100% 104%,hsla(142,71%,48%,.30) 0%, transparent 56%),
+    radial-gradient(40% 50% at 84% 8%,   hsla(257,100%,62%,.22) 0%, transparent 58%),
+    linear-gradient(158deg, var(--cf-navy-deep) 0%, var(--cf-navy) 100%);
 }
-/* title-slide dual glow, stronger */
-.cs-stage--title{
+
+/* ==== Surface panel -- translucent navy + thin nitrous rim that glows ==== */
+.cf-panel{
+  position:absolute; border-radius:var(--cf-radius);
+  background:var(--cf-surface);
+  border:var(--cf-rim) solid var(--nitrous-rim);
+  box-shadow:var(--cf-glow-nitrous), inset 0 1px 0 rgba(255,255,255,.05);
+  backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px);
+  padding:var(--cf-pad);
+}
+/* nitrous tint corner-glow inside the card */
+.cf-panel::before{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:radial-gradient(120% 130% at 16% 0%, hsla(214,100%,60%,.10) 0%, transparent 60%);
+}
+.cf-panel > *{ position:relative; }
+
+/* Spectrum (hero) panel -- gradient border via padding-box/border-box trick */
+.cf-panel.spectrum{
+  border:1.5px solid transparent;
   background:
-    radial-gradient(40% 65% at 100% 0%,  rgba(140,80,200,.70) 0%, transparent 58%),
-    radial-gradient(34% 60% at 0% 100%,  rgba(120,64,190,.60) 0%, transparent 58%),
-    var(--cs-black);
+    linear-gradient(var(--cf-surface),var(--cf-surface)) padding-box,
+    var(--cf-grad-spectrum) border-box;
+  box-shadow:var(--cf-glow-spectrum);
+}
+.cf-panel.spectrum::before{
+  background:radial-gradient(130% 130% at 82% 8%, hsla(291,100%,58%,.12) 0%, hsla(257,100%,62%,.07) 48%, transparent 100%);
+}
+/* solid inner white panel for diagram slides */
+.cf-panel.solid{ background:var(--cf-surface-2); }
+.cf-panel.solid::before{ display:none; }
+
+/* ==== Spectrum accent bar -- bleeds partially off the left edge ==== */
+.cf-accent-left{
+  position:absolute; left:-5px; width:8px; border-radius:6px;
+  background:var(--cf-grad-spectrum); box-shadow:0 0 16px var(--nitrous-glow);
 }
 
-/* ════ Gradient-border panel ════
-   border = padding holding the gradient; .cs-in = dark body w/ 10%-alpha radial glow */
-.cs-panel{ position:absolute; border-radius:var(--cs-radius); padding:var(--cs-border); }
-.cs-panel > .cs-in{
-  width:100%; height:100%; border-radius:calc(var(--cs-radius) - 1.5px);
-  position:relative; background:var(--cs-black); overflow:hidden;
-}
-.cs-panel > .cs-in::before{
-  content:""; position:absolute; inset:0; border-radius:inherit;
-  background:radial-gradient(120% 130% at 18% 0%,
-      rgba(129,142,255,.10) 0%, rgba(57,176,255,.10) 100%);
-}
-.cs-panel.blue{ background:var(--cs-grad-blue); box-shadow:var(--cs-glow-blue); }
-.cs-panel.hero{ background:var(--cs-grad-hero); box-shadow:var(--cs-glow-hero); }
-.cs-panel.hero > .cs-in::before{
-  background:radial-gradient(130% 130% at 80% 30%,
-      rgba(202,91,205,.14) 0%, rgba(129,142,255,.10) 55%, rgba(57,176,255,.06) 100%);
-}
-/* white inner panel used by diagram slides */
-.cs-panel.white > .cs-in{ background:var(--cs-white-panel); }
-.cs-panel.white > .cs-in::before{ display:none; }
-
-/* ════ Coral accent bar — bleeds off the left edge ════ */
-.cs-accent-left{
-  position:absolute; left:-6px; width:10px; border-radius:6px;
-  background:var(--cs-grad-hero); box-shadow:var(--cs-glow-hero);
-}
-
-/* ════ Typography ════ */
-.cs-title{
+/* ==== Typography ==== */
+.cf-title{
   font-weight:800; font-size:46px; line-height:1.04; letter-spacing:-.5px;
-  background:var(--cs-grad-title); -webkit-background-clip:text;
-  background-clip:text; color:transparent; width:max-content; max-width:90%;
+  background:var(--cf-grad-title); -webkit-background-clip:text; background-clip:text;
+  color:transparent; width:max-content; max-width:92%;
 }
-.cs-title.white{ background:none; color:var(--cs-fg); -webkit-text-fill-color:var(--cs-fg); }
-.cs-kicker{ font-weight:700; font-size:30px; letter-spacing:1.2px; color:var(--cs-cyan); }
-.cs-h2{ font-weight:700; font-size:22px; color:var(--cs-fg); }
-.cs-h2.under{ text-decoration:underline; text-underline-offset:5px; text-decoration-thickness:2px; }
-.cs-label{ font-weight:600; font-size:17px; color:var(--cs-fg); }
-.cs-body{ font-weight:400; font-size:16px; line-height:1.42; color:var(--cs-fg-soft); }
-.cs-mono{ font-family:"Cascadia Code","Consolas",monospace; font-size:14px; color:var(--cs-fg-soft); }
+.cf-title.white{ background:none; color:var(--cf-fg); -webkit-text-fill-color:var(--cf-fg); }
+.cf-kicker{
+  font-weight:700; font-size:30px; letter-spacing:1.4px; text-transform:uppercase;
+  background:var(--cf-grad-spectrum); -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.cf-h2{ font-weight:700; font-size:22px; color:var(--cf-fg); }
+/* underlined section sub-head -- the nitrous rule */
+.cf-h2.under{ position:relative; padding-bottom:6px; display:inline-block; }
+.cf-h2.under::after{
+  content:""; position:absolute; left:0; bottom:0; height:2px; width:100%;
+  background:var(--nitrous); box-shadow:0 0 8px var(--nitrous-glow); border-radius:2px;
+}
+.cf-label{ font-weight:600; font-size:17px; color:var(--cf-fg); }
+.cf-body{ font-weight:400; font-size:16px; line-height:1.44; color:var(--cf-fg-soft); }
+.cf-dim{ color:var(--cf-fg-dim); }
+.cf-mono{ font-family:var(--cf-mono); font-size:14px; color:var(--cf-fg-soft); }
 
-/* ════ Diagram primitives ════ */
-.cs-pill{
+/* ==== Diagram primitives ==== */
+.cf-pill{
   display:flex; align-items:center; justify-content:center; height:52px;
-  border-radius:8px; font-weight:600; font-size:17px; color:#fff;
+  border-radius:10px; font-weight:600; font-size:17px; color:#fff;
+  border:1px solid var(--nitrous-tint); background:var(--cf-surface-2);
 }
-.cs-pill.blue{ background:var(--cs-pill-blue); }
-.cs-pill.mag{  background:var(--cs-pill-mag);  }
-.cs-tile{
+.cf-pill.cyan{    background:hsla(186,100%,45%,.20); border-color:hsla(186,100%,58%,.55); }
+.cf-pill.purple{  background:hsla(257,100%,62%,.22); border-color:hsla(257,100%,70%,.55); }
+.cf-pill.magenta{ background:hsla(291,100%,58%,.20); border-color:hsla(291,100%,66%,.55); }
+.cf-pill.nitrous{ background:hsla(214,100%,58%,.20); border-color:var(--nitrous-rim); }
+
+.cf-tile{
   display:flex; align-items:center; justify-content:center; text-align:center;
-  border-radius:8px; background:var(--cs-tile-light); color:var(--cs-ink-fg);
-  font-weight:500; font-size:16px; padding:8px;
+  border-radius:10px; background:var(--cf-surface-2); color:var(--cf-fg);
+  border:1px solid var(--nitrous-tint); font-weight:500; font-size:15px; padding:8px;
 }
 /* vertical Orchestrator rail label */
-.cs-orx{
+.cf-orx{
   writing-mode:vertical-rl; transform:rotate(180deg);
-  font-size:18px; color:var(--cs-ink-fg); letter-spacing:.3px;
+  font-size:18px; color:var(--cf-fg-soft); letter-spacing:.3px;
   display:flex; align-items:center; justify-content:center;
-  border-left:2px solid var(--cs-ink-fg); padding-right:2px;
+  border-left:2px solid var(--nitrous-rim); padding-right:2px;
 }
-/* knowledge | tools divider with gradient rule + end dots */
-.cs-divider{ position:relative; height:2px; border-radius:2px; background:var(--cs-grad-blue); }
-.cs-divider::before,.cs-divider::after{
+/* knowledge | tools divider -- nitrous rule with end dots */
+.cf-divider{ position:relative; height:2px; border-radius:2px; background:var(--nitrous); box-shadow:0 0 8px var(--nitrous-glow); }
+.cf-divider::before,.cf-divider::after{
   content:""; position:absolute; top:50%; width:7px; height:7px; border-radius:50%;
-  transform:translateY(-50%); background:var(--cs-mag);
+  transform:translateY(-50%); background:var(--nitrous-strong);
 }
-.cs-divider::before{ left:-2px; } .cs-divider::after{ right:-2px; }
+.cf-divider::before{ left:-2px; } .cf-divider::after{ right:-2px; }
 
-/* ════ Side green-bullets panel (Agent Layers) ════ */
-.cs-greenpanel{
-  position:absolute; border-radius:6px; background:#3F8A2E; padding:22px 24px;
-  display:flex; flex-direction:column; gap:18px;
+/* ==== Spectrum swatch (token-board component) ==== */
+.cf-swatch{
+  position:relative; border-radius:var(--cf-radius-sm); height:100%;
+  border:1px solid var(--nitrous-tint); display:flex; align-items:flex-end;
+  padding:10px 12px; overflow:hidden;
 }
-.cs-greenpanel .cs-body{ color:#fff; font-size:18px; }
+.cf-swatch .lbl{ position:relative; font-weight:600; font-size:14px; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.5); }
+.cf-swatch .hex{ position:relative; font-family:var(--cf-mono); font-size:11px; color:rgba(255,255,255,.85); }
+.cf-swatch.cyan{    background:var(--clippy-cyan); }
+.cf-swatch.blue{    background:var(--clippy-blue); }
+.cf-swatch.purple{  background:var(--clippy-purple); }
+.cf-swatch.magenta{ background:var(--clippy-magenta); }
+.cf-swatch.green{   background:var(--clippy-green); }
+.cf-swatch.nitrous{ background:var(--nitrous); box-shadow:inset 0 0 0 2px rgba(255,255,255,.18), 0 0 18px var(--nitrous-glow); }
 
-/* ════ Connected-agent cards (white, icon + label) ════ */
-.cs-agentcard{
-  display:flex; align-items:center; gap:12px; height:64px; padding:0 14px;
-  border-radius:8px; background:#fff; color:var(--cs-ink-fg);
-  font-size:15px; box-shadow:0 1px 3px rgba(0,0,0,.4);
+/* ==== Chips / badges ==== */
+.cf-chip{
+  display:inline-flex; align-items:center; font-size:12.5px; color:var(--cf-fg);
+  background:hsla(214,100%,60%,.10); border:1px solid var(--nitrous-tint);
+  border-radius:999px; padding:4px 11px; white-space:nowrap;
 }
-.cs-agentcard .ico{ width:34px; height:34px; flex:0 0 34px; border-radius:6px; }
+.cf-badge{
+  display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:var(--cf-fg);
+  background:var(--cf-surface-2); border:1px solid var(--nitrous-tint); border-radius:999px; padding:6px 14px;
+}
+.cf-badge .dot{ width:9px; height:9px; border-radius:50%; background:var(--nitrous); box-shadow:0 0 10px var(--nitrous-glow); }
 
-/* ════ Lifecycle environment cards ════ */
-.cs-env{
-  position:absolute; border-radius:8px; padding:14px 18px; color:#fff;
+/* ==== Connected-agent / item card ==== */
+.cf-agentcard{
+  display:flex; align-items:center; gap:12px; height:62px; padding:0 14px;
+  border-radius:10px; background:var(--cf-surface-2); color:var(--cf-fg);
+  border:1px solid var(--nitrous-tint); font-size:15px;
+}
+.cf-agentcard .ico{ width:34px; height:34px; flex:0 0 34px; border-radius:8px; }
+
+/* ==== Status fills ==== */
+.cf-status{ font-weight:600; }
+.cf-status.ok{ color:var(--cf-success); }
+.cf-status.warn{ color:var(--cf-warning); }
+.cf-status.danger{ color:var(--cf-danger); }
+
+/* ==== Lifecycle environment cards ==== */
+.cf-env{
+  position:absolute; border-radius:10px; padding:14px 18px; color:#fff;
   display:flex; flex-direction:column; justify-content:center; gap:2px;
+  background:var(--cf-surface-2); border:1px solid var(--nitrous-tint);
 }
-.cs-env.dev{     background:var(--cs-env-dev);     border:1px solid #C77866; }
-.cs-env.sandbox{ background:var(--cs-env-sandbox); border:1px solid #7C9AC2; }
-.cs-env.prod{    background:linear-gradient(135deg,#1E1410,#0A0A0A); border:1.5px solid #2FA84F; }
-.cs-env .name{ font-size:18px; font-weight:600; }
-.cs-env .ver{  font-size:18px; font-style:italic; font-weight:600; }
+.cf-env.dev{     border-color:hsla(291,100%,66%,.55); box-shadow:inset 3px 0 0 var(--clippy-magenta); }
+.cf-env.sandbox{ border-color:hsla(214,100%,64%,.55); box-shadow:inset 3px 0 0 var(--nitrous); }
+.cf-env.prod{    border-color:hsla(142,71%,52%,.6);  box-shadow:inset 3px 0 0 var(--clippy-green-br); }
+.cf-env .name{ font-size:18px; font-weight:600; }
+.cf-env .ver{  font-size:16px; font-style:italic; color:var(--cf-fg-soft); }
 
-/* ════ Rainbow health bar ════ */
-.cs-health{
+/* ==== Health / progress bar (brand spectrum) ==== */
+.cf-health{
   position:absolute; left:0; bottom:0; width:100%; height:40px;
-  background:var(--cs-grad-health); display:flex; align-items:center;
+  background:var(--cf-grad-health); display:flex; align-items:center;
 }
-.cs-health .lbl{ color:#fff; font-size:18px; padding-left:18px; text-shadow:0 1px 2px rgba(0,0,0,.4); }
+.cf-health .lbl{ color:#fff; font-size:18px; padding-left:18px; text-shadow:0 1px 3px rgba(0,0,0,.5); }
+
+/* ==== Nitrous scrollbar (presenter / scroll regions) ==== */
+.cf-scroll{ scrollbar-width:thin; scrollbar-color:var(--nitrous-thumb) transparent; }
+.cf-scroll::-webkit-scrollbar{ width:10px; height:10px; }
+.cf-scroll::-webkit-scrollbar-thumb{ background:var(--nitrous-thumb); border-radius:999px; }
+.cf-scroll::-webkit-scrollbar-thumb:hover{ background:var(--nitrous-thumb-hover); }
+.cf-scroll::-webkit-scrollbar-track{ background:transparent; }
+
+/* ==== Focus ring ==== */
+.cf-focusable:focus-visible{ outline:2px solid var(--nitrous); outline-offset:2px; }
+
+/* Compatibility aliases for generated ClippySlide layouts. */
+.cf-stage,
+.cf-stage *{ box-sizing:border-box; }
+.cf-stage--title,
+.cf-stage--glow{ background:var(--cf-bg); }
+.cf-stage--title{ background:
+  radial-gradient(54% 64% at 4% 0%,    hsla(291,100%,58%,.32) 0%, transparent 56%),
+  radial-gradient(64% 74% at 52% 46%,  hsla(186,100%,54%,.18) 0%, transparent 62%),
+  radial-gradient(58% 70% at 100% 104%,hsla(142,71%,48%,.30) 0%, transparent 56%),
+  radial-gradient(40% 50% at 84% 8%,   hsla(257,100%,62%,.22) 0%, transparent 58%),
+  linear-gradient(158deg, var(--cf-navy-deep) 0%, var(--cf-navy) 100%);
+}
+.cf-panel > .cf-in{
+  position:relative; width:100%; height:100%; border-radius:calc(var(--cf-radius) - 2px);
+}
+.cf-panel.blue{ border-color:var(--nitrous-rim); }
+.cf-panel.hero{
+  border:1.5px solid transparent;
+  background:
+    linear-gradient(var(--cf-surface),var(--cf-surface)) padding-box,
+    var(--cf-grad-spectrum) border-box;
+  box-shadow:var(--cf-glow-spectrum);
+}
+.cf-panel.white{
+  background:var(--cf-surface-2);
+  border-color:var(--nitrous-tint);
+}
+.cf-pill.blue{ background:hsla(186,100%,45%,.20); border-color:hsla(186,100%,58%,.55); }
+.cf-pill.mag{ background:hsla(291,100%,58%,.20); border-color:hsla(291,100%,66%,.55); }
+.cf-greenpanel{
+  position:absolute; border-radius:var(--cf-radius-sm); background:var(--cf-surface-2);
+  border:1px solid var(--nitrous-tint); box-shadow:var(--cf-glow-nitrous);
+  padding:22px 24px; display:flex; flex-direction:column; gap:18px;
+}

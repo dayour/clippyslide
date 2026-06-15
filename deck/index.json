@@ -1,9 +1,9 @@
 {
-  "title": "CoE Framework — ClippySlide",
-  "description": "Oceaneering CoE deck reproduced in the ClippySlide design system.",
+  "title": "ClippyFlow -- ClippySlide",
+  "description": "ClippySlide deck using the ClippyFlow brand-flagship design system.",
   "version": "1.0.0",
-  "theme": "clippyslide",
-  "generated": "2026-06-08",
+  "theme": "clippyflow",
+  "generated": "2026-06-15",
   "slides": [
     {
       "n": 1,
@@ -37,7 +37,7 @@
     },
     {
       "n": 7,
-      "file": "../slides/07-orchestration.html",
+      "file": "../slides-clippyflow/07-orchestration.html",
       "archetype": "diagram (bespoke)"
     },
     {

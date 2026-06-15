@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<style>html,body{margin:0;padding:0;background:#05080b}</style>
+<link rel="stylesheet" href="../design-system/clippyflow.css">
+<link rel="stylesheet" href="../design-system/clippyflow-terminal.css">
+</head><body>
+<div class="cf-stage cf-scan">
+  <div class="cf-win">
+    <div class="cf-win-bar">
+      <span class="cf-win-dots"><i></i><i></i><i></i></span>
+      <span class="cf-win-title"><b>components</b> --gallery</span>
+      <span class="cf-win-meta"><span>07 / 11</span><span class="on">● live</span></span>
+    </div>
+    <div class="cf-win-body" style="display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;align-items:baseline;gap:16px">
+        <span class="cf-mk">COMPONENTS</span>
+        <span class="cf-ml">tiles &amp; cards the terminal renders</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;flex:1">
+        <!-- pills + tiles -->
+        <div class="cf-panel solid" style="position:relative;inset:auto;display:flex;flex-direction:column;gap:10px">
+          <div class="cf-ml cyan">pills &amp; tiles</div>
+          <div style="display:flex;gap:8px"><span class="cf-pill cyan" style="flex:1">cyan</span><span class="cf-pill nitrous" style="flex:1">nitrous</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <span class="cf-tile" style="height:40px">tile</span><span class="cf-tile" style="height:40px">tile</span>
+            <span class="cf-tile" style="height:40px">tile</span><span class="cf-tile" style="height:40px">tile</span>
+          </div>
+        </div>
+        <!-- chips + badges -->
+        <div class="cf-panel solid" style="position:relative;inset:auto;display:flex;flex-direction:column;gap:10px">
+          <div class="cf-ml cyan">chips &amp; badges</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px">
+            <span class="cf-chip">grounded</span><span class="cf-chip">mcp</span><span class="cf-chip">async</span><span class="cf-chip">tool</span>
+          </div>
+          <div class="cf-badge"><span class="dot"></span>orchestrator</div>
+          <div class="cf-badge"><span class="dot"></span>knowledge</div>
+        </div>
+        <!-- status -->
+        <div class="cf-panel solid" style="position:relative;inset:auto;display:flex;flex-direction:column;gap:10px">
+          <div class="cf-ml cyan">status</div>
+          <div class="cf-row"><span class="k">build</span><span class="cf-status ok v">● passing</span></div>
+          <div class="cf-row"><span class="k">quota</span><span class="cf-status warn v">▲ 82%</span></div>
+          <div class="cf-row"><span class="k">drift</span><span class="cf-status danger v">✕ detected</span></div>
+        </div>
+      </div>
+      <!-- agentcards row -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+        <div class="cf-agentcard"><span class="ico" style="background:var(--cf-grad-cyan)"></span>Studio Agent</div>
+        <div class="cf-agentcard"><span class="ico" style="background:linear-gradient(135deg,var(--clippy-purple),var(--clippy-magenta))"></span>Researcher</div>
+        <div class="cf-agentcard"><span class="ico" style="background:linear-gradient(135deg,var(--nitrous),var(--clippy-cyan))"></span>SWE</div>
+      </div>
+      <!-- health bar -->
+      <div style="position:relative;height:40px;border-radius:10px;overflow:hidden;border:1px solid var(--nitrous-tint)">
+        <div style="position:absolute;inset:0;background:var(--cf-grad-health)"></div>
+        <span style="position:relative;color:#fff;font-size:15px;line-height:40px;padding-left:16px;text-shadow:0 1px 3px rgba(0,0,0,.5);font-family:var(--cf-mono)">fleet health - 9 agents - all spectrum nominal</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body></html>

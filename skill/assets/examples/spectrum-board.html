@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8">
+<title>Clippyflow -- Spectrum Board</title>
+<link rel="stylesheet" href="../clippyslide.css">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;background:black;}
+  .mast{position:absolute;left:64px;top:46px;width:900px;}
+  .mast .cf-title{font-size:58px;line-height:1.02;}
+  .subtitle{margin-top:6px;font-size:23px;color:var(--cf-fg-soft);}
+  .swatches{position:absolute;left:64px;top:236px;width:1152px;height:104px;display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
+  .cf-swatch{flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:3px;}
+  .hero{left:64px;top:372px;width:690px;height:226px;}
+  .hero .cf-h2{font-size:30px;margin:0 0 18px 0;}
+  .hero .cf-body{font-size:20px;line-height:1.45;max-width:610px;}
+  .rule{margin-top:22px;height:2px;width:420px;}
+  .chip-panel{left:792px;top:372px;width:424px;height:226px;}
+  .chip-panel .cf-h2{margin:0 0 16px 0;}
+  .chip-panel .cf-body{margin-bottom:18px;}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;}
+  .note{position:absolute;left:64px;bottom:62px;width:780px;}
+  .note .cf-mono{font-size:15px;}
+</style></head>
+<body>
+  <div class="cf-stage cf-stage--hero">
+    <div class="mast">
+      <div class="cf-kicker">CLIPPYSLIDE DESIGN SYSTEM</div>
+      <div class="cf-title">Clippyflow</div>
+      <div class="subtitle">the ClippySlide brand-flagship theme</div>
+    </div>
+    <div class="swatches" aria-label="Clippyflow spectrum tokens">
+      <div class="cf-swatch cyan"><div class="lbl">Cyan</div><div class="hex">#00CFE6</div></div>
+      <div class="cf-swatch blue"><div class="lbl">Blue</div><div class="hex">#0079D6</div></div>
+      <div class="cf-swatch purple"><div class="lbl">Purple</div><div class="hex">#C83DFF</div></div>
+      <div class="cf-swatch magenta"><div class="lbl">Magenta</div><div class="hex">#DF29FF</div></div>
+      <div class="cf-swatch green"><div class="lbl">Green</div><div class="hex">#1EAE79</div></div>
+      <div class="cf-swatch nitrous"><div class="lbl">Nitrous accent</div><div class="hex">#2986FF</div></div>
+    </div>
+    <section class="cf-panel spectrum hero">
+      <div class="cf-h2 under">Nitrous is structure, not data</div>
+      <div class="cf-body">The brand spectrum carries meaning and visual energy. Nitrous blue is reserved for thin rims, focus rings, scrollbars, dividers, and underlines so the system keeps a premium, restrained signal layer.</div>
+      <div class="cf-divider rule"></div>
+    </section>
+    <section class="cf-panel chip-panel">
+      <div class="cf-h2 under">Theme primitives</div>
+      <div class="cf-body">Deep navy surfaces let the spectrum background breathe while maintaining high-contrast text and crisp structural affordances.</div>
+      <div class="chips">
+        <span class="cf-chip">deep-navy canvas</span>
+        <span class="cf-chip">spectrum title text</span>
+        <span class="cf-chip">cyan brand action</span>
+        <span class="cf-chip">nitrous rim</span>
+        <span class="cf-chip">AA contrast target</span>
+        <span class="cf-chip">legacy CoE available</span>
+      </div>
+    </section>
+    <div class="note"><div class="cf-mono">ClippyFlow is now the default ClippySlide theme; legacy assets remain available under clippyslide-legacy names.</div></div>
+    <div class="cf-health"><div class="lbl">Spectrum health bar: magenta to purple to nitrous to cyan to green</div></div>
+  </div>
+</body></html>

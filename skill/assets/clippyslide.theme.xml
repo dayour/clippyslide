@@ -1,73 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  TileSlide Theme  ·  v1.0
-  OOXML-aligned theme profile. Mirrors a DrawingML <a:theme> color scheme plus
-  TileSlide-specific gradient definitions so the system round-trips back to PowerPoint.
-  Source: CoE_Framework.pptx (Oceaneering, 01FY26), slide3 + theme1.
+  ClippyFlow Theme  -  v1.0
+  OOXML-adjacent theme profile for the ClippySlide default visual system.
+  The legacy CoE extraction artifact is preserved as clippyslide-legacy.theme.xml.
 -->
-<tileslideTheme xmlns="https://darbotlm.github.io/tileslide/theme"
-                xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
-                name="TileSlide" version="1.0.0">
+<clippyflowTheme xmlns="https://darbotlm.github.io/clippyflow/theme"
+                 xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"
+                 name="ClippyFlow" version="1.0.0">
 
-  <canvas widthEmu="12192000" heightEmu="6858000" ratio="16:9" background="000000"/>
+  <canvas widthEmu="12192000" heightEmu="6858000" ratio="16:9" background="091018"/>
 
-  <a:clrScheme name="TileSlide">
-    <a:dk1><a:srgbClr val="000000"/></a:dk1>
-    <a:lt1><a:srgbClr val="FFFFFF"/></a:lt1>
-    <a:dk2><a:srgbClr val="0E2841"/></a:dk2>
-    <a:lt2><a:srgbClr val="CFE8F7"/></a:lt2>
-    <a:accent1><a:srgbClr val="818EFF"/></a:accent1> <!-- periwinkle -->
-    <a:accent2><a:srgbClr val="39B0FF"/></a:accent2> <!-- cyan -->
-    <a:accent3><a:srgbClr val="F77181"/></a:accent3> <!-- coral -->
-    <a:accent4><a:srgbClr val="CA5BCD"/></a:accent4> <!-- magenta -->
-    <a:accent5><a:srgbClr val="1666C7"/></a:accent5> <!-- pill blue -->
-    <a:accent6><a:srgbClr val="3F8A2E"/></a:accent6> <!-- green panel -->
+  <a:clrScheme name="ClippyFlow">
+    <a:dk1><a:srgbClr val="091018"/></a:dk1>
+    <a:lt1><a:srgbClr val="EAF2FB"/></a:lt1>
+    <a:dk2><a:srgbClr val="101820"/></a:dk2>
+    <a:lt2><a:srgbClr val="E0FBFC"/></a:lt2>
+    <a:accent1><a:srgbClr val="00CFE6"/></a:accent1> <!-- cyan -->
+    <a:accent2><a:srgbClr val="2986FF"/></a:accent2> <!-- nitrous structure -->
+    <a:accent3><a:srgbClr val="7B3DFF"/></a:accent3> <!-- purple -->
+    <a:accent4><a:srgbClr val="DF29FF"/></a:accent4> <!-- magenta -->
+    <a:accent5><a:srgbClr val="1EAE79"/></a:accent5> <!-- green -->
+    <a:accent6><a:srgbClr val="FF8C1A"/></a:accent6> <!-- warning / chart-5 -->
   </a:clrScheme>
 
   <gradients>
-    <gradient id="blueBorder" kind="linear" ang="2700000">
-      <stop pos="0" color="818EFF"/>
-      <stop pos="100000" color="39B0FF"/>
+    <gradient id="spectrum" kind="linear" ang="-600000">
+      <stop pos="0" color="00CFE6"/>
+      <stop pos="26000" color="2986FF"/>
+      <stop pos="60000" color="7B3DFF"/>
+      <stop pos="100000" color="DF29FF"/>
     </gradient>
-    <gradient id="heroBorder" kind="linear" ang="2700000">
-      <stop pos="0" color="F77181"/>
-      <stop pos="48000" color="CA5BCD"/>
-      <stop pos="100000" color="818EFF"/>
+    <gradient id="titleText" kind="linear" ang="-120000">
+      <stop pos="0" color="47F0FF"/>
+      <stop pos="32000" color="66A3FF"/>
+      <stop pos="64000" color="B28CFF"/>
+      <stop pos="100000" color="E970FF"/>
     </gradient>
-    <gradient id="titleText" kind="linear" ang="0">
-      <stop pos="0" color="F77181"/>
-      <stop pos="50000" color="CA5BCD"/>
-      <stop pos="100000" color="818EFF"/>
+    <gradient id="action" kind="linear" ang="2700000">
+      <stop pos="0" color="29E6FF"/>
+      <stop pos="100000" color="0079D6"/>
     </gradient>
-    <gradient id="panelFillBlue" kind="path" path="circle">
-      <stop pos="0" color="818EFF" alpha="10000"/>
-      <stop pos="100000" color="39B0FF" alpha="10000"/>
-    </gradient>
-    <gradient id="healthBar" kind="linear" ang="0">
-      <stop pos="0" color="E33B3B"/>
-      <stop pos="22000" color="E8932F"/>
-      <stop pos="44000" color="E7D63B"/>
-      <stop pos="68000" color="A9D63B"/>
-      <stop pos="100000" color="22C24E"/>
-    </gradient>
-    <gradient id="envDev" kind="linear" ang="2700000">
-      <stop pos="0" color="7C3B30"/><stop pos="100000" color="46201B"/>
-    </gradient>
-    <gradient id="envSandbox" kind="linear" ang="2700000">
-      <stop pos="0" color="3E597A"/><stop pos="100000" color="22344B"/>
+    <gradient id="health" kind="linear" ang="0">
+      <stop pos="0" color="DF29FF"/>
+      <stop pos="26000" color="7B3DFF"/>
+      <stop pos="50000" color="2986FF"/>
+      <stop pos="74000" color="00CFE6"/>
+      <stop pos="100000" color="1FCF8B"/>
     </gradient>
   </gradients>
 
-  <geometry radiusPx="16" borderPx="1.6" cornerPct="3.708"/>
+  <geometry radiusPx="16" borderPx="1.5" padPx="20"/>
   <typography family="Segoe UI Variable" mono="Cascadia Code"
               title="46" kicker="30" h2="22" label="17" body="16" titleWeight="800"/>
 
-  <archetypes>
-    <archetype id="title" layout="dual-glow + watermark + kicker/title block"/>
-    <archetype id="panelGrid" layout="gradient-border tile grid"/>
-    <archetype id="orchestratorDiagram" layout="white inner panel + pills + light tiles + side panel"/>
-    <archetype id="contentPanel" layout="title + body panels"/>
-    <archetype id="lifecycleHealthBar" layout="env card columns + rainbow health bar"/>
-    <archetype id="ctaBootcamp" layout="outcomes + register CTA"/>
-  </archetypes>
-</tileslideTheme>
+  <rules>
+    <rule>Nitrous is structural only: rims, dividers, focus rings, and underlines.</rule>
+    <rule>Charts use cyan, green, magenta, purple, and orange; no nitrous data fills.</rule>
+    <rule>Surfaces remain translucent deep navy so the spectrum background shows through.</rule>
+  </rules>
+</clippyflowTheme>

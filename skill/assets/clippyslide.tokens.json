@@ -1,58 +1,85 @@
 {
-  "$schema": "https://darbotlm.github.io/tileslide/schema/tokens-1.0.json",
-  "name": "TileSlide",
+  "$schema": "https://darbotlm.github.io/clippyflow/schema/tokens-1.0.json",
+  "name": "Clippyflow",
   "version": "1.0.0",
+  "description": "The ClippySlide brand-flagship theme. Deep-navy spectrum canvas, full logo spectrum (cyan/blue/purple/magenta/green), and a single electric nitrous-blue (214deg) accent for thin outlines, focus rings, scrollbars, and rims. Clippyflow extends dark; it does not replace it.",
   "source": {
-    "deck": "CoE_Framework.pptx",
-    "account": "Oceaneering",
-    "engagement": "01FY26",
-    "extractedFrom": "ppt/slides/slide3.xml + theme1.xml",
-    "method": "verbatim OOXML gradient-stop extraction"
+    "spec": "Clippyflow Theme #18 (ClippyClaw theme registry)",
+    "philosophy": "Nitrous (214deg) sits between brand cyan (186) and brand blue (206) and reads as a distinct tech accent -- a glowing rim light that separates structure from fill without introducing an off-brand hue."
   },
-  "canvas": { "width": 1280, "height": 720, "ratio": "16:9", "inches": [13.333, 7.5], "background": "#000000" },
-  "color": {
-    "periwinkle": "#818EFF",
-    "cyan": "#39B0FF",
-    "coral": "#F77181",
-    "magenta": "#CA5BCD",
-    "tileLight": "#CFE8F7",
-    "pillBlue": "#1666C7",
-    "pillMagenta": "#C746B8",
-    "greenPanel": "#3F8A2E",
-    "ink": "#14161D",
-    "white": "#FFFFFF"
+  "canvas": { "width": 1280, "height": 720, "ratio": "16:9", "inches": [13.333, 7.5] },
+  "colorScheme": "dark",
+  "spectrum": {
+    "cyan":    { "hsl": "hsl(186,100%,45%)", "deg": 186, "role": "fills / brand-subtle backgrounds" },
+    "cyanBr":  { "hsl": "hsl(186,100%,58%)", "deg": 186, "role": "brand-action / CTA fill" },
+    "blue":    { "hsl": "hsl(206,100%,42%)", "deg": 206, "role": "links" },
+    "purple":  { "hsl": "hsl(257,100%,62%)", "deg": 257, "role": "primary brand" },
+    "magenta": { "hsl": "hsl(291,100%,58%)", "deg": 291, "role": "danger / accent" },
+    "green":   { "hsl": "hsl(142,71%,40%)",  "deg": 142, "role": "success" },
+    "greenBr": { "hsl": "hsl(142,71%,48%)",  "deg": 142, "role": "success bright" },
+    "orange":  { "hsl": "hsl(28,100%,55%)",  "deg": 28,  "role": "warning / chart-5 (NOT a brand spectrum hue)" }
+  },
+  "nitrous": {
+    "base":       { "token": "--nitrous",             "hsl": "hsl(214,100%,58%)",    "purpose": "accent base -- electric blue; outlines, focus rings, scrollbars, message-bubble rims" },
+    "strong":     { "token": "--nitrous-strong",      "hsl": "hsl(214,100%,64%)",    "purpose": "hover/focus emphasis" },
+    "glow":       { "token": "--nitrous-glow",        "hsl": "hsla(214,100%,60%,.40)","purpose": "soft halo for active cards" },
+    "rim":        { "token": "--nitrous-rim",         "hsl": "hsla(214,100%,60%,.55)","purpose": "solid-feeling thin outline" },
+    "tint":       { "token": "--nitrous-tint",        "hsl": "hsla(214,100%,60%,.28)","purpose": "subtle border/separator" },
+    "thumb":      { "token": "--nitrous-thumb",       "hsl": "hsla(214,100%,64%,.32)","purpose": "scrollbar at rest" },
+    "thumbHover": { "token": "--nitrous-thumb-hover", "hsl": "hsla(214,100%,64%,.50)","purpose": "scrollbar hover" }
+  },
+  "surface": {
+    "navy":     "hsl(200,16%,8%)",
+    "navyDeep": "hsl(206,30%,5%)",
+    "card":     "hsla(200,16%,12%,.94)",
+    "tile":     "hsla(200,18%,16%,.92)",
+    "tile2":    "hsla(200,18%,20%,.90)",
+    "note": "Surfaces are translucent so the spectrum background peeks through."
+  },
+  "foreground": {
+    "fg":     "#EAF2FB",
+    "fgSoft": "rgba(234,242,251,.78)",
+    "fgDim":  "rgba(234,242,251,.52)"
   },
   "gradient": {
-    "blueBorder":  { "type": "linear", "angle": 135, "stops": [ {"pos": 0, "color": "#818EFF"}, {"pos": 100, "color": "#39B0FF"} ] },
-    "heroBorder":  { "type": "linear", "angle": 135, "stops": [ {"pos": 0, "color": "#F77181"}, {"pos": 48, "color": "#CA5BCD"}, {"pos": 100, "color": "#818EFF"} ] },
-    "titleText":   { "type": "linear", "angle": 90, "stops": [ {"pos": 0, "color": "#F77181"}, {"pos": 50, "color": "#CA5BCD"}, {"pos": 100, "color": "#818EFF"} ] },
-    "panelFillBlue": { "type": "radial", "alpha": 0.10, "stops": [ {"pos": 0, "color": "#818EFF"}, {"pos": 100, "color": "#39B0FF"} ], "note": "same border colors at 10% alpha over black = the inner glow" },
-    "panelFillHero": { "type": "radial", "alpha": 0.14, "stops": [ {"pos": 0, "color": "#CA5BCD"}, {"pos": 55, "color": "#818EFF"}, {"pos": 100, "color": "#39B0FF"} ] },
-    "healthBar":   { "type": "linear", "angle": 90, "stops": [ {"pos": 0, "color": "#E33B3B"}, {"pos": 22, "color": "#E8932F"}, {"pos": 44, "color": "#E7D63B"}, {"pos": 68, "color": "#A9D63B"}, {"pos": 100, "color": "#22C24E"} ] },
-    "envDev":      { "type": "linear", "angle": 135, "stops": [ {"pos": 0, "color": "#7C3B30"}, {"pos": 100, "color": "#46201B"} ] },
-    "envSandbox":  { "type": "linear", "angle": 135, "stops": [ {"pos": 0, "color": "#3E597A"}, {"pos": 100, "color": "#22344B"} ] }
+    "spectrum": { "type": "linear", "angle": 100, "stops": [ {"pos":0,"color":"hsl(186,100%,45%)"}, {"pos":26,"color":"hsl(214,100%,58%)"}, {"pos":60,"color":"hsl(257,100%,62%)"}, {"pos":100,"color":"hsl(291,100%,58%)"} ], "note": "panel rim + accent bar + kicker text" },
+    "title":    { "type": "linear", "angle": 92,  "stops": [ {"pos":0,"color":"hsl(186,100%,64%)"}, {"pos":32,"color":"hsl(214,100%,70%)"}, {"pos":64,"color":"hsl(257,100%,76%)"}, {"pos":100,"color":"hsl(291,100%,72%)"} ], "note": "display-title text gradient" },
+    "action":   { "type": "linear", "angle": 135, "stops": [ {"pos":0,"color":"hsl(186,100%,58%)"}, {"pos":100,"color":"hsl(206,100%,42%)"} ], "note": "CTA fill (cyan family, never nitrous)" },
+    "health":   { "type": "linear", "angle": 90,  "stops": [ {"pos":0,"color":"hsl(291,100%,58%)"}, {"pos":26,"color":"hsl(257,100%,62%)"}, {"pos":50,"color":"hsl(214,100%,58%)"}, {"pos":74,"color":"hsl(186,100%,45%)"}, {"pos":100,"color":"hsl(142,71%,48%)"} ], "note": "progress/health bar -- full brand spectrum" },
+    "appBackground": { "type": "composite", "layers": [
+      "radial 58%x70% at 6% 2%   magenta@.22",
+      "radial 72%x82% at 50% 50% cyan@.13",
+      "radial 58%x70% at 98% 102% green@.22",
+      "linear 158deg navyDeep -> navy"
+    ], "note": "magenta TL -> cyan center -> green BR over deep-navy gradient" }
   },
-  "geometry": { "radius": 16, "radiusSmall": 10, "borderWidth": 1.6, "pad": 20, "cornerPctSource": 3.708 },
-  "glow": { "blue": "0 0 18px rgba(80,140,255,.28)", "hero": "0 0 22px rgba(202,91,205,.34)" },
+  "chart": {
+    "1": "hsl(186,100%,45%)", "2": "hsl(142,71%,40%)", "3": "hsl(291,100%,58%)", "4": "hsl(257,100%,62%)", "5": "hsl(28,100%,55%)",
+    "note": "cyan / green / magenta / purple / orange -- full brand spectrum, NO nitrous in charts"
+  },
+  "status": { "success": "hsl(142,71%,48%)", "warning": "hsl(28,100%,55%)", "danger": "hsl(291,100%,58%)" },
+  "geometry": { "radius": 16, "radiusSmall": 10, "rim": 1.5, "pad": 20 },
+  "glow": { "nitrous": "0 0 22px hsla(214,100%,60%,.40)", "spectrum": "0 0 26px hsla(257,100%,62%,.26)" },
   "type": {
     "family": "Segoe UI Variable, Segoe UI, system-ui, sans-serif",
     "mono": "Cascadia Code, Consolas, monospace",
     "scale": { "title": 46, "kicker": 30, "h2": 22, "label": 17, "body": 16, "mono": 14 },
     "titleWeight": 800,
-    "titleUnderline": "section sub-headers only"
+    "titleUnderline": "section sub-headers only (nitrous rule); never on display titles"
   },
+  "classPrefix": "cf-",
   "components": [
-    "stage", "stage--glow", "stage--title", "panel.blue", "panel.hero", "panel.white",
-    "accent-left", "title", "title.white", "kicker", "h2.under", "label", "body",
-    "pill.blue", "pill.mag", "tile", "orx", "divider", "greenpanel", "agentcard",
-    "env.dev", "env.sandbox", "env.prod", "health"
+    "cf-stage", "cf-stage--hero", "cf-panel", "cf-panel.spectrum", "cf-panel.solid",
+    "cf-accent-left", "cf-title", "cf-title.white", "cf-kicker", "cf-h2.under",
+    "cf-label", "cf-body", "cf-mono", "cf-pill.cyan", "cf-pill.purple", "cf-pill.magenta", "cf-pill.nitrous",
+    "cf-tile", "cf-orx", "cf-divider", "cf-swatch", "cf-chip", "cf-badge", "cf-agentcard",
+    "cf-env.dev", "cf-env.sandbox", "cf-env.prod", "cf-health", "cf-scroll", "cf-focusable"
   ],
-  "archetypes": {
-    "title": ["slide1"],
-    "panelGrid": ["slide3"],
-    "orchestratorDiagram": ["slide2", "slide6", "slide7"],
-    "contentPanel": ["slide4","slide5","slide8","slide9","slide10","slide11","slide12","slide13","slide15","slide17","slide19","slide20","slide21"],
-    "lifecycleHealthBar": ["slide16","slide18"],
-    "ctaBootcamp": ["slide22","slide23","slide24"]
-  }
+  "rules": [
+    "Nitrous is structure only: outlines, focus rings, scrollbars, dividers, underlines. Never a chart/data hue.",
+    "Brand-action / CTA fill is cyan, not nitrous.",
+    "Surfaces stay translucent so the spectrum background shows through.",
+    "No raw hex literals in components -- every color traces to a token here. A future hue retune is a one-line change.",
+    "Zero emoji. AA contrast. Premium, dark, restrained."
+  ]
 }

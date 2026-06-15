@@ -7,38 +7,38 @@ title: Introduction
 
 # ClippySlide
 
-**ClippySlide is a slide design system reverse-engineered from a real, premium PowerPoint deck — and then productized.** Every color, gradient, radius, and stop position in this system was lifted verbatim from the OOXML of a customer-grade deck (`CoE_Framework.pptx`). Nothing here was eyeballed.
+**ClippySlide is a ClippyFlow-first slide design system for premium, dark, agentic presentations.** New decks use a deep-navy spectrum canvas, translucent cards, spectrum title text, and nitrous-blue structural accents by default.
 
-> The governing principle of the whole project: **extract real design tokens from the source, never vibe-code them.**
+> The active rule: **use ClippyFlow by default; keep the original CoE extraction available as legacy reference material.**
 
 ![The full 24-slide deck, reproduced in ClippySlide](/img/contact-sheet.png)
 
 ## What's in the box
 
-ClippySlide is five things that share one set of tokens:
+ClippySlide is five things that share one default ClippyFlow token set:
 
 | Layer | What it is | Where |
 | --- | --- | --- |
-| **Design system** | A CSS component library + machine-readable token profiles (JSON / XML / YAML) | [`design-system/`](/design-system/tokens) |
-| **Deck generator** | A data-driven Node generator that emits the full 24-slide deck from one content model | [`generator/`](/generator/overview) |
+| **Design system** | The ClippyFlow CSS component library + machine-readable token profiles (JSON / XML / YAML), with legacy CoE files preserved | [`design-system/`](/design-system/tokens) |
+| **Deck generator** | A data-driven Node generator that emits the full ClippyFlow deck from one content model | [`generator/`](/generator/overview) |
 | **Presenter** | A clean, viewport-grid presenter: full-bleed slides + a single floating header layer | [`presenter/`](/presenter/overview) |
-| **Clawpilot skill** | An 8-command skill that encodes the whole workflow (extract → theme → build → render → validate → export → present) | [`skill/`](/skill/overview) |
-| **TileSlide extension** | A theme for the Adaptive-Card TileSlide app, so live AC decks can wear the CoE look | [`extension/`](/extension/coe-theme) |
+| **Clawpilot skill** | An 8-command skill that encodes the build, render, validate, export, and present workflow | [`skill/`](/skill/overview) |
+| **TileSlide extension** | A legacy CoE theme for the Adaptive-Card TileSlide app | [`extension/`](/extension/coe-theme) |
 
 ## The aesthetic
 
-The CoE look is deceptively simple and very specific:
+The ClippyFlow look is deliberately restrained and specific:
 
-- **Pure-black canvas** (`#000000`), 16:9, 1280×720.
-- **Glowing gradient-border panels** — a thin, bright gradient ring around a near-black body.
-- **Magenta-gradient titles** — `#F77181 → #CA5BCD → #818EFF`, weight 800.
-- **A rainbow "health bar"** — `#E33B3B → #E8932F → #E7D63B → #A9D63B → #22C24E`.
-- **Environment cards** color-coded Dev / Sandbox / Prod.
+- **Deep-navy spectrum canvas**, 16:9, 1280x720.
+- **Translucent navy cards** with thin nitrous-blue structural rims.
+- **Spectrum-gradient titles** using cyan, nitrous, purple, and magenta.
+- **A brand-spectrum health bar** that runs magenta to purple to nitrous to cyan to green.
+- **Environment cards** with magenta, nitrous, and green spines for Dev / Sandbox / Prod.
 
-The single most important trick: **the "dark navy" panel bodies are not navy at all.** They are the same bright border colors painted as a *radial gradient at 10% alpha over black*. See [Design Tokens](/design-system/tokens) for the receipts.
+The single most important trick: **nitrous is structure, not data.** Use it for rims, dividers, underlines, focus rings, and scrollbars. Charts and semantic fills use the brand spectrum instead. See [Design Tokens](/design-system/tokens) for the details.
 
 ## Why it exists
 
-The first attempt at this deck was generic and "vibe-coded." The breakthrough came from refusing to guess: reading the slide XML straight from the `.pptx` zip and lifting the exact tokens. The result was clean enough that the next step was obvious — turn the method into a reusable system so the same rigor applies to every future deck.
+The original ClippySlide work proved the method by extracting exact tokens from a real `.pptx`. ClippyFlow takes that rigor and makes it the product default: a reusable brand-flagship theme that can still coexist with the legacy CoE extraction.
 
 Start with the [Quick Start](/quick-start), or jump to the [Reproduction Method](/reproduction/methodology) to see how the tokens were extracted.

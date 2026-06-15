@@ -1,0 +1,33 @@
+{
+  "name": "Clippyflow Brand Deck + Mood Board",
+  "version": "1.0",
+  "created": "2026-06-12",
+  "canvas": { "w": 1280, "h": 720, "ratio": "16:9", "safe_margin_px": 22 },
+  "concept": "Retro-nostalgic MODERN TERMINAL that renders tiles and cards. Every slide is a polished TUI window (titlebar + traffic-light dots + mono meta) wrapping the Clippyflow spectrum brand. Boundaries enforced via flex/grid inside .cf-win-body (no free-floating absolute overflow).",
+  "design_law": "Spectrum = data/meaning (cyan 186 / blue 206 / purple 257 / magenta 291 / green 142). Nitrous blue (214) = STRUCTURE ONLY (rims, focus, scrollbars, dividers, cursor, underlines). CTA fill = cyan 186 brighter, never nitrous. No raw hex in components.",
+  "typography": {
+    "display_sans": "Segoe UI Variable / Segoe UI",
+    "terminal_mono": "Cascadia Code / Consolas (the modern Windows Terminal face that rendered tiles+cards)",
+    "retro_devices": ["clippyflow:~$ prompt", "blinking nitrous cursor block", "[ BRACKETED ] mono kickers", "uppercase tracked mono micro-labels", "corner-bracket frames", "very subtle CRT scanline overlay", "keycap hints"]
+  },
+  "palette": {
+    "cyan": "hsl(186,100%,45%)", "cyan_br": "hsl(186,100%,58%)", "blue": "hsl(206,100%,42%)",
+    "purple": "hsl(257,100%,62%)", "magenta": "hsl(291,100%,58%)", "green": "hsl(142,71%,40%)",
+    "nitrous": "hsl(214,100%,58%)", "navy": "hsl(200,16%,8%)", "navy_deep": "hsl(206,30%,5%)",
+    "fg": "#EAF2FB"
+  },
+  "stylesheets": ["../design-system/clippyflow.css", "../design-system/clippyflow-terminal.css"],
+  "slides": [
+    { "id": "01-cover",        "title": "CLIPPYFLOW wordmark + boot line" },
+    { "id": "02-manifesto",    "title": "Brand manifesto / philosophy" },
+    { "id": "03-logo-spectrum","title": "Logo spectrum strip + meaning" },
+    { "id": "04-color",        "title": "Color system swatch board + nitrous callout" },
+    { "id": "05-type",         "title": "Typography specimen: terminal mono + sans" },
+    { "id": "06-nitrous-rule", "title": "The Nitrous Rule: structure vs data" },
+    { "id": "07-components",   "title": "Tiles / pills / badges / agentcards / health bar" },
+    { "id": "08-surfaces",     "title": "Window chrome / panels / states" },
+    { "id": "09-dos-donts",    "title": "Usage guardrails" },
+    { "id": "10-moodboard",    "title": "Mood board collage" },
+    { "id": "11-closing",      "title": "Sign-off / repo / /clippyflow-design" }
+  ]
+}

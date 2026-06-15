@@ -5,88 +5,82 @@ title: Components
 
 # Components
 
-`clippyslide.css` is a small component library. Every class is prefixed `cs-`. Components are positioned absolutely inside a `.cs-stage` (the 1280×720 canvas), which is how a slide deck differs from a flowing web page.
+`clippyslide.css` is the default ClippyFlow component library. New slides should use the `cf-` class prefix and absolute positioning inside a fixed `1280x720` `.cf-stage`.
 
-## The stage
+## Stage
 
 ```html
-<div class="cs-stage cs-stage--glow"> ... </div>
+<div class="cf-stage"> ... </div>
+<div class="cf-stage cf-stage--hero"> ... </div>
 ```
 
 | Class | Effect |
 | --- | --- |
-| `.cs-stage` | 1280×720 black canvas, sets the font and antialiasing |
-| `.cs-stage--glow` | adds the content-slide violet corner glows (top-right + bottom-left) |
-| `.cs-stage--title` | a stronger dual glow for title/section slides |
+| `.cf-stage` | 1280x720 deep-navy spectrum canvas |
+| `.cf-stage--hero` | Stronger spectrum bloom for title and section slides |
+| `.cf-stage--title` / `.cf-stage--glow` | Compatibility aliases for generated layouts |
 
-## Gradient-border panel
-
-The hero component. A `.cs-panel` is the gradient ring; its `.cs-in` child is the black body with the radial glow.
+## Panels
 
 ```html
-<div class="cs-panel blue" style="left:80px;top:120px;width:520px;height:300px">
-  <div class="cs-in" style="padding:24px">
-    <div class="cs-title">Use Case Description</div>
-    <div class="cs-body">…</div>
-  </div>
+<div class="cf-panel spectrum" style="left:80px;top:120px;width:560px;height:300px">
+  <div class="cf-title">Use Case Description</div>
+  <div class="cf-body">Translucent navy surface with a spectrum rim.</div>
 </div>
 ```
 
-| Variant | Border |
+| Variant | Use |
 | --- | --- |
-| `.cs-panel.blue` | `--cs-grad-blue` + blue glow |
-| `.cs-panel.hero` | `--cs-grad-hero` (3-stop) + magenta glow |
-| `.cs-panel.white` | solid white inner panel (for diagram slides) |
-
-The ring is implemented as **padding holding the gradient** with the `.cs-in` body sitting on top — not a CSS border — which is why the corners stay crisp at the 16px radius.
+| `.cf-panel` | Translucent navy card with nitrous rim |
+| `.cf-panel.spectrum` | Spectrum-rim hero panel |
+| `.cf-panel.solid` | Opaque nested panel for diagrams |
+| `.cf-panel.blue` / `.cf-panel.hero` | Generator compatibility aliases |
 
 ## Typography
 
 | Class | Use |
 | --- | --- |
-| `.cs-title` | gradient-clipped magenta title (weight 800). `.cs-title.white` overrides to solid white |
-| `.cs-kicker` | cyan section eyebrow |
-| `.cs-h2` | white subheading. `.cs-h2.under` adds the 2px gradient-offset underline |
-| `.cs-label` | bold 17px label |
-| `.cs-body` | soft-white body copy |
-| `.cs-mono` | monospace (code, versions) |
+| `.cf-title` | Spectrum-gradient display title |
+| `.cf-title.white` | Solid foreground title |
+| `.cf-kicker` | Uppercase spectrum-gradient eyebrow |
+| `.cf-h2` | Subheading |
+| `.cf-h2.under` | Subheading with nitrous underline |
+| `.cf-label` | Bold label |
+| `.cf-body` | Soft foreground body copy |
+| `.cf-mono` | Monospace code or version text |
 
 ## Diagram primitives
 
 | Class | Use |
 | --- | --- |
-| `.cs-pill.blue` / `.cs-pill.mag` | rounded process pills (Trigger / Plan / Act) |
-| `.cs-tile` | light-blue knowledge/tools tile (`#CFE8F7`, dark text) |
-| `.cs-orx` | vertical "Orchestrator" rail label |
-| `.cs-divider` | gradient rule with magenta end-dots (via `::before`/`::after`) |
-| `.cs-accent-left` | coral accent bar that bleeds off the left edge |
+| `.cf-pill.cyan` / `.purple` / `.magenta` / `.nitrous` | Rounded process pills |
+| `.cf-pill.blue` / `.mag` | Generator compatibility aliases |
+| `.cf-tile` | Navy tile with nitrous-tint border |
+| `.cf-orx` | Vertical orchestrator rail label |
+| `.cf-divider` | Nitrous rule with endpoint dots |
+| `.cf-accent-left` | Spectrum accent bar bleeding slightly off the left edge |
 
-## Lifecycle & status
+## Lifecycle and status
 
 | Class | Use |
 | --- | --- |
-| `.cs-env.dev` / `.sandbox` / `.prod` | environment cards (see [tokens](/design-system/tokens)) |
-| `.cs-health` | the full-width rainbow health bar, pinned to the stage bottom |
-| `.cs-greenpanel` | the green "Agent Layers" side panel |
-| `.cs-agentcard` | white connected-agent card (icon + label) |
+| `.cf-env.dev` / `.sandbox` / `.prod` | Environment cards with magenta, nitrous, or green spine |
+| `.cf-health` | Brand-spectrum health/progress bar pinned to the stage bottom |
+| `.cf-agentcard` | Connected-agent card |
+| `.cf-chip` / `.cf-badge` | Compact metadata and identity pills |
+| `.cf-scroll` | Nitrous scrollbar styling for scroll regions |
+| `.cf-focusable` | Nitrous focus-visible ring |
 
-:::warning The `.cs-env` gotcha
-`.cs-env` is `position:absolute`. If you stack several in a flex column **without** giving each one explicit coordinates (or overriding to `position:relative`), they all pile on top of each other and you only see the last one. This bug silently collapsed slides 16 and 18 until it was caught — see [Archetypes → lifecycle / healthmatrix](/generator/archetypes).
-:::
-
-## Putting it together
-
-A minimal "use case" slide:
+## Minimal slide
 
 ```html
-<div class="cs-stage cs-stage--glow">
-  <div class="cs-panel hero" style="left:64px;top:90px;width:1152px;height:120px">
-    <div class="cs-in" style="padding:18px 28px">
-      <div class="cs-kicker">DESIGN</div>
-      <div class="cs-title">Use Case Description</div>
-    </div>
+<div class="cf-stage cf-stage--hero">
+  <div class="cf-panel spectrum" style="left:64px;top:90px;width:720px;height:220px">
+    <div class="cf-kicker">DESIGN</div>
+    <div class="cf-title">ClippyFlow Default</div>
+    <div class="cf-body">Deep navy, spectrum title text, and nitrous structure.</div>
   </div>
-  <div class="cs-health"><span class="lbl">Configuration / validation health</span></div>
+  <div class="cf-health"><span class="lbl">Spectrum health bar</span></div>
 </div>
 ```
 

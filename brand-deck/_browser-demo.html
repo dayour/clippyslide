@@ -1,0 +1,106 @@
+﻿<!doctype html>
+<html lang="en" data-theme="clippyflow">
+<head>
+<meta charset="utf-8">
+<title>clippyflow · browser</title>
+<link rel="stylesheet" href="../design-system/clippyflow.css">
+<link rel="stylesheet" href="../design-system/clippyflow-terminal.css">
+<style>
+  html,body{ margin:0; width:1280px; height:720px; overflow:hidden;
+             background:var(--cf-canvas, #0a0f16); }
+  .stage{ position:relative; width:1280px; height:720px; }
+
+  /* ── the captured "page" inside the viewport ───────────────────────────── */
+  .page{ position:absolute; inset:0; padding:48px 56px; box-sizing:border-box;
+         display:flex; flex-direction:column;
+         background:var(--app-background-image, #0a0f16); }
+  .page .kick{ font-family:var(--cf-mono); font-size:13px; letter-spacing:2.5px;
+               text-transform:uppercase; color:var(--nitrous); }
+  .page h1{ font-family:var(--cf-mono); font-weight:700; letter-spacing:.5px;
+            font-size:46px; line-height:1.05; margin:12px 0 10px;
+            background:var(--cf-grad-title); -webkit-background-clip:text;
+            background-clip:text; color:transparent; }
+  .page p.lede{ max-width:620px; color:var(--cf-fg-soft); font-size:17px;
+                line-height:1.55; margin:0 0 26px; }
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+          margin-top:auto; }
+  .card{ border:1px solid var(--nitrous-tint); border-radius:12px;
+         padding:18px; background:hsla(214,100%,60%,.05); min-height:128px;
+         display:flex; flex-direction:column; }
+  .card .h{ font-family:var(--cf-mono); font-size:12px; letter-spacing:1.4px;
+            text-transform:uppercase; color:var(--clippy-cyan-br); }
+  .card .big{ font-family:var(--cf-mono); font-weight:700; font-size:30px;
+              color:var(--cf-fg); margin:8px 0 4px; }
+  .card .sub{ font-size:13px; color:var(--cf-fg-dim); margin-top:auto; }
+  .bar{ display:flex; gap:6px; margin-top:10px; }
+  .bar i{ height:8px; border-radius:4px; display:block; }
+  .b1{ flex:5; background:var(--clippy-cyan); }
+  .b2{ flex:3; background:var(--clippy-purple); }
+  .b3{ flex:2; background:var(--clippy-green); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <section class="cf-browser cf-win--full cf-scan">
+
+    <!-- TAB STRIP -->
+    <header class="cf-bx-bar">
+      <div class="cf-win-dots"><i></i><i></i><i></i></div>
+      <div class="cf-bx-tabs">
+        <div class="cf-bx-tab active">
+          <span class="fav"></span><span class="t">Clippyflow — Flow</span><span class="x">×</span>
+        </div>
+        <div class="cf-bx-tab">
+          <span class="fav"></span><span class="t">Brand Deck · 11 slides</span><span class="x">×</span>
+        </div>
+        <div class="cf-bx-tab">
+          <span class="fav"></span><span class="t">github.com/dayour</span><span class="x">×</span>
+        </div>
+        <span class="cf-bx-newtab">+</span>
+      </div>
+      <div class="cf-bx-winbtns"><span>—</span><span>▢</span><span>×</span></div>
+    </header>
+
+    <!-- OMNIBOX -->
+    <div class="cf-bx-omni">
+      <div class="cf-bx-nav"><span class="on">‹</span><span>›</span><span>⟳</span></div>
+      <div class="cf-bx-url focus">
+        <span class="lock">🔒</span>
+        <span class="host">clippyflow.darbotlabs.dev</span><span class="rest">/flow</span>
+      </div>
+      <div class="cf-bx-actions"><span>★</span><span>⤓</span><span>⋮</span></div>
+    </div>
+
+    <!-- VIEWPORT : a real rendered page -->
+    <div class="cf-bx-view">
+      <div class="page">
+        <span class="kick">[ KEEP YOU IN THE FLOW ]</span>
+        <h1>Clippyflow Browser</h1>
+        <p class="lede">Wrap any web capture in on-brand chrome — nitrous tab rim,
+          nitrous omnibox focus ring, green secure-lock. The spectrum lives in the
+          page; structure lives in the frame.</p>
+        <div class="cards">
+          <div class="card">
+            <span class="h">Active tab</span>
+            <span class="big">nitrous</span>
+            <span class="sub">214° underline · the only lit tab</span>
+          </div>
+          <div class="card">
+            <span class="h">Page palette</span>
+            <span class="big">spectrum</span>
+            <div class="bar"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+            <span class="sub">cyan · purple · green carry meaning</span>
+          </div>
+          <div class="card">
+            <span class="h">Capture</span>
+            <span class="big">1280²</span>
+            <span class="sub">@2x · iframe or screenshot</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+</body>
+</html>

@@ -13,9 +13,9 @@
           "id": "coe-panel-hero",
           "spacing": "None",
           "items": [
-            { "type": "TextBlock", "id": "coe-kicker", "text": "OPERATE  ·  STEP 06", "size": "Medium", "spacing": "None" },
+            { "type": "TextBlock", "id": "coe-kicker", "text": "OPERATE  -  STEP 06", "size": "Medium", "spacing": "None" },
             { "type": "TextBlock", "id": "coe-title-magenta", "text": "Agent Lifecycle", "size": "ExtraLarge", "weight": "Bolder", "wrap": true, "spacing": "Small" },
-            { "type": "TextBlock", "text": "Promote every agent through controlled rings — from a legal-reviewed sandbox to general availability — with health gates and rollback at each stage.", "wrap": true, "isSubtle": true, "spacing": "Small" }
+            { "type": "TextBlock", "text": "Promote every agent through controlled rings -- from a legal-reviewed sandbox to general availability -- with health gates and rollback at each stage.", "wrap": true, "isSubtle": true, "spacing": "Small" }
           ]
         },
         {
@@ -28,7 +28,7 @@
               "items": [
                 { "type": "Container", "id": "coe-env-dev", "height": "stretch", "items": [
                   { "type": "TextBlock", "text": "Legal / Sandbox", "weight": "Bolder", "size": "Medium", "wrap": true },
-                  { "type": "TextBlock", "text": "v0.x  ·  authoring", "isSubtle": true, "spacing": "None" },
+                  { "type": "TextBlock", "text": "v0.x  -  authoring", "isSubtle": true, "spacing": "None" },
                   { "type": "TextBlock", "text": "Build, red-team and legal review. No customer data.", "wrap": true, "spacing": "Small" }
                 ]}
               ]
@@ -37,8 +37,8 @@
               "type": "Column", "width": "stretch",
               "items": [
                 { "type": "Container", "id": "coe-env-sandbox", "height": "stretch", "items": [
-                  { "type": "TextBlock", "text": "MVP  ·  Ring 1", "weight": "Bolder", "size": "Medium", "wrap": true },
-                  { "type": "TextBlock", "text": "v1.0  ·  pilot users", "isSubtle": true, "spacing": "None" },
+                  { "type": "TextBlock", "text": "MVP  -  Ring 1", "weight": "Bolder", "size": "Medium", "wrap": true },
+                  { "type": "TextBlock", "text": "v1.0  -  pilot users", "isSubtle": true, "spacing": "None" },
                   { "type": "TextBlock", "text": "Limited cohort. Watch eval scores and feedback.", "wrap": true, "spacing": "Small" }
                 ]}
               ]
@@ -48,7 +48,7 @@
               "items": [
                 { "type": "Container", "id": "coe-env-prod", "height": "stretch", "items": [
                   { "type": "TextBlock", "text": "All Users", "weight": "Bolder", "size": "Medium", "wrap": true },
-                  { "type": "TextBlock", "text": "v2.0  ·  production", "isSubtle": true, "spacing": "None" },
+                  { "type": "TextBlock", "text": "v2.0  -  production", "isSubtle": true, "spacing": "None" },
                   { "type": "TextBlock", "text": "General availability with monitoring and rollback.", "wrap": true, "spacing": "Small" }
                 ]}
               ]
@@ -60,7 +60,7 @@
           "id": "coe-healthbar",
           "spacing": "Large",
           "items": [
-            { "type": "TextBlock", "text": "Health gates at every ring:  monitor  ·  evaluate  ·  remediate  ·  roll back", "wrap": true, "horizontalAlignment": "Center" }
+            { "type": "TextBlock", "text": "Health gates at every ring:  monitor  -  evaluate  -  remediate  -  roll back", "wrap": true, "horizontalAlignment": "Center" }
           ]
         }
       ]

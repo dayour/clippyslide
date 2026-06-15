@@ -22,7 +22,7 @@
                   "id": "coe-panel-blue",
                   "height": "stretch",
                   "items": [
-                    { "type": "TextBlock", "id": "coe-kicker", "text": "DESIGN  ·  STEP 02", "size": "Medium", "spacing": "None" },
+                    { "type": "TextBlock", "id": "coe-kicker", "text": "DESIGN  -  STEP 02", "size": "Medium", "spacing": "None" },
                     { "type": "TextBlock", "id": "coe-title-magenta", "text": "Use Case Description", "size": "ExtraLarge", "weight": "Bolder", "wrap": true, "spacing": "Small" },
                     { "type": "TextBlock", "text": "Define the agent's job-to-be-done before you build. Capture the trigger that starts it, the plan it follows, and the grounding it needs to act reliably and safely.", "wrap": true, "isSubtle": true, "spacing": "Small" },
                     { "type": "TextBlock", "id": "coe-h2-under", "text": "Orchestration", "size": "Large", "weight": "Bolder", "spacing": "Large" },
@@ -30,9 +30,9 @@
                       "type": "ColumnSet", "spacing": "Small",
                       "columns": [
                         { "type": "Column", "width": "stretch", "items": [ { "type": "Container", "id": "coe-pill-blue", "items": [ { "type": "TextBlock", "text": "Trigger", "horizontalAlignment": "Center", "wrap": true } ] } ] },
-                        { "type": "Column", "width": "auto", "verticalContentAlignment": "Center", "items": [ { "type": "TextBlock", "text": "→", "weight": "Bolder" } ] },
+                        { "type": "Column", "width": "auto", "verticalContentAlignment": "Center", "items": [ { "type": "TextBlock", "text": "->", "weight": "Bolder" } ] },
                         { "type": "Column", "width": "stretch", "items": [ { "type": "Container", "id": "coe-pill-mag", "items": [ { "type": "TextBlock", "text": "Plan", "horizontalAlignment": "Center", "wrap": true } ] } ] },
-                        { "type": "Column", "width": "auto", "verticalContentAlignment": "Center", "items": [ { "type": "TextBlock", "text": "→", "weight": "Bolder" } ] },
+                        { "type": "Column", "width": "auto", "verticalContentAlignment": "Center", "items": [ { "type": "TextBlock", "text": "->", "weight": "Bolder" } ] },
                         { "type": "Column", "width": "stretch", "items": [ { "type": "Container", "id": "coe-pill-blue--2", "items": [ { "type": "TextBlock", "text": "Act", "horizontalAlignment": "Center", "wrap": true } ] } ] }
                       ]
                     },
@@ -47,7 +47,7 @@
                       ]
                     },
                     { "type": "TextBlock", "id": "coe-h2-under--3", "text": "Example", "size": "Large", "weight": "Bolder", "spacing": "Large" },
-                    { "type": "TextBlock", "text": "A customer emails support  →  the agent drafts a grounded reply from the knowledge base  →  logs the interaction to CRM and flags anything it could not answer.", "wrap": true, "isSubtle": true, "spacing": "Small" }
+                    { "type": "TextBlock", "text": "A customer emails support  ->  the agent drafts a grounded reply from the knowledge base  ->  logs the interaction to CRM and flags anything it could not answer.", "wrap": true, "isSubtle": true, "spacing": "Small" }
                   ]
                 }
               ]

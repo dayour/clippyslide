@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en" data-theme="clippyflow">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clippyflow · Terminal Header Spec · 16 slides</title>
+<style>
+/*__CSS__*/
+
+/* ───────── presenter shell (deck-scoped) ───────── */
+html,body{ margin:0; height:100%; background:#05080d; overflow:hidden; }
+.deck{ position:fixed; inset:0; display:grid; place-items:center; }
+.slide{
+  position:absolute; width:1280px; height:720px; transform:scale(var(--s,1));
+  transform-origin:center center; opacity:0; pointer-events:none;
+  transition:opacity .28s ease; box-shadow:0 30px 80px rgba(0,0,0,.6); border-radius:16px;
+}
+.slide.active{ opacity:1; pointer-events:auto; }
+.cf-stage{ border-radius:16px; }
+
+/* navigation pill */
+.nav{
+  position:fixed; right:18px; bottom:18px; z-index:50;
+  display:flex; align-items:center; gap:14px; padding:8px 14px; border-radius:999px;
+  font-family:var(--cf-mono); font-size:13px; color:var(--cf-fg-soft);
+  background:hsla(200,16%,12%,.82); border:1px solid var(--nitrous-tint);
+  box-shadow:var(--cf-glow-nitrous); backdrop-filter:blur(8px);
+}
+.nav b{ color:var(--nitrous); cursor:pointer; padding:0 6px; user-select:none; }
+.nav b:hover{ color:var(--nitrous-strong); }
+.nav .cnt{ color:var(--cf-fg); min-width:54px; text-align:center; }
+.nav .ttl{ color:var(--cf-fg-dim); max-width:230px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.nav .ff{ color:var(--cf-fg-dim); cursor:pointer; }
+.nav .ff:hover{ color:var(--clippy-cyan-br); }
+
+/* ───────── deck-scoped layout utilities ───────── */
+.dk{ display:flex; flex-direction:column; height:100%; }
+.dk-body{ flex:1 1 auto; min-height:0; display:flex; flex-direction:column; padding:28px 36px; gap:14px; overflow:hidden; }
+.dk-eyebrow{ display:flex; align-items:center; gap:14px; }
+.dk-h{ font-family:var(--cf-mono); font-weight:700; font-size:29px; line-height:1.08; margin:2px 0;
+  background:var(--cf-grad-title); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.dk-lede{ color:var(--cf-fg-soft); font-size:15px; line-height:1.5; max-width:920px; margin:0; }
+.dk-grid2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; flex:1 1 auto; min-height:0; }
+.dk-grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; flex:1 1 auto; min-height:0; }
+.dk-grid2.t{ flex:0 0 auto; }
+.dk-card{ border:1px solid var(--nitrous-tint); border-radius:12px; padding:15px 17px;
+  background:hsla(214,100%,60%,.04); display:flex; flex-direction:column; gap:9px; min-height:0; overflow:hidden; }
+.dk-card.hero{ background:linear-gradient(var(--cf-surface),var(--cf-surface)) padding-box, var(--cf-grad-spectrum) border-box; border:1.5px solid transparent; }
+.dk-card .ttl{ font-family:var(--cf-mono); font-size:11.5px; letter-spacing:1.4px; text-transform:uppercase; color:var(--clippy-cyan-br); }
+.dk-card .big{ font-family:var(--cf-mono); font-weight:700; font-size:26px; color:var(--cf-fg); }
+.dk-mono{ font-family:var(--cf-mono); font-size:13px; color:var(--cf-fg-soft); line-height:1.65; }
+.dk-mono .n{ color:var(--nitrous); } .dk-mono .c{ color:var(--clippy-cyan-br); } .dk-mono .dim{ color:var(--cf-fg-dim); }
+.dk-foot{ display:flex; align-items:center; gap:12px; margin-top:auto; }
+.dk-demo{ display:flex; flex-direction:column; justify-content:center; gap:14px; padding:18px;
+  border:1px solid var(--nitrous-tint); border-radius:12px; background:var(--cf-navy-deep); min-height:0; }
+.dk-demo .cfh{ border:1px solid var(--nitrous-tint); border-radius:10px; overflow:hidden; }
+.dk-cap{ font-family:var(--cf-mono); font-size:11px; letter-spacing:.6px; color:var(--cf-fg-dim); }
+.dk-kv{ display:flex; align-items:center; gap:10px; font-family:var(--cf-mono); font-size:13px;
+  color:var(--cf-fg-soft); padding:7px 0; border-bottom:1px dashed var(--nitrous-tint); }
+.dk-kv:last-child{ border-bottom:0; }
+.dk-kv .k{ color:var(--clippy-cyan-br); min-width:128px; }
+.dk-kv .v{ color:var(--cf-fg); } .dk-kv .tag{ margin-left:auto; color:var(--nitrous); }
+.dk-num{ display:flex; align-items:flex-start; gap:11px; }
+.dk-num .i{ font-family:var(--cf-mono); font-weight:700; color:var(--nitrous); flex:0 0 auto; }
+.dk-num .tx{ color:var(--cf-fg-soft); font-size:13.5px; line-height:1.4; }
+.dk-num .tx b{ color:var(--cf-fg); }
+.dk-swrow{ display:flex; gap:10px; }
+.dk-sw{ flex:1; height:40px; border-radius:8px; position:relative; box-shadow:inset 0 0 0 1px rgba(255,255,255,.08); }
+.dk-sw b{ position:absolute; left:7px; bottom:5px; font-family:var(--cf-mono); font-size:9.5px; color:rgba(255,255,255,.92); letter-spacing:.4px; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ════════ 01 · COVER ════════ -->
+<section class="slide cf-stage cf-stage--hero cf-scan" data-title="Cover">
+  <div class="cf-win cf-win--full" style="display:flex;flex-direction:column">
+    __HEADER_FULL__
+    <div class="cf-win-body" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:18px">
+      <span class="cf-mk">CLIPPYFLOW · DESIGN SYSTEM</span>
+      <div class="cf-wordmark" style="font-size:78px">TERMINAL HEADER</div>
+      <p class="dk-lede" style="text-align:center;font-size:17px;max-width:760px">
+        The full spec for the title-taskbar header — brand, tabs, tools, agents, apps,
+        controls, and a live readout. One command surface for every Clippyflow window.</p>
+      <div style="display:flex;gap:10px;margin-top:6px">
+        <span class="cf-chip">titlebar</span><span class="cf-chip">taskbar</span>
+        <span class="cf-chip">tabs</span><span class="cf-chip">agents</span>
+        <span class="cf-chip">16 slides</span>
+      </div>
+      <div class="cf-prompt" style="margin-top:10px">run /clippyflow-design --header<span class="cf-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 02 · ANATOMY ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Anatomy">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_FULL__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">SECTION 01</span><span class="dk-cap">the header, labelled</span></div>
+      <h1 class="dk-h">Anatomy of the header</h1>
+      <p class="dk-lede">Two stacked rows. The <b>titlebar</b> carries identity + navigation; the
+        <b>taskbar</b> carries action + state. Read it left-to-right, by cluster:</p>
+      <div class="dk-grid3" style="grid-template-columns:repeat(6,1fr);gap:11px">
+        <div class="dk-card"><span class="ttl">1 · Brand</span><span class="dk-mono">Glyph + wordmark or traffic dots. Window identity.</span></div>
+        <div class="dk-card"><span class="ttl">2 · Tabs</span><span class="dk-mono">Open surfaces. Active = <span class="n">nitrous</span> underline.</span></div>
+        <div class="dk-card"><span class="ttl">3 · Tools</span><span class="dk-mono">Verb launchers — terminal, browser, files, search.</span></div>
+        <div class="dk-card"><span class="ttl">4 · Agents</span><span class="dk-mono">Live status. Spectrum dots carry meaning.</span></div>
+        <div class="dk-card"><span class="ttl">5 · Apps</span><span class="dk-mono">Pinned nouns. Nitrous tick = running.</span></div>
+        <div class="dk-card"><span class="ttl">6 · Controls</span><span class="dk-mono">Readout + theme, settings, profile, alerts.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 03 · TWO-ROW MODEL ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Two-row model">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">SECTION 02</span><span class="dk-cap">titlebar vs taskbar</span></div>
+      <h1 class="dk-h">Two rows, two jobs</h1>
+      <div class="dk-grid2">
+        <div class="dk-card">
+          <span class="ttl">Row 1 · Titlebar — identity &amp; navigation</span>
+          <div class="dk-kv"><span class="k">height</span><span class="v">--cfh-bar · 44px</span></div>
+          <div class="dk-kv"><span class="k">holds</span><span class="v">brand · title · tabs · window controls</span></div>
+          <div class="dk-kv"><span class="k">align</span><span class="v">tabs to baseline (flex-end)</span></div>
+          <div class="dk-kv"><span class="k">law</span><span class="v">active tab = nitrous underline</span><span class="tag">struct</span></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">Row 2 · Taskbar — action &amp; state</span>
+          <div class="dk-kv"><span class="k">height</span><span class="v">--cfh-task · 50px</span></div>
+          <div class="dk-kv"><span class="k">holds</span><span class="v">tools · agents · apps · readout · controls</span></div>
+          <div class="dk-kv"><span class="k">rails</span><span class="v">nitrous 1px divider between clusters</span><span class="tag">struct</span></div>
+          <div class="dk-kv"><span class="k">law</span><span class="v">agent / app status = spectrum</span><span class="tag">mean</span></div>
+        </div>
+      </div>
+      <p class="dk-lede"><b>Single-row mode</b> (<span class="dk-mono" style="display:inline">.cfh--single</span>) drops the taskbar for compact chrome — the titlebar alone still ships brand, tabs, and controls.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 04 · DESIGN LAW ════════ -->
+<section class="slide cf-stage cf-stage--hero cf-scan" data-title="Design law">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">SECTION 03</span><span class="dk-cap">the one rule that governs everything</span></div>
+      <h1 class="dk-h">Nitrous = structure · Spectrum = meaning</h1>
+      <div class="dk-grid2">
+        <div class="dk-card hero">
+          <span class="ttl" style="color:#fff">NITROUS 214° — structure only</span>
+          <div class="dk-num"><span class="i">›</span><span class="tx"><b>Active-tab underline</b> — the only lit tab.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx"><b>Cluster rails</b> — 1px dividers in the taskbar.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx"><b>Focus rings &amp; hover outlines</b> on every control.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx"><b>App "running" tick.</b> Never a fill, never a status.</span></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">SPECTRUM — meaning only</span>
+          <div class="dk-swrow">
+            <span class="dk-sw" style="background:var(--clippy-green-br)"><b>RUN</b></span>
+            <span class="dk-sw" style="background:var(--clippy-purple)"><b>THINK</b></span>
+            <span class="dk-sw" style="background:var(--clippy-cyan-br)"><b>IDLE</b></span>
+            <span class="dk-sw" style="background:var(--clippy-magenta)"><b>ERROR</b></span>
+          </div>
+          <div class="dk-num"><span class="i">›</span><span class="tx">Agent &amp; app <b>status dots</b> use the five logo hues.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx">App <b>identity tints</b> distinguish pins.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx">Notification <b>badge</b> = magenta (needs attention).</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx"><b>One lit element per cluster</b> — the rest read dim.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 05 · BRAND CLUSTER ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Brand cluster">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">CLUSTER · BRAND</span><span class="dk-cap">window identity</span></div>
+      <h1 class="dk-h">Brand cluster</h1>
+      <div class="dk-grid2">
+        <div class="dk-demo">
+          <span class="dk-cap">.cfh-brand — glyph + wordmark</span>
+          <div class="cfh cfh--single"><div class="cfh-titlebar cfh--center">
+            <div class="cfh-brand"><span class="cfh-glyph"></span><span class="cfh-wordmark">CLIPPYFLOW</span></div>
+            <span class="cfh-spacer"></span><div class="cfh-wctl"><span>—</span><span>▢</span><span class="close">×</span></div>
+          </div></div>
+          <span class="dk-cap">.cfh-dots — macOS-style traffic lights</span>
+          <div class="cfh cfh--single"><div class="cfh-titlebar cfh--center">
+            <div class="cfh-brand"><span class="cfh-dots"><i></i><i></i><i></i></span><span class="cfh-title"><b>flow</b> · ~/clippyflow</span></div>
+          </div></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">rules</span>
+          <div class="dk-kv"><span class="k">.cfh-glyph</span><span class="v">24px · spectrum gradient + nitrous glow</span></div>
+          <div class="dk-kv"><span class="k">.cfh-wordmark</span><span class="v">title-gradient text · 700 · +.5px</span></div>
+          <div class="dk-kv"><span class="k">.cfh-dots</span><span class="v">magenta · cyan · green (brand, not macOS)</span></div>
+          <div class="dk-kv"><span class="k">pick one</span><span class="v">glyph+wordmark <i>or</i> dots — never both</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 06 · TITLE + WINDOW CONTROLS ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Title & window controls">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">CLUSTER · TITLE / WCTL</span><span class="dk-cap">name &amp; window buttons</span></div>
+      <h1 class="dk-h">Window title &amp; controls</h1>
+      <div class="dk-grid2">
+        <div class="dk-demo">
+          <span class="dk-cap">.cfh-title — path form · b = focus segment</span>
+          <div class="cfh cfh--single"><div class="cfh-titlebar cfh--center">
+            <span class="cfh-title"><b>clippyflow</b>&nbsp;·&nbsp;~/design-system/header.css</span>
+            <span class="cfh-spacer"></span>
+            <div class="cfh-wctl"><span>—</span><span>▢</span><span class="close">×</span></div>
+          </div></div>
+          <span class="dk-cap">hover states — min/max wash nitrous, close washes magenta</span>
+          <div class="cfh cfh--single"><div class="cfh-titlebar cfh--center">
+            <span class="cfh-title">3 windows · session active</span><span class="cfh-spacer"></span>
+            <div class="cfh-wctl"><span style="background:hsla(214,100%,60%,.10);color:var(--cf-fg)">—</span><span>▢</span><span class="close" style="background:var(--clippy-magenta);color:#fff">×</span></div>
+          </div></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">behaviour</span>
+          <div class="dk-num"><span class="i">›</span><span class="tx">Title is <b>mono</b>, dim, with one <b>full-contrast</b> focus segment via <span class="dk-mono" style="display:inline">&lt;b&gt;</span>.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx">Controls sit hard-right (<span class="dk-mono" style="display:inline">margin-left:auto</span>).</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx">Hover = nitrous wash; <b>close</b> is the only magenta-wash control.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx">On the dots variant, controls are optional (dots imply them).</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 07 · TABS ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Tabs">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">CLUSTER · TABS</span><span class="dk-cap">open surfaces</span></div>
+      <h1 class="dk-h">Tab strip &amp; states</h1>
+      <div class="dk-demo" style="flex:0 0 auto">
+        <span class="dk-cap">.cfh-tabs — active · loading · default · pinned</span>
+        <div class="cfh cfh--single"><div class="cfh-titlebar">
+          <div class="cfh-tabs" style="align-items:center;padding-top:8px">
+            <div class="cfh-tab active"><span class="fav"></span><span class="t">Flow · ~/clippyflow</span><span class="x">×</span></div>
+            <div class="cfh-tab loading"><span class="fav"></span><span class="t">Rendering deck…</span><span class="x">×</span></div>
+            <div class="cfh-tab"><span class="fav"></span><span class="t">github.com/dayour</span><span class="x">×</span></div>
+            <div class="cfh-tab"><span class="fav"></span><span class="t">SPEC.md</span><span class="x">×</span></div>
+            <div class="cfh-tab pinned"><span class="fav"></span><span class="t">pin</span></div>
+            <span class="cfh-newtab">+</span>
+          </div>
+        </div></div>
+      </div>
+      <div class="dk-grid3">
+        <div class="dk-card"><span class="ttl">.active</span><span class="dk-mono"><span class="n">Nitrous</span> top-underline + surface-3 fill + cyan favicon. The one lit tab.</span></div>
+        <div class="dk-card"><span class="ttl">.loading</span><span class="dk-mono"><span class="c">Purple</span> favicon, pulsing. Work in flight on that surface.</span></div>
+        <div class="dk-card"><span class="ttl">.pinned</span><span class="dk-mono">Collapses to the favicon (max-width 42px). Title hidden.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 08 · TOOLS ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Tools">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">CLUSTER · TOOLS</span><span class="dk-cap">verb launchers</span></div>
+      <h1 class="dk-h">Tools cluster</h1>
+      <div class="dk-grid2">
+        <div class="dk-demo">
+          <span class="dk-cap">.cfh-tool — 30px squares · active = nitrous inset</span>
+          <div class="cfh cfh--single"><div class="cfh-taskbar">
+            <div class="cfh-cluster"><span class="lbl">tools</span>
+              <span class="cfh-tool active">▌_</span><span class="cfh-tool">◉</span>
+              <span class="cfh-tool">▢</span><span class="cfh-tool">⌕</span><span class="cfh-tool">▶</span>
+            </div>
+          </div></div>
+          <span class="dk-cap">hover lifts a nitrous focus halo (structure)</span>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">set &amp; semantics</span>
+          <div class="dk-kv"><span class="k">▌_ terminal</span><span class="v">shell / command surface</span></div>
+          <div class="dk-kv"><span class="k">◉ browser</span><span class="v">web capture / preview</span></div>
+          <div class="dk-kv"><span class="k">▢ files</span><span class="v">workspace tree</span></div>
+          <div class="dk-kv"><span class="k">⌕ search</span><span class="v">command palette</span></div>
+          <div class="dk-kv"><span class="k">▶ run</span><span class="v">execute / render</span><span class="tag">verb</span></div>
+        </div>
+      </div>
+      <p class="dk-lede">Tools are <b>verbs</b>: things you do. They share one nitrous-rimmed square so the
+        cluster reads as a single control group. Exactly one may be <span class="dk-mono" style="display:inline">.active</span>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 09 · AGENTS ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Agents">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">CLUSTER · AGENTS</span><span class="dk-cap">live status taxonomy</span></div>
+      <h1 class="dk-h">Agents cluster</h1>
+      <div class="dk-demo" style="flex:0 0 auto">
+        <span class="dk-cap">.cfh-agent — avatar + spectrum status dot + name</span>
+        <div class="cfh cfh--single"><div class="cfh-taskbar">
+          <div class="cfh-cluster"><span class="lbl">agents</span>
+            <span class="cfh-agent run"><span class="av cyan"><span class="st"></span></span><span class="nm">orchestrator</span></span>
+            <span class="cfh-agent think"><span class="av purple"><span class="st"></span></span><span class="nm">swe</span></span>
+            <span class="cfh-agent idle"><span class="av green"><span class="st"></span></span><span class="nm">review</span></span>
+            <span class="cfh-agent error"><span class="av cyan"><span class="st"></span></span><span class="nm">deploy</span></span>
+            <span class="cfh-agent paused"><span class="av purple"><span class="st"></span></span><span class="nm">docs</span></span>
+          </div>
+        </div></div>
+      </div>
+      <div class="dk-grid3" style="grid-template-columns:repeat(5,1fr);gap:11px">
+        <div class="dk-card"><span class="ttl" style="color:var(--clippy-green-br)">.run</span><span class="dk-mono">Green, glowing. Actively working.</span></div>
+        <div class="dk-card"><span class="ttl" style="color:var(--clippy-purple)">.think</span><span class="dk-mono">Purple, pulsing. Reasoning.</span></div>
+        <div class="dk-card"><span class="ttl" style="color:var(--clippy-cyan-br)">.idle</span><span class="dk-mono">Cyan. Ready, waiting.</span></div>
+        <div class="dk-card"><span class="ttl" style="color:var(--clippy-magenta)">.error</span><span class="dk-mono">Magenta, glowing. Needs you.</span></div>
+        <div class="dk-card"><span class="ttl" style="color:var(--cf-fg-dim)">.paused</span><span class="dk-mono">Greyed avatar + dim dot.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 10 · APPS ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Apps">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">CLUSTER · APPS</span><span class="dk-cap">pinned nouns</span></div>
+      <h1 class="dk-h">Apps cluster</h1>
+      <div class="dk-grid2">
+        <div class="dk-demo">
+          <span class="dk-cap">.cfh-app — identity tint + nitrous "running" tick</span>
+          <div class="cfh cfh--single"><div class="cfh-taskbar">
+            <div class="cfh-cluster"><span class="lbl">apps</span>
+              <span class="cfh-app cyan"><span class="ic"></span><span class="run"></span></span>
+              <span class="cfh-app purple"><span class="ic"></span><span class="run"></span></span>
+              <span class="cfh-app magenta"><span class="ic"></span></span>
+              <span class="cfh-app green"><span class="ic"></span></span>
+            </div>
+          </div></div>
+          <span class="dk-cap">tick present = app is running</span>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">rules</span>
+          <div class="dk-num"><span class="i">›</span><span class="tx">Apps are <b>nouns</b>: places you go. Identity = a spectrum tint.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx">The <b>running tick</b> is <span class="n">nitrous</span> — structure, shared by all apps.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx">Tint is identity, not status — a magenta app isn't "in error".</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx">Pins persist; order is user-sorted.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 11 · CONTROLS ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Controls">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">CLUSTER · CONTROLS</span><span class="dk-cap">system &amp; identity</span></div>
+      <h1 class="dk-h">Controls cluster</h1>
+      <div class="dk-grid2">
+        <div class="dk-demo">
+          <span class="dk-cap">.cfh-ctrl — alerts (badge) · theme · settings · .cfh-avatar</span>
+          <div class="cfh cfh--single"><div class="cfh-taskbar" style="justify-content:flex-end">
+            <div class="cfh-cluster">
+              <span class="cfh-ctrl">◔<span class="badge">3</span></span>
+              <span class="cfh-ctrl">◐</span><span class="cfh-ctrl">⚙</span>
+              <span class="cfh-avatar"></span>
+            </div>
+          </div></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">rules</span>
+          <div class="dk-kv"><span class="k">alerts</span><span class="v">.badge = magenta count · needs attention</span><span class="tag">mean</span></div>
+          <div class="dk-kv"><span class="k">theme</span><span class="v">cycles system · light · dark · clippyflow</span></div>
+          <div class="dk-kv"><span class="k">settings</span><span class="v">opens config — hover nitrous wash</span><span class="tag">struct</span></div>
+          <div class="dk-kv"><span class="k">avatar</span><span class="v">cyan gradient · nitrous rim · profile</span></div>
+        </div>
+      </div>
+      <p class="dk-lede">Controls sit hard-right, after the readout. They are the only cluster without a
+        text label — the glyphs are universal.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 12 · LIVE READOUT ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Readout">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">CLUSTER · READOUT</span><span class="dk-cap">status at a glance</span></div>
+      <h1 class="dk-h">Live readout</h1>
+      <div class="dk-grid2">
+        <div class="dk-demo">
+          <span class="dk-cap">.cfh-readout — model · connection · clock</span>
+          <div class="cfh cfh--single"><div class="cfh-taskbar" style="justify-content:flex-end">
+            <div class="cfh-readout"><span><span class="k">opus</span>-4.8</span><span class="on">connected</span><span>09:41</span></div>
+          </div></div>
+          <span class="dk-cap">offline state — drop .on, omit "connected"</span>
+          <div class="cfh cfh--single"><div class="cfh-taskbar" style="justify-content:flex-end">
+            <div class="cfh-readout"><span><span class="k">local</span>-mock</span><span style="color:var(--clippy-orange)">● reconnecting</span><span>09:42</span></div>
+          </div></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">tokens</span>
+          <div class="dk-kv"><span class="k">.k (key)</span><span class="v">cyan — the meaningful label</span></div>
+          <div class="dk-kv"><span class="k">.on</span><span class="v">green ● — connected / healthy</span></div>
+          <div class="dk-kv"><span class="k">warn</span><span class="v">orange ● — reconnecting / degraded</span></div>
+          <div class="dk-kv"><span class="k">clock</span><span class="v">dim mono · 24h</span></div>
+          <div class="dk-kv"><span class="k">place</span><span class="v">between spacer and the controls rail</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 13 · STATES & FOCUS ════════ -->
+<section class="slide cf-stage cf-scan" data-title="States & focus">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_FULL__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">SECTION 04</span><span class="dk-cap">interaction model</span></div>
+      <h1 class="dk-h">States, focus &amp; keys</h1>
+      <div class="dk-grid2">
+        <div class="dk-card">
+          <span class="ttl">structure states (nitrous)</span>
+          <div class="dk-num"><span class="i">›</span><span class="tx"><b>:hover</b> — nitrous wash or rim halo.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx"><b>:focus-visible</b> — 2px nitrous ring, 2px offset.</span></div>
+          <div class="dk-num"><span class="i">›</span><span class="tx"><b>.active</b> — nitrous inset/underline. One per cluster.</span></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">keyboard</span>
+          <div class="dk-kv"><span class="k">⌘/Ctrl + T</span><span class="v">new tab</span></div>
+          <div class="dk-kv"><span class="k">⌘/Ctrl + 1–9</span><span class="v">jump to tab</span></div>
+          <div class="dk-kv"><span class="k">⌘/Ctrl + K</span><span class="v">search / palette</span></div>
+          <div class="dk-kv"><span class="k">Tab / ⇧Tab</span><span class="v">walk clusters L→R</span></div>
+        </div>
+      </div>
+      <p class="dk-lede"><b>One-lit-per-cluster</b> is the discipline that keeps a busy header calm: at any moment
+        a single tab, a single tool, and a single readout state carry the eye.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 14 · LAYOUT & OVERFLOW ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Layout & overflow">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_FULL__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">SECTION 05</span><span class="dk-cap">priority &amp; collapse</span></div>
+      <h1 class="dk-h">Layout &amp; responsive order</h1>
+      <div class="dk-grid2">
+        <div class="dk-card">
+          <span class="ttl">collapse order (narrow → wide)</span>
+          <div class="dk-num"><span class="i">1</span><span class="tx">Drop <b>cluster text labels</b> (tools / agents / apps).</span></div>
+          <div class="dk-num"><span class="i">2</span><span class="tx">Collapse <b>agent names</b> to avatars only.</span></div>
+          <div class="dk-num"><span class="i">3</span><span class="tx">Move <b>readout</b> into an overflow ⋯ menu.</span></div>
+          <div class="dk-num"><span class="i">4</span><span class="tx">Scroll the <b>tab strip</b>; pin actives.</span></div>
+          <div class="dk-num"><span class="i">5</span><span class="tx">Fold <b>tools/apps</b> into a single launcher.</span></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">never drop</span>
+          <div class="dk-kv"><span class="k">brand</span><span class="v">window identity</span></div>
+          <div class="dk-kv"><span class="k">active tab</span><span class="v">where you are</span></div>
+          <div class="dk-kv"><span class="k">window ctl</span><span class="v">close must always reach</span></div>
+          <div class="dk-kv"><span class="k">alerts</span><span class="v">attention can't hide</span><span class="tag">mean</span></div>
+          <div class="dk-foot"><span class="cf-badge"><span class="dot"></span>spacer absorbs all slack</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 15 · TOKEN CONTRACT / API ════════ -->
+<section class="slide cf-stage cf-scan" data-title="Token contract">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_BAR__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">SECTION 06</span><span class="dk-cap">the API surface</span></div>
+      <h1 class="dk-h">Token contract &amp; class API</h1>
+      <div class="dk-grid2">
+        <div class="dk-card">
+          <span class="ttl">--cfh-* tokens (retheme in one place)</span>
+          <div class="dk-kv"><span class="k">--cfh-bar</span><span class="v">44px · titlebar height</span></div>
+          <div class="dk-kv"><span class="k">--cfh-task</span><span class="v">50px · taskbar height</span></div>
+          <div class="dk-kv"><span class="k">--cfh-ico</span><span class="v">30px · launcher square</span></div>
+          <div class="dk-kv"><span class="k">--cfh-radius</span><span class="v">9px · tab / button</span></div>
+          <div class="dk-kv"><span class="k">--cfh-gap</span><span class="v">8px · item gap</span></div>
+          <div class="dk-kv"><span class="k">--cf-ps1</span><span class="v">prompt glyph (terminal layer)</span></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl">class map</span>
+          <div class="dk-mono">
+            <span class="n">.cfh</span> <span class="dim">› .cfh--single</span><br>
+            &nbsp;&nbsp;<span class="c">.cfh-titlebar</span> › brand · title · tabs · wctl<br>
+            &nbsp;&nbsp;<span class="c">.cfh-taskbar</span> › cluster · rail · spacer<br>
+            <span class="dim">brand </span>.cfh-glyph .cfh-wordmark .cfh-dots<br>
+            <span class="dim">tabs  </span>.cfh-tab<span class="dim">{.active.loading.pinned}</span><br>
+            <span class="dim">tools </span>.cfh-tool<span class="dim">{.active}</span><br>
+            <span class="dim">agent </span>.cfh-agent<span class="dim">{.run.think.idle.error.paused}</span><br>
+            <span class="dim">app   </span>.cfh-app<span class="dim">{.cyan…} .run</span><br>
+            <span class="dim">ctrl  </span>.cfh-ctrl .badge .cfh-avatar<br>
+            <span class="dim">stat  </span>.cfh-readout<span class="dim">{.k.on}</span>
+          </div>
+        </div>
+      </div>
+      <p class="dk-lede">Every color resolves to a Clippyflow token — no raw hex. Retune nitrous → ice-blue
+        once in <span class="dk-mono" style="display:inline">:root</span> and the whole header follows.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 16 · DO/DON'T + CLOSING ════════ -->
+<section class="slide cf-stage cf-stage--hero cf-scan" data-title="Do / Don't · Ship">
+  <div class="cf-win cf-win--full dk">
+    __HEADER_FULL__
+    <div class="dk-body">
+      <div class="dk-eyebrow"><span class="cf-mk">SHIP IT</span><span class="dk-cap">rules + file map</span></div>
+      <h1 class="dk-h">Do / Don't</h1>
+      <div class="dk-grid2 t">
+        <div class="dk-card">
+          <span class="ttl" style="color:var(--clippy-green-br)">DO</span>
+          <div class="cf-rule do"><span class="mk">✓</span><span class="txt">Use nitrous for the active-tab underline, rails &amp; focus.</span></div>
+          <div class="cf-rule do"><span class="mk">✓</span><span class="txt">Use spectrum for agent/app status &amp; identity.</span></div>
+          <div class="cf-rule do"><span class="mk">✓</span><span class="txt">Keep one lit element per cluster.</span></div>
+        </div>
+        <div class="dk-card">
+          <span class="ttl" style="color:var(--clippy-magenta)">DON'T</span>
+          <div class="cf-rule dont"><span class="mk">✗</span><span class="txt">Fill a tab or tool with nitrous — it's structure only.</span></div>
+          <div class="cf-rule dont"><span class="mk">✗</span><span class="txt">Use a status hue as decoration.</span></div>
+          <div class="cf-rule dont"><span class="mk">✗</span><span class="txt">Light up two active tabs at once.</span></div>
+        </div>
+      </div>
+      <div class="dk-card" style="flex:0 0 auto">
+        <span class="ttl">file map</span>
+        <div class="dk-mono"><span class="c">design-system/</span> clippyflow.css · clippyflow-terminal.css · <span class="n">clippyflow-header.css</span><br>
+          <span class="c">examples/</span> header-window · terminal-window · browser-window<br>
+          <span class="c">deck/</span> clippyflow-header-spec.html <span class="dim">· skill: /clippyflow-design</span></div>
+      </div>
+      <div class="cf-prompt" style="margin-top:2px">ship /clippyflow-header<span class="cf-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ───────── nav ───────── -->
+<div class="nav">
+  <b id="prev">‹</b>
+  <span class="cnt" id="cnt">1 / 16</span>
+  <b id="next">›</b>
+  <span class="ttl" id="ttl"></span>
+  <span class="ff" id="ff" title="fullscreen (f)">⛶</span>
+</div>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var i=0, cnt=document.getElementById('cnt'), ttl=document.getElementById('ttl');
+  function fit(){ var s=Math.min(innerWidth/1280, innerHeight/720);
+    document.documentElement.style.setProperty('--s', s); }
+  function show(n){ i=(n+slides.length)%slides.length;
+    slides.forEach(function(el,k){ el.classList.toggle('active', k===i); });
+    cnt.textContent=(i+1)+' / '+slides.length;
+    ttl.textContent=slides[i].getAttribute('data-title')||'';
+    if(history.replaceState) history.replaceState(null,'','#'+(i+1)); }
+  addEventListener('resize', fit);
+  addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ show(i+1); e.preventDefault(); }
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){ show(i-1); }
+    else if(e.key==='Home'){ show(0); } else if(e.key==='End'){ show(slides.length-1); }
+    else if(e.key==='f'||e.key==='F'){ var d=document.documentElement;
+      if(!document.fullscreenElement){ d.requestFullscreen&&d.requestFullscreen(); } else { document.exitFullscreen&&document.exitFullscreen(); } }
+  });
+  document.getElementById('next').onclick=function(){ show(i+1); };
+  document.getElementById('prev').onclick=function(){ show(i-1); };
+  document.getElementById('ff').onclick=function(){ var d=document.documentElement;
+    if(!document.fullscreenElement){ d.requestFullscreen&&d.requestFullscreen(); } else { document.exitFullscreen&&document.exitFullscreen(); } };
+  fit();
+  var start=parseInt((location.hash||'').slice(1),10); show(isNaN(start)?0:start-1);
+})();
+</script>
+</body>
+</html>

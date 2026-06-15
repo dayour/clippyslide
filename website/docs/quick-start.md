@@ -7,13 +7,13 @@ title: Quick Start
 
 # Quick Start
 
-Everything in ClippySlide is plain files — HTML, CSS, a single Node script, and JSON/YAML profiles. No build toolchain is required to use the design system; Node is only needed to regenerate the deck.
+Everything in ClippySlide is plain files: HTML, CSS, a single Node script, and JSON/YAML/XML profiles. ClippyFlow is the default theme. No build toolchain is required to use the design system; Node is only needed to regenerate the deck.
 
 ## Prerequisites
 
-- **Node.js** ≥ 18 (the generator uses no dependencies; tested on Node 25).
+- **Node.js** >= 18 (the generator uses no dependencies; tested on Node 25).
 - A **Chromium-based browser** (Edge/Chrome) to view the slides and presenter.
-- Optional: **Python 3** + Pillow for contact sheets, and PowerPoint COM or LibreOffice for `.pptx → PNG` rendering.
+- Optional: **Python 3** + Pillow for contact sheets, and PowerPoint COM or LibreOffice for `.pptx -> PNG` rendering.
 
 ## Clone
 
@@ -24,7 +24,7 @@ cd clippyslide
 
 ## Look at the deck
 
-The generated deck lives in [`deck/`](https://github.com/dayour/clippyslide/tree/main/deck) as standalone HTML files (each links `../design-system/clippyslide.css`). Open any of them directly:
+The generated ClippyFlow deck lives in [`deck/`](https://github.com/dayour/clippyslide/tree/main/deck) as standalone HTML files. Each slide links `../design-system/clippyslide.css`, the canonical ClippyFlow entrypoint. Open any slide directly:
 
 ```bash
 # Windows
@@ -42,7 +42,7 @@ start presenter/present.html      # Windows
 open  presenter/present.html      # macOS
 ```
 
-Controls: `←/→` navigate · `F` present (fullscreen) · `H` hide the header · `G` toggle the measurement grid. See [Presenter → Controls](/presenter/controls).
+Controls: `<-/->` navigate - `F` present (fullscreen) - `H` hide the header - `G` toggle the measurement grid. See [Presenter -> Controls](/presenter/controls).
 
 :::tip File paths
 The presenter loads slides into an `<iframe>`. When opening from `file://`, launch the browser with `--allow-file-access-from-files` (Edge/Chrome) so the iframe can load sibling slide files, or serve the folder over HTTP (`npx serve`).
@@ -50,7 +50,7 @@ The presenter loads slides into an `<iframe>`. When opening from `file://`, laun
 
 ## Regenerate the deck
 
-All 23 generated slides (slide 7 is bespoke) come from one script:
+All 23 generated slides (slide 7 is bespoke under `slides-clippyflow/`) come from one script:
 
 ```bash
 cd generator
@@ -66,12 +66,10 @@ Edit the `SLIDES[]` content model inside [`build-deck.js`](/generator/content-mo
 <!DOCTYPE html><html><head>
   <link rel="stylesheet" href="design-system/clippyslide.css">
 </head><body>
-  <div class="cs-stage cs-stage--glow">
-    <div class="cs-panel blue" style="left:80px;top:120px;width:520px;height:300px">
-      <div class="cs-in" style="padding:24px">
-        <div class="cs-title">Hello, CoE</div>
-        <div class="cs-body">A glowing gradient-border panel, straight from the token set.</div>
-      </div>
+  <div class="cf-stage">
+    <div class="cf-panel spectrum" style="left:80px;top:120px;width:560px;height:300px">
+      <div class="cf-title">Hello, ClippyFlow</div>
+      <div class="cf-body">A translucent navy card with a spectrum rim and nitrous structure.</div>
     </div>
   </div>
 </body></html>

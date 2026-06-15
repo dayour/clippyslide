@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CoE Framework — ClippySlide</title>
+<title>ClippyFlow -- ClippySlide</title>
 <style>
   :root{
-    --cyan:#39B0FF; --peri:#818EFF; --mag:#CA5BCD; --coral:#F77181;
-    --white:#f3f5f7; --muted:#7c8694;
+    --cyan:#00CFE6; --nitrous:#2986FF; --mag:#DF29FF; --purple:#7B3DFF;
+    --white:#EAF2FB; --muted:rgba(234,242,251,.58);
     --mono:"Cascadia Code","Consolas",ui-monospace,monospace;
-    --grad-title:linear-gradient(90deg,#F77181,#CA5BCD 50%,#818EFF);
+    --grad-title:linear-gradient(92deg,#47F0FF,#66A3FF 32%,#B28CFF 64%,#E970FF);
   }
   *{box-sizing:border-box}
   html,body{margin:0;height:100%;background:#000;overflow:hidden;
     font-family:"Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;}
 
-  /* ── Layer 1 · presentation (full-bleed reproduction, top-anchored, scaled) ── */
+  /* -- Layer 1 - presentation (full-bleed reproduction, top-anchored, scaled) -- */
   #viewport{position:fixed;inset:0;background:#000;overflow:hidden;}
   #frameWrap{position:absolute;left:50%;top:0;width:1280px;height:720px;
     transform:translateX(-50%) scale(var(--s,1));transform-origin:top center;
@@ -26,7 +26,7 @@
   .navzone{position:fixed;top:0;bottom:0;width:12%;z-index:600;cursor:pointer;background:transparent;border:0;outline:0;}
   .navzone.left{left:0;} .navzone.right{right:0;}
 
-  /* ── Layer 2 · viewport-grid measurement border (toggle: G) ── */
+  /* -- Layer 2 - viewport-grid measurement border (toggle: G) -- */
   #measure{position:absolute;left:50%;top:0;width:1280px;height:720px;
     transform:translateX(-50%) scale(var(--s,1));transform-origin:top center;
     z-index:680;pointer-events:none;display:none;}
@@ -44,11 +44,11 @@
   #measure .dim.stage{left:6px;top:6px;}
   #measure .dim.safe{right:6px;bottom:30px;color:#9fffc6;border-color:rgba(34,197,94,.4);}
 
-  /* ── Layer 3 · floating header tilebar (recedes; hover/idle controlled) ── */
+  /* -- Layer 3 - floating header tilebar (recedes; hover/idle controlled) -- */
   .floating-header{
     position:fixed;top:0;left:0;right:0;height:34px;z-index:700;
     display:flex;align-items:center;gap:8px;padding:0 12px;
-    background:linear-gradient(180deg,rgba(0,0,0,.80) 0%,rgba(0,0,0,.32) 64%,transparent 100%);
+    background:linear-gradient(180deg,rgba(9,16,24,.84) 0%,rgba(9,16,24,.34) 64%,transparent 100%);
     opacity:.42;transition:opacity .4s ease;}
   .floating-header:hover{opacity:1;}
   .floating-header.hidden{opacity:0;pointer-events:none;}
@@ -68,7 +68,7 @@
 
   #hint{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:650;
     font-size:11px;color:var(--muted);font-family:var(--mono);
-    background:rgba(3,5,18,.55);border:1px solid rgba(255,255,255,.07);
+    background:rgba(9,16,24,.58);border:1px solid rgba(41,134,255,.18);
     padding:4px 11px;border-radius:999px;transition:opacity .5s ease;}
 </style>
 </head>
@@ -82,7 +82,7 @@
   <div id="measure">
     <div class="edge t"></div><div class="edge b"></div><div class="edge l"></div><div class="edge r"></div>
     <div class="tick cx"></div><div class="tick cy"></div>
-    <div class="dim stage" id="dimStage">stage 1280×720</div>
+    <div class="dim stage" id="dimStage">stage 1280x720</div>
     <div class="dim safe" id="dimSafe">safe</div>
   </div>
 
@@ -91,8 +91,8 @@
 
   <!-- Layer 3: floating header tilebar (separate layer, nothing else) -->
   <header class="floating-header" id="bar">
-    <span class="brand">ClippySlide</span>
-    <span class="page-title" id="deckTitle">CoE Framework</span>
+    <span class="brand">ClippyFlow</span>
+    <span class="page-title" id="deckTitle">ClippySlide default</span>
     <span class="header-stat" id="vpStat">vp</span>
     <button class="header-btn" id="btnPrev" type="button" title="Previous (left arrow)">&lsaquo;</button>
     <span class="header-stat" id="counter">1 / 24</span>
@@ -109,7 +109,8 @@
   "use strict";
   var SLIDES = [];
   for (var n = 1; n <= 24; n++){
-    SLIDES.push(n === 7 ? "slides/07-orchestration.html"
+    SLIDES.push(n === 1 ? "slides-clippyflow/01-title.html"
+                        : n === 7 ? "slides-clippyflow/07-orchestration.html"
                         : "deck/" + (n < 10 ? "0"+n : ""+n) + ".html");
   }
   var TOTAL = SLIDES.length, idx = 0;

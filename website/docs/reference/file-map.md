@@ -9,48 +9,48 @@ Where everything lives in the repository.
 
 ```
 clippyslide/
-├── README.md
-├── LICENSE
-├── design-system/                 # the token-extracted source of truth
-│   ├── clippyslide.css            #   component library (cs-* classes)
-│   ├── clippyslide.tokens.json    #   structured tokens + provenance
-│   ├── clippyslide.theme.xml      #   OOXML-aligned theme projection
-│   └── clippyslide.profile.yaml   #   authoring contract + QA checklist
-├── generator/
-│   └── build-deck.js              # data-driven 24-slide generator (zero deps)
-├── deck/                          # generated output (do not hand-edit)
-│   ├── NN.html                    #   one standalone slide per file
-│   ├── NN.png                     #   rendered preview
-│   └── index.json                 #   manifest the presenter reads
-├── slides/                        # bespoke, hand-authored slides
-│   ├── 01-title.html
-│   ├── 07-orchestration.html      #   the one slide the generator references
-│   └── 18-lifecycle.html
-├── presenter/
-│   └── present.html               # viewport-grid presenter (full-bleed + floating header)
-├── skill/                         # the Clawpilot /clippyslide skill
-│   ├── SKILL.md                   #   8 commands + self-reflection notes
-│   ├── assets/                    #   bundled CSS + profiles + example slides
-│   └── scripts/                   #   extract-tokens.py, render.ps1, pptx-to-png.ps1
-├── extension/                     # TileSlide Adaptive-Card theme
-│   ├── coe-theme.css              #   scoped [data-theme=clippyslide-coe] styles
-│   ├── coe-theme.js               #   host config + decorateCoe()
-│   └── coe-sample/                #   two-slide AC sample deck
-└── website/                       # this Docusaurus wiki
-    ├── docs/                      #   the wiki content
-    ├── docusaurus.config.js
-    └── sidebars.js
+├-- README.md
+├-- LICENSE
+├-- design-system/                 # the token-extracted source of truth
+|   ├-- clippyslide.css            #   component library (cs-* classes)
+|   ├-- clippyslide.tokens.json    #   structured tokens + provenance
+|   ├-- clippyslide.theme.xml      #   OOXML-aligned theme projection
+|   +-- clippyslide.profile.yaml   #   authoring contract + QA checklist
+├-- generator/
+|   +-- build-deck.js              # data-driven 24-slide generator (zero deps)
+├-- deck/                          # generated output (do not hand-edit)
+|   ├-- NN.html                    #   one standalone slide per file
+|   ├-- NN.png                     #   rendered preview
+|   +-- index.json                 #   manifest the presenter reads
+├-- slides/                        # bespoke, hand-authored slides
+|   ├-- 01-title.html
+|   ├-- 07-orchestration.html      #   the one slide the generator references
+|   +-- 18-lifecycle.html
+├-- presenter/
+|   +-- present.html               # viewport-grid presenter (full-bleed + floating header)
+├-- skill/                         # the Clawpilot /clippyslide skill
+|   ├-- SKILL.md                   #   8 commands + self-reflection notes
+|   ├-- assets/                    #   bundled CSS + profiles + example slides
+|   +-- scripts/                   #   extract-tokens.py, render.ps1, pptx-to-png.ps1
+├-- extension/                     # TileSlide Adaptive-Card theme
+|   ├-- coe-theme.css              #   scoped [data-theme=clippyslide-coe] styles
+|   ├-- coe-theme.js               #   host config + decorateCoe()
+|   +-- coe-sample/                #   two-slide AC sample deck
++-- website/                       # this Docusaurus wiki
+    ├-- docs/                      #   the wiki content
+    ├-- docusaurus.config.js
+    +-- sidebars.js
 ```
 
 ## The "edit here, not there" rules
 
-| If you want to change… | Edit | Not |
+| If you want to change... | Edit | Not |
 | --- | --- | --- |
 | a slide's content | `generator/build-deck.js` (`SLIDES[]`) | `deck/NN.html` |
 | a token | **both** CSS copies + the profiles | one copy |
 | the look of all panels | `design-system/clippyslide.css` | individual slides |
 | slide 7 | `slides/07-orchestration.html` | the generator |
-| the presenter | `presenter/present.html` | — |
+| the presenter | `presenter/present.html` | -- |
 
 ## Two CSS copies
 

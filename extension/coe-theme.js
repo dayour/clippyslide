@@ -1,4 +1,4 @@
-/* clippyslide-coe theme module — hostConfig + post-render DOM decorator.
+/* clippyslide-coe theme module -- hostConfig + post-render DOM decorator.
    Shared verbatim between the verification harness and index.html. */
 (function (global) {
   "use strict";
