@@ -32,7 +32,7 @@
               "required": ["id", "kind", "role", "bounds"],
               "properties": {
                 "id": {"type": "string", "pattern": "^[A-Za-z0-9_-]+$"},
-                "kind": {"enum": ["text", "shape", "line", "connector", "icon", "picture", "background", "video", "chart", "group"]},
+                "kind": {"enum": ["text", "shape", "line", "connector", "icon", "picture", "background", "video", "chart", "table", "group"]},
                 "role": {"type": "string"},
                 "bounds": {
                   "type": "object",
