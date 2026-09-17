@@ -19,6 +19,10 @@ clippyslide/
 ├-- generator/
 |   ├-- build-deck.js              # data-driven 24-slide generator (zero deps)
 |   +-- build-clippydecks.js       # packages deck folders into single-file decks
+├-- clippydeck_harvest/
+|   ├-- SPEC.md                    # complete SWE architecture and acceptance contract
+|   ├-- schemas/                   # manifest, content, and replacement-map JSON schemas
+|   +-- examples/                  # synthetic profile, layout, and manifest examples
 ├-- deck/                          # generated output (do not hand-edit)
 |   ├-- NN.html                    #   one standalone slide per file
 |   ├-- NN.png                     #   rendered preview
@@ -34,14 +38,17 @@ clippyslide/
 |   +-- 18-lifecycle.html
 ├-- presenter/
 |   +-- present.html               # viewport-grid presenter (full-bleed + floating header)
-├-- skill/                         # the Clawpilot /clippyslide skill
+├-- skill/                         # the Clawpilot /clippyslide authoring skill
 |   ├-- SKILL.md                   #   8 commands + self-reflection notes
 |   ├-- assets/                    #   bundled CSS + profiles + example slides
 |   +-- scripts/                   #   extract-tokens.py, render.ps1, pptx-to-png.ps1
-├-- extension/                     # TileSlide Adaptive-Card theme
+├-- skills/clippydeck-harvest/     # the reference harvesting and privacy skill
+|   +-- SKILL.md                   #   inspect through package workflow
+├-- extension/                     # Adaptive Card theme and content plugins
 |   ├-- coe-theme.css              #   scoped [data-theme=clippyslide-coe] styles
 |   ├-- coe-theme.js               #   host config + decorateCoe()
-|   +-- coe-sample/                #   two-slide AC sample deck
+|   ├-- clippydeck-harvest.js      #   bindings, syntheticization, privacy audit
+|   +-- harvest-sample/            #   Adaptive Card binding example
 +-- website/                       # this Docusaurus wiki
     ├-- docs/                      #   the wiki content
     |   +-- library.mdx            #     generated deck library page
@@ -60,6 +67,9 @@ clippyslide/
 | slide 7 | `slides/07-orchestration.html` | the generator |
 | the presenter | `presenter/present.html` | -- |
 | the deck list / Library | `DECKS` in `generator/build-clippydecks.js` | `website/docs/library.mdx` |
+| a harvested layout | `clippydeck_harvest` package `layout.template.json` | rendered slide HTML |
+| customer wording | the selected content profile | layout, CSS, filenames, IDs, or comments |
+| real-to-synthetic mapping | a private replacement map | public repository files |
 | a packaged deck | the deck's slide sources, then rebuild | `*-clippydeck.html` |
 
 ## Two CSS copies

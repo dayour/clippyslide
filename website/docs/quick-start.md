@@ -77,6 +77,20 @@ Edit the `SLIDES[]` content model inside [`build-deck.js`](/generator/content-mo
 
 See [Components](/design-system/components) for the full class list.
 
+## Harvest a reference design
+
+For an authorized existing PPTX, PDF, HTML page, image, video, ClippyDeck, or Adaptive Card source, follow the [ClippyDeck Harvest workflow](/harvest/workflow). The workflow extracts exact visual evidence, moves mutable text into `${content.path}` bindings, creates a synthetic public profile, reconstructs the deck, and validates privacy and visual fidelity.
+
+Start with:
+
+```text
+skills/clippydeck-harvest/SKILL.md
+clippydeck_harvest/SPEC.md
+clippydeck_harvest/examples/
+```
+
+The publishable default is always `content.synthetic.json`; restricted `content.real.json` files are gitignored.
+
 ## Build this wiki locally
 
 ```bash

@@ -7,6 +7,8 @@ title: Methodology
 
 The single idea that makes ClippySlide work: **don't eyeball a design -- read its source.** A `.pptx` is a zip of XML. Every color, gradient stop, and dimension is in there as a number. Extracting those numbers gives a pixel-faithful reproduction that no amount of "looks about right" can match.
 
+[ClippyDeck Harvest](/harvest/overview) generalizes this method across PPTX, PDF, HTML, images, video, diagrams, and Adaptive Cards, and separates mutable customer content into real and synthetic JSON profiles.
+
 ## Step 1 -- A `.pptx` is a zip
 
 ```python

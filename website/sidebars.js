@@ -27,6 +27,19 @@ const sidebars = {
     },
     {
       type: 'category',
+      label: 'ClippyDeck Harvest',
+      collapsed: false,
+      items: [
+        'harvest/overview',
+        'harvest/architecture',
+        'harvest/schemas',
+        'harvest/workflow',
+        'harvest/privacy',
+        'harvest/plugin',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Deck Generator',
       items: [
         'generator/overview',
@@ -54,7 +67,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'TileSlide Extension',
+      label: 'Adaptive Card Extensions',
       items: [
         'extension/coe-theme',
         'extension/integration',

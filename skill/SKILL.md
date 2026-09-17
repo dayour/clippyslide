@@ -28,6 +28,14 @@ ClippyFlow profile and `cf-` components.
 **Always read `assets/clippyslide.profile.yaml` first** -- it is the single source of truth for
 tokens, components, archetypes, and the QA checklist.
 
+## Reference harvesting
+
+When the request is to extract or reproduce an authorized existing presentation, use the dedicated
+`clippydeck-harvest` skill in `../skills/clippydeck-harvest/SKILL.md`. It extends the exact-source
+method beyond PPTX tokens to layout, shapes, diagrams, dataflows, pictures, video, backgrounds,
+and Adaptive Card-compatible content bindings. It also requires separate real and synthetic JSON
+profiles so customer identifiers never become part of the reusable template.
+
 ## The design system (summary -- full values in the profile/tokens)
 
 | Element | Value |

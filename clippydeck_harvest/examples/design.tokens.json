@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0.0",
+  "source": {"kind": "pptx", "digest": "0000000000000000000000000000000000000000000000000000000000000000"},
+  "tokens": {
+    "color": {
+      "canvas": {"value": "#0D1B2A", "confidence": 1, "evidence": "theme:dk1"},
+      "structure": {"value": "#2986FF", "confidence": 1, "evidence": "shape-line:slide-001/title-rule"}
+    },
+    "gradient": {
+      "canvas": {"value": "linear-gradient(135deg,#0D1B2A 0%,#1B2838 100%)", "confidence": 1, "evidence": "slide-master-1/background"}
+    },
+    "text": {
+      "title": {"family": "Trebuchet MS", "size": 48, "weight": 700, "color": "#FFFFFF", "confidence": 0.98},
+      "body": {"family": "Calibri", "size": 18, "weight": 400, "color": "#E0FBFC", "confidence": 0.98}
+    }
+  }
+}

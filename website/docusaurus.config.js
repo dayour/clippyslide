@@ -19,7 +19,11 @@ const config = {
   trailingSlash: false,
 
   onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   i18n: {
     defaultLocale: 'en',
@@ -63,6 +67,7 @@ const config = {
           {to: '/quick-start', label: 'Quick Start', position: 'left'},
           {to: '/presenter/overview', label: 'Presenter', position: 'left'},
           {to: '/library', label: 'Library', position: 'left'},
+          {to: '/harvest/overview', label: 'Harvest', position: 'left'},
           {href: 'https://github.com/dayour/clippyslide', label: 'GitHub', position: 'right'},
         ],
       },
@@ -82,6 +87,7 @@ const config = {
             items: [
               {label: 'Deck Generator', to: '/generator/overview'},
               {label: 'Deck Library', to: '/library'},
+              {label: 'ClippyDeck Harvest', to: '/harvest/overview'},
               {label: 'Presenter', to: '/presenter/overview'},
               {label: 'Clawpilot Skill', to: '/skill/overview'},
             ],

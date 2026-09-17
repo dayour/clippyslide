@@ -1,0 +1,24 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "body": [
+    {
+      "type": "Container",
+      "id": "cf-stage",
+      "items": [
+        {"type": "TextBlock", "id": "kicker", "text": "${content.slides.slide001.kicker}", "isSubtle": true},
+        {"type": "TextBlock", "id": "title", "text": "${content.slides.slide001.title}", "size": "ExtraLarge", "weight": "Bolder", "wrap": true},
+        {"type": "TextBlock", "id": "summary", "text": "${content.slides.slide001.summary}", "wrap": true},
+        {
+          "type": "FactSet",
+          "id": "metrics",
+          "facts": [
+            {"title": "Customer", "value": "${content.customer.displayName}"},
+            {"title": "Environment", "value": "${content.environment.label}"}
+          ]
+        }
+      ]
+    }
+  ]
+}

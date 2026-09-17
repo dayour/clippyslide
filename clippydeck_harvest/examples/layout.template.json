@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0.0",
+  "deck": {"id": "sample-architecture-deck", "width": 1280, "height": 720},
+  "slides": [
+    {
+      "id": "slide-001",
+      "archetype": "architecture-dataflow",
+      "background": {"kind": "gradient", "token": "gradient.canvas"},
+      "elements": [
+        {"id": "kicker", "kind": "text", "role": "kicker", "bounds": {"x": 64, "y": 64, "w": 600, "h": 28}, "styleRef": "text.kicker", "value": "${content.slides.slide001.kicker}"},
+        {"id": "title", "kind": "text", "role": "title", "bounds": {"x": 64, "y": 104, "w": 920, "h": 84}, "styleRef": "text.title", "value": "${content.slides.slide001.title}"},
+        {"id": "summary", "kind": "text", "role": "body", "bounds": {"x": 64, "y": 202, "w": 900, "h": 54}, "styleRef": "text.body", "value": "${content.slides.slide001.summary}"},
+        {"id": "source", "kind": "shape", "role": "dataflow-node", "bounds": {"x": 96, "y": 340, "w": 220, "h": 120}, "styleRef": "card.source"},
+        {"id": "processor", "kind": "shape", "role": "dataflow-node", "bounds": {"x": 520, "y": 340, "w": 240, "h": 120}, "styleRef": "card.processor"},
+        {"id": "destination", "kind": "shape", "role": "dataflow-node", "bounds": {"x": 944, "y": 340, "w": 220, "h": 120}, "styleRef": "card.destination"}
+      ],
+      "relationships": [
+        {"from": "source", "to": "processor", "kind": "dataflow"},
+        {"from": "processor", "to": "destination", "kind": "dataflow"}
+      ]
+    }
+  ]
+}

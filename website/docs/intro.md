@@ -15,15 +15,16 @@ title: Introduction
 
 ## What's in the box
 
-ClippySlide is five things that share one default ClippyFlow token set:
+ClippySlide is six integrated layers that share one default ClippyFlow token set:
 
 | Layer | What it is | Where |
 | --- | --- | --- |
 | **Design system** | The ClippyFlow CSS component library + machine-readable token profiles (JSON / XML / YAML), with legacy CoE files preserved | [`design-system/`](/design-system/tokens) |
 | **Deck generator** | A data-driven Node generator that emits the full ClippyFlow deck from one content model | [`generator/`](/generator/overview) |
+| **ClippyDeck Harvest** | An evidence-driven pipeline that extracts reusable layouts, diagrams, media, and design tokens while separating real and synthetic content | [`clippydeck_harvest/`](/harvest/overview) |
 | **Presenter** | A clean, viewport-grid presenter: full-bleed slides + a single floating header layer | [`presenter/`](/presenter/overview) |
-| **Clawpilot skill** | An 8-command skill that encodes the build, render, validate, export, and present workflow | [`skill/`](/skill/overview) |
-| **TileSlide extension** | A legacy CoE theme for the Adaptive-Card TileSlide app | [`extension/`](/extension/coe-theme) |
+| **Skills** | ClippySlide authoring plus an 8-command harvest workflow for extraction, binding, syntheticization, reconstruction, and validation | [`skills/`](/skill/overview) |
+| **Adaptive Card extensions** | Theme and content-binding modules for editable cards and privacy-safe profile switching | [`extension/`](/harvest/plugin) |
 
 ## The aesthetic
 

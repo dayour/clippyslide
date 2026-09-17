@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dayour.github.io/clippyslide/schemas/layout-template.schema.json",
+  "title": "ClippyDeck Harvest Layout Template",
+  "type": "object",
+  "required": ["schemaVersion", "deck", "slides"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "deck": {
+      "type": "object",
+      "required": ["id", "width", "height"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "width": {"type": "number", "exclusiveMinimum": 0},
+        "height": {"type": "number", "exclusiveMinimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "slides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "archetype", "elements"],
+        "properties": {
+          "id": {"type": "string"},
+          "archetype": {"type": "string"},
+          "background": {"type": "object"},
+          "elements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "kind", "role", "bounds"],
+              "properties": {
+                "id": {"type": "string", "pattern": "^[A-Za-z0-9_-]+$"},
+                "kind": {"enum": ["text", "shape", "line", "connector", "icon", "picture", "background", "video", "chart", "group"]},
+                "role": {"type": "string"},
+                "bounds": {
+                  "type": "object",
+                  "required": ["x", "y", "w", "h"],
+                  "properties": {
+                    "x": {"type": "number"}, "y": {"type": "number"},
+                    "w": {"type": "number", "minimum": 0}, "h": {"type": "number", "minimum": 0}
+                  },
+                  "additionalProperties": false
+                },
+                "styleRef": {"type": "string"},
+                "value": {},
+                "assetRef": {"type": "string"},
+                "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+                "sourceEvidence": {"type": "array", "items": {"type": "string"}}
+              },
+              "additionalProperties": true
+            }
+          },
+          "relationships": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["from", "to", "kind"],
+              "properties": {
+                "from": {"type": "string"},
+                "to": {"type": "string"},
+                "kind": {"enum": ["dataflow", "sequence", "association", "containment", "annotation"]},
+                "label": {"type": "string"},
+                "directed": {"type": "boolean", "default": true}
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

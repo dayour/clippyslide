@@ -1,0 +1,16 @@
+{
+  "id": "clippydeck-harvest",
+  "version": "1.0.0",
+  "name": "ClippyDeck Harvest Content Binding",
+  "description": "Resolves Adaptive Card-compatible content bindings and validates synthetic profiles without network or persistence access.",
+  "entry": "clippydeck-harvest.js",
+  "capabilities": ["content-binding", "syntheticization", "privacy-audit", "binding-inventory"],
+  "permissions": {"network": false, "filesystem": false, "storage": false},
+  "schemas": [
+    "../clippydeck_harvest/schemas/adaptive-content.schema.json",
+    "../clippydeck_harvest/schemas/replacement-map.schema.json",
+    "../clippydeck_harvest/schemas/harvest-manifest.schema.json",
+    "../clippydeck_harvest/schemas/layout-template.schema.json",
+    "../clippydeck_harvest/schemas/design-tokens.schema.json"
+  ]
+}

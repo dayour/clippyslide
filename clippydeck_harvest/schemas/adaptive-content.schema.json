@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dayour.github.io/clippyslide/schemas/adaptive-content.schema.json",
+  "title": "ClippyDeck Harvest Adaptive Content",
+  "type": "object",
+  "required": ["schemaVersion", "profile", "content"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "profile": {
+      "type": "object",
+      "required": ["id", "privacyMode", "synthetic"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "privacyMode": {"enum": ["private-real", "synthetic-review", "public-release"]},
+        "synthetic": {"type": "boolean"},
+        "locale": {"type": "string", "default": "en-US"}
+      },
+      "additionalProperties": false
+    },
+    "content": {
+      "type": "object",
+      "description": "Arbitrary JSON values addressable through ${content.<path>} bindings."
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "type", "value"],
+        "properties": {
+          "path": {"type": "string", "pattern": "^(?!(?:.*\\.)?(?:__proto__|prototype|constructor)(?:\\.|$))(?:[A-Za-z0-9_-]+\\.)*[A-Za-z0-9_-]+$"},
+          "type": {"enum": ["customer", "person", "organization", "product", "project", "tenant", "domain", "email", "url", "geography", "metric", "date", "quote", "other"]},
+          "value": {},
+          "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+          "source": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"profile": {"properties": {"privacyMode": {"const": "public-release"}}}}},
+      "then": {"properties": {"profile": {"properties": {"synthetic": {"const": true}}}}}
+    }
+  ],
+  "additionalProperties": false
+}

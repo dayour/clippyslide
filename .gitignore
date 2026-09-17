@@ -26,3 +26,8 @@ scratch/
 refs/
 profiles/
 website/pages-sim/
+
+# restricted ClippyDeck Harvest content
+*.real.json
+replacement-map.private.json
+harvest-private/

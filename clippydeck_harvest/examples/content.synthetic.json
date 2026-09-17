@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0.0",
+  "profile": {
+    "id": "contoso-public",
+    "privacyMode": "public-release",
+    "synthetic": true,
+    "locale": "en-US"
+  },
+  "content": {
+    "customer": {"displayName": "Contoso"},
+    "environment": {"label": "Production"},
+    "slides": {
+      "slide001": {
+        "kicker": "Reference architecture",
+        "title": "Contoso integration dataflow",
+        "summary": "A reusable view of ingestion, orchestration, grounding, and response delivery."
+      }
+    }
+  },
+  "entities": [
+    {"path": "customer.displayName", "type": "customer", "value": "Contoso", "sensitivity": "public", "source": "synthetic"}
+  ]
+}

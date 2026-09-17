@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "harvestId": "sample-architecture-deck",
+  "createdAt": "2026-09-17T00:00:00Z",
+  "source": {
+    "kind": "pptx",
+    "name": "authorized-reference.pptx",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "authorized": true,
+    "classification": "internal"
+  },
+  "privacy": {
+    "mode": "public-release",
+    "defaultProfile": "content.synthetic.json",
+    "forbiddenTermDigests": []
+  },
+  "slides": [
+    {"id": "slide-001", "number": 1, "archetype": "architecture-dataflow", "elements": 8, "lowConfidenceElements": 0, "media": [], "approximations": []}
+  ],
+  "outputs": {
+    "layout": "layout.template.json",
+    "tokens": "design.tokens.json",
+    "syntheticContent": "content.synthetic.json",
+    "adaptiveCards": ["adaptive/slide-001.card.json"],
+    "standaloneDeck": "deck/sample-architecture-clippydeck.html"
+  },
+  "validation": {"schema": "pass", "privacy": "pass", "visual": "pending", "offline": "pending"}
+}

@@ -14,11 +14,12 @@ const TOKENS = [
 
 const CARDS = [
   {title: 'ClippyFlow Design System', to: '/design-system/tokens', body: 'A deep-navy spectrum canvas, translucent cards, nitrous structure, and ClippyFlow token profiles.'},
-  {title: 'Legacy CoE Extraction', to: '/reproduction/methodology', body: 'The original OOXML extraction method remains documented and available as legacy assets.'},
+  {title: 'ClippyDeck Harvest', to: '/harvest/overview', body: 'Extract layouts, design tokens, diagrams, dataflows, and media while keeping real and synthetic content in separate JSON profiles.'},
+  {title: 'Reproduction Method', to: '/reproduction/methodology', body: 'Read exact source geometry, colors, gradients, and relationships instead of approximating a design by eye.'},
   {title: 'Deck Generator', to: '/generator/overview', body: 'One content model, ten archetype renderers, and a zero-dependency Node script for the ClippyFlow deck.'},
   {title: 'Presenter', to: '/presenter/overview', body: 'Full-bleed slides on a viewport grid with a single floating header layer. No chrome.'},
   {title: 'Clawpilot Skill', to: '/skill/overview', body: 'Eight commands that encode the build, render, validate, export, and present loop.'},
-  {title: 'TileSlide Extension', to: '/extension/coe-theme', body: 'The legacy CoE theme for live, editable Adaptive Cards.'},
+  {title: 'Adaptive Card Extensions', to: '/harvest/plugin', body: 'Content binding, synthetic profile switching, privacy audit, and legacy TileSlide theme support.'},
 ];
 
 export default function Home() {
@@ -39,6 +40,7 @@ export default function Home() {
             <Link className={styles.primaryBtn} to="/intro">Read the Wiki</Link>
             <Link className={styles.ghostBtn} to="/quick-start">Quick Start</Link>
             <Link className={styles.ghostBtn} to="/presenter/overview">Presenter</Link>
+            <Link className={styles.ghostBtn} to="/harvest/overview">Harvest</Link>
           </div>
         </div>
       </header>

@@ -52,6 +52,12 @@ Both wrap their content in a transparent `coe-stage` container so panels size to
 
 The theme was validated in isolation (an HTML harness rendering the two sample cards with the same CSS + host config + decorator) **before** touching the 1,400-line `index.html`, then re-verified live in the app via the `#load=coe` deep-link. The order matters: prove the hard part (the visual theme) in isolation, then integrate.
 
+## Harvest content binding
+
+`extension/clippydeck-harvest.js` adds a theme-independent content layer. It resolves `${content.path}` strings before an Adaptive Card is parsed, applies deterministic synthetic substitutions, inventories bindings, and scans resolved output for forbidden customer terms. Keep this separate from visual decoration: Harvest selects content; `coe-theme.js` or a ClippyFlow theme styles the resulting card.
+
+See [Harvest Runtime Plugin](/harvest/plugin) for the API and security contract.
+
 ## Presenter vs. extension
 
 Two ways to present a ClippySlide deck:

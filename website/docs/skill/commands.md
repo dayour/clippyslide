@@ -5,7 +5,7 @@ title: The 8 Commands
 
 # The 8 Commands
 
-Each command in `SKILL.md` is self-contained and now assumes the ClippyFlow default unless a legacy CoE reproduction is explicitly requested.
+Each command in `skill/SKILL.md` is self-contained and assumes the ClippyFlow default. For full reference extraction, entity separation, synthetic profiles, diagrams, media, and privacy validation, use the separate [ClippyDeck Harvest workflow](/harvest/workflow).
 
 ## 1. `new` - scaffold a deck
 

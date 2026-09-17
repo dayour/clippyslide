@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dayour.github.io/clippyslide/schemas/replacement-map.schema.json",
+  "title": "ClippyDeck Harvest Replacement Map",
+  "type": "object",
+  "required": ["schemaVersion", "mapId", "replacements"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "mapId": {"type": "string", "minLength": 1},
+    "saltId": {"type": "string"},
+    "replacements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "entityType", "syntheticValue", "scope"],
+        "properties": {
+          "path": {"type": "string", "pattern": "^(?!(?:.*\\.)?(?:__proto__|prototype|constructor)(?:\\.|$))(?:[A-Za-z0-9_-]+\\.)*[A-Za-z0-9_-]+$"},
+          "entityType": {"type": "string"},
+          "originalDigest": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+          "originalValue": {"type": ["string", "number", "boolean", "null"]},
+          "syntheticValue": {"type": ["string", "number", "boolean", "null"]},
+          "scope": {"enum": ["deck", "slide", "element"]},
+          "approved": {"type": "boolean", "default": false},
+          "notes": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

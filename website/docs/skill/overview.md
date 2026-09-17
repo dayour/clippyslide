@@ -7,7 +7,7 @@ title: Overview
 
 ClippySlide ships as a Clawpilot skill invoked as `/clippyslide`. The skill now defaults to ClippyFlow: deep-navy spectrum slides, translucent cards, spectrum title text, and nitrous-blue structure.
 
-The skill lives in [`skill/`](https://github.com/dayour/clippyslide/tree/main/skill).
+The authoring skill lives in [`skill/`](https://github.com/dayour/clippyslide/tree/main/skill). Reference extraction and synthetic-content work uses the dedicated [`skills/clippydeck-harvest/`](https://github.com/dayour/clippyslide/tree/main/skills/clippydeck-harvest) skill.
 
 ## What's bundled
 
@@ -21,6 +21,7 @@ The skill lives in [`skill/`](https://github.com/dayour/clippyslide/tree/main/sk
 | `scripts/extract-tokens.py` | Legacy OOXML token extractor for `.pptx` reproduction work |
 | `scripts/render.ps1` | HTML to PNG via headless Edge |
 | `scripts/pptx-to-png.ps1` | Reference `.pptx` to per-slide PNG via PowerPoint COM |
+| `../skills/clippydeck-harvest/SKILL.md` | Source harvesting, content binding, syntheticization, media extraction, and public-release validation |
 
 ## The governing rule
 

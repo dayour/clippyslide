@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dayour.github.io/clippyslide/schemas/harvest-manifest.schema.json",
+  "title": "ClippyDeck Harvest Manifest",
+  "type": "object",
+  "required": ["schemaVersion", "harvestId", "source", "privacy", "slides", "outputs", "validation"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "harvestId": {"type": "string", "minLength": 1},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "source": {
+      "type": "object",
+      "required": ["kind", "sha256", "authorized"],
+      "properties": {
+        "kind": {"enum": ["pptx", "pdf", "html", "image", "video", "clippydeck", "adaptive-card"]},
+        "name": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[A-Fa-f0-9]{64}$"},
+        "authorized": {"type": "boolean"},
+        "classification": {"enum": ["public", "internal", "confidential", "restricted"]}
+      },
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object",
+      "required": ["mode", "defaultProfile"],
+      "properties": {
+        "mode": {"enum": ["private-real", "synthetic-review", "public-release"]},
+        "defaultProfile": {"type": "string"},
+        "forbiddenTermDigests": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "slides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "archetype", "elements"],
+        "properties": {
+          "id": {"type": "string"},
+          "number": {"type": "integer", "minimum": 1},
+          "archetype": {"type": "string"},
+          "elements": {"type": "integer", "minimum": 0},
+          "lowConfidenceElements": {"type": "integer", "minimum": 0},
+          "media": {"type": "array", "items": {"type": "string"}},
+          "approximations": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "outputs": {
+      "type": "object",
+      "required": ["layout", "tokens", "syntheticContent"],
+      "properties": {
+        "layout": {"type": "string"},
+        "tokens": {"type": "string"},
+        "syntheticContent": {"type": "string"},
+        "adaptiveCards": {"type": "array", "items": {"type": "string"}},
+        "standaloneDeck": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "validation": {
+      "type": "object",
+      "required": ["schema", "privacy", "visual", "offline"],
+      "properties": {
+        "schema": {"enum": ["pending", "pass", "fail"]},
+        "privacy": {"enum": ["pending", "pass", "fail"]},
+        "visual": {"enum": ["pending", "pass", "fail"]},
+        "offline": {"enum": ["pending", "pass", "fail"]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
