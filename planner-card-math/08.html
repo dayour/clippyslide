@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><style>:root{--cf-teal:#00B4D8;--cf-violet:#7B2FF7;--cf-navy:#0D1B2A;--cf-midnight:#1B2838;--cf-slate:#415A77;--cf-ice:#E0FBFC;--cf-snow:#F8FFFE;--cf-coral:#FF6B6B;--cf-gold:#FFD93D;--cf-mint:#6BCB77;--cf-purple:#C77DFF;--cf-hero:linear-gradient(135deg,#00B4D8 0%,#7B2FF7 100%);--cf-dark:linear-gradient(100deg,#0D1B2A 0%,#1B2838 100%);--cf-bar:linear-gradient(90deg,#00B4D8 0%,#7B2FF7 100%);--cf-head:"Trebuchet MS","Segoe UI",sans-serif;--cf-body:Calibri,"Segoe UI",sans-serif;--cf-mono:Consolas,"Courier New",monospace}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:var(--cf-body)}
+.slide{position:relative;display:flex;flex-direction:column;width:1280px;height:720px;padding:56px 64px 44px;overflow:hidden}
+.slide::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--cf-bar)}
+.slide.light{background:var(--cf-snow);color:var(--cf-navy)}
+.slide.ice{background:var(--cf-ice);color:var(--cf-navy)}
+.slide.dark{background:var(--cf-dark);color:#fff}
+.slide.hero{background:var(--cf-hero);color:#fff;justify-content:center;padding:64px 80px 56px}
+.dots{position:absolute;right:70px;top:74px;display:grid;grid-template-columns:repeat(4,12px);gap:16px;opacity:.28}
+.dots i{width:12px;height:12px;border-radius:50%;background:#fff;display:block}
+.head{flex:0 0 auto}
+.kicker{font-family:var(--cf-body);font-size:14px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.light .kicker,.ice .kicker{color:var(--cf-violet)}.dark .kicker{color:var(--cf-teal)}.hero .kicker{color:var(--cf-ice)}
+h1{font-family:var(--cf-head);font-size:42px;line-height:1.06;font-weight:700;letter-spacing:.01em;margin:12px 0 10px;max-width:1080px}
+.hero h1{font-size:56px;letter-spacing:.02em;max-width:900px}
+.sub{font-size:20px;line-height:1.4;max-width:1000px}
+.light .sub,.ice .sub{color:var(--cf-slate)}.dark .sub{color:var(--cf-ice)}.hero .sub{color:var(--cf-ice);font-size:23px;max-width:820px}
+.meta{margin-top:34px;font-family:var(--cf-mono);font-size:14px;color:rgba(255,255,255,.82)}
+.content{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:24px 0 8px}
+.grid{display:grid;gap:20px}.cols2{grid-template-columns:repeat(2,1fr)}.cols3{grid-template-columns:repeat(3,1fr)}
+.card{display:flex;flex-direction:column;padding:24px;border-radius:16px}
+.light .card,.ice .card{background:#fff;box-shadow:0 6px 18px rgba(13,27,42,.08)}
+.dark .card{background:var(--cf-midnight);border:1px solid rgba(224,251,252,.14)}
+.cols3>.card{min-height:196px}.cols2>.card{min-height:252px}.flow>.card{min-height:196px}
+.card>.bar{height:4px;width:52px;border-radius:999px;margin-bottom:16px;background:var(--cf-bar)}
+.card.teal>.bar{background:var(--cf-teal)}.card.violet>.bar{background:var(--cf-violet)}
+.card.mint>.bar{background:var(--cf-mint)}.card.coral>.bar{background:var(--cf-coral)}.card.gold>.bar{background:var(--cf-gold)}
+h2{font-family:var(--cf-head);font-size:22px;font-weight:700;margin:0 0 10px}
+.dark h2{color:#fff}.light h2,.ice h2{color:var(--cf-navy)}
+.id{align-self:flex-start;margin-bottom:12px;padding:5px 10px;border-radius:999px;font:700 12px var(--cf-mono);letter-spacing:.02em}
+.light .id,.ice .id{background:rgba(123,47,247,.1);color:var(--cf-violet)}
+.dark .id{background:rgba(0,180,216,.16);color:var(--cf-teal)}
+p,li{font-size:16px;line-height:1.5}
+.light p,.light li,.ice p,.ice li{color:var(--cf-slate)}.dark p,.dark li{color:var(--cf-ice)}
+ul{margin:8px 0 0;padding-left:20px}li+li{margin-top:7px}
+.flow{display:flex;align-items:stretch;gap:16px}.flow .card{flex:1}
+.step{display:flex;align-items:center;justify-content:center;width:42px;height:42px;margin-bottom:14px;border-radius:50%;font:700 17px var(--cf-head);color:#fff;background:var(--cf-teal)}
+.card.violet .step{background:var(--cf-violet)}.card.mint .step{background:var(--cf-mint)}.card.coral .step{background:var(--cf-coral)}
+.arrow{align-self:center;font-size:26px;font-weight:700;color:var(--cf-teal)}
+.table{width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 6px 18px rgba(13,27,42,.08)}
+.table th,.table td{text-align:left;padding:13px 16px;font-size:15px;border-bottom:1px solid rgba(65,90,119,.14)}
+.table tr:last-child td{border-bottom:none}
+.table th{font:700 12px var(--cf-body);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,#00B4D8,#7B2FF7)}
+.table td{color:var(--cf-slate)}
+code{font-family:var(--cf-mono);font-size:14px;color:var(--cf-violet)}.dark code{color:var(--cf-purple)}
+.footer{flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;font:12px var(--cf-mono);letter-spacing:.04em}
+.light .footer,.ice .footer{color:var(--cf-slate)}.dark .footer{color:rgba(224,251,252,.6)}</style></head><body>
+<section class="slide ice">
+<div class="head"><div class="kicker">Schema reference</div><h1>Stable identifiers and rollups</h1><div class="sub">Machine-readable IDs connect visual tiles to question-card sequences.</div></div>
+<div class="content"><table class="table"><thead><tr><th>Pattern</th><th>Meaning</th><th>Examples</th></tr></thead><tbody>
+<tr><td><code>e# / d# / g#</code></td><td>Entry, alternate-entry, or terminal tiles</td><td><code>e2</code>, <code>d4</code>, <code>g3</code></td></tr>
+<tr><td><code>a1t2 / b2t4 / c1t3</code></td><td>Non-question tile inside a path</td><td>Path + optional variant + tile number</td></tr>
+<tr><td><code>c1:q1/3</code></td><td>Visible question-card rollup</td><td>Question 1 of 3</td></tr>
+<tr><td><code>a2d:q1/n</code></td><td>Named question-set variant</td><td>Decision-support sequence</td></tr>
+<tr><td><code>data-step-id</code></td><td>Stable DOM identifier</td><td><code>data-step-id="c1t2"</code></td></tr>
+<tr><td><code>data-card-rollup</code></td><td>Cards represented by a tile</td><td>Comma-separated card IDs</td></tr></tbody></table></div>
+<div class="footer"><span>Task Planning Flow Architecture</span><span>8 / 8</span></div>
+</section></body></html>

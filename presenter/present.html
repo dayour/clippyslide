@@ -23,7 +23,7 @@
   #slideFrame{width:1280px;height:720px;border:0;display:block;background:#000;}
 
   /* invisible edge click-zones for prev/next */
-  .navzone{position:fixed;top:0;bottom:0;width:12%;z-index:600;cursor:pointer;background:transparent;border:0;outline:0;}
+  .navzone{position:fixed;top:34px;bottom:0;width:12%;z-index:600;cursor:pointer;background:transparent;border:0;outline:0;}
   .navzone.left{left:0;} .navzone.right{right:0;}
 
   /* -- Layer 2 - viewport-grid measurement border (toggle: G) -- */
@@ -70,6 +70,29 @@
     font-size:11px;color:var(--muted);font-family:var(--mono);
     background:rgba(9,16,24,.58);border:1px solid rgba(41,134,255,.18);
     padding:4px 11px;border-radius:999px;transition:opacity .5s ease;}
+
+  /* ── Layer 4 · deck library overlay (L) ── */
+  #library{position:fixed;inset:0;z-index:800;display:flex;align-items:center;justify-content:center;
+    padding:32px;background:rgba(5,10,16,.78);backdrop-filter:blur(6px);}
+  #library[hidden]{display:none;}
+  .lib-panel{width:min(1000px,100%);max-height:100%;overflow:auto;background:#0b131d;
+    border:1px solid rgba(41,134,255,.22);border-radius:16px;padding:24px 26px 20px;
+    box-shadow:0 30px 80px rgba(0,0,0,.6);}
+  .lib-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .lib-sub{margin-right:auto;font-family:var(--mono);font-size:11px;color:var(--muted);}
+  .lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
+  .lib-card{display:flex;flex-direction:column;gap:7px;padding:16px 18px;border-radius:12px;
+    border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.03);
+    text-decoration:none;color:var(--white);transition:border-color .16s,transform .16s,background .16s;}
+  .lib-card:hover{border-color:rgba(0,207,230,.7);background:rgba(0,207,230,.08);transform:translateY(-2px);}
+  .lib-card.current{border-color:rgba(223,41,255,.7);background:rgba(223,41,255,.10);}
+  .lib-badge{align-self:flex-start;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+    color:#9eeaff;background:rgba(0,207,230,.14);border-radius:999px;padding:2px 9px;}
+  .lib-name{font-size:14px;font-weight:700;line-height:1.3;}
+  .lib-blurb{font-size:12px;color:var(--muted);line-height:1.45;}
+  .lib-meta{margin-top:4px;font-family:var(--mono);font-size:10.5px;color:var(--muted);}
+  .lib-foot{margin-top:18px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);
+    font-family:var(--mono);font-size:10.5px;color:var(--muted);}
 </style>
 </head>
 <body class="measure">
@@ -100,18 +123,50 @@
     <span class="header-sep"></span>
     <button class="header-btn" id="btnMeasure" type="button" title="Toggle measure grid (G)">grid</button>
     <button class="header-btn" id="btnPresent" type="button" title="Present (F)">present</button>
+    <button class="header-btn" id="btnLibrary" type="button" title="Deck library (L)">library</button>
   </header>
 
-  <div id="hint">&larr;/&rarr; navigate &middot; F present &middot; H hide bar &middot; G grid</div>
+  <!-- Layer 4: deck library -->
+  <div id="library" hidden>
+    <div class="lib-panel" role="dialog" aria-label="Deck library" aria-modal="true">
+      <div class="lib-head">
+        <span class="brand">Library</span>
+        <span class="lib-sub" id="libSub">decks</span>
+        <button class="header-btn" id="btnLibClose" type="button" aria-label="Close library">close</button>
+      </div>
+      <div class="lib-grid" id="libGrid"></div>
+      <div class="lib-foot">Wiki &amp; decks: <code>https://dayour.github.io/clippyslide/</code></div>
+    </div>
+  </div>
+
+  <div id="hint">&larr;/&rarr; navigate &middot; F present &middot; L library &middot; H hide bar &middot; G grid</div>
 
 <script>
 (function(){
   "use strict";
+
+  /* Mirrors the DECKS registry in generator/build-clippydecks.js. */
+  var DECKS = [
+    {id:"deck", file:"coe-framework-clippydeck.html", name:"Copilot CoE Framework", theme:"TileSlide", slides:24,
+     blurb:"Center of Excellence operating model, from intake and governance through measurement."},
+    {id:"brand-deck", file:"clippyflow-brand-clippydeck.html", name:"ClippyFlow Brand Deck", theme:"ClippyFlow", slides:11,
+     blurb:"Brand manifesto, spectrum palette, the Nitrous Rule, components, and usage guardrails."},
+    {id:"planner-card-math", file:"task-planning-clippydeck.html", name:"Task Planning Flow Architecture", theme:"ClippyFlow", slides:8,
+     blurb:"Generic planning paths from intake to an approved plan, with stable tile and card identifiers."},
+    {id:"atlassian-connectors", file:"atlassian-connectors-clippydeck.html", name:"Atlassian Connectors", theme:"Pine", slides:7,
+     blurb:"Connector landscape and integration patterns for Jira and Confluence."},
+    {id:"slides-clippyflow", file:"clippyflow-samples-clippydeck.html", name:"ClippyFlow Sample Slides", theme:"ClippyFlow", slides:3,
+     blurb:"Reference ClippyFlow slides: title, orchestration, and the spectrum board."},
+    {id:"slides", file:"tileslide-samples-clippydeck.html", name:"TileSlide Sample Slides", theme:"TileSlide", slides:3,
+     blurb:"Legacy TileSlide reference slides used as layout examples for new decks."}
+  ];
+  var DECK_URL = "https://dayour.github.io/clippyslide/decks/";
+
   var SLIDES = [];
   for (var n = 1; n <= 24; n++){
-    SLIDES.push(n === 1 ? "slides-clippyflow/01-title.html"
-                        : n === 7 ? "slides-clippyflow/07-orchestration.html"
-                        : "deck/" + (n < 10 ? "0"+n : ""+n) + ".html");
+    SLIDES.push(n === 1 ? "../slides-clippyflow/01-title.html"
+                        : n === 7 ? "../slides-clippyflow/07-orchestration.html"
+                        : "../deck/" + (n < 10 ? "0"+n : ""+n) + ".html");
   }
   var TOTAL = SLIDES.length, idx = 0;
 
@@ -160,12 +215,39 @@
   var barHidden = false;
   function setBar(h){ barHidden = h; bar.classList.toggle("hidden", h); }
 
+  // Deck library overlay, rendered from the shared DECKS registry.
+  var library = document.getElementById("library");
+  (function renderLibrary(){
+    var total = 0, html = "";
+    for (var i = 0; i < DECKS.length; i++){
+      var d = DECKS[i], cur = (d.id === "deck");
+      total += d.slides;
+      html += '<a class="lib-card' + (cur ? " current" : "") + '" href="' + DECK_URL + d.file + '"'
+            + (cur ? ' aria-current="true"' : "") + ">"
+            + '<span class="lib-badge">' + d.theme + "</span>"
+            + '<span class="lib-name">' + d.name + "</span>"
+            + '<span class="lib-blurb">' + d.blurb + "</span>"
+            + '<span class="lib-meta">' + d.slides + " slides" + (cur ? " &middot; open" : "") + "</span></a>";
+    }
+    document.getElementById("libGrid").innerHTML = html;
+    document.getElementById("libSub").textContent = DECKS.length + " decks \u00b7 " + total + " slides";
+  })();
+  function setLibrary(open){ library.hidden = !open; if (open) setBar(false); }
+  document.getElementById("btnLibrary").onclick  = function(){ setLibrary(true); };
+  document.getElementById("btnLibClose").onclick = function(){ setLibrary(false); };
+  library.onclick = function(e){ if (e.target === library) setLibrary(false); };
+
   document.addEventListener("keydown", function(e){
+    if (!library.hidden){
+      if (e.key === "Escape"){ e.preventDefault(); setLibrary(false); }
+      return;
+    }
     switch(e.key){
       case "ArrowRight": case "PageDown": case " ": e.preventDefault(); next(); break;
       case "ArrowLeft":  case "PageUp": e.preventDefault(); prev(); break;
       case "Home": show(0); break;
       case "End": show(TOTAL - 1); break;
+      case "l": case "L": e.preventDefault(); setLibrary(true); break;
       case "f": case "F": toggleFullscreen(); break;
       case "g": case "G": toggleMeasure(); break;
       case "h": case "H": setBar(!barHidden); break;

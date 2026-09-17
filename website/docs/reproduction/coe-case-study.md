@@ -5,7 +5,7 @@ title: Case Study -- CoE Framework
 
 # Case Study: CoE Framework
 
-The deck that started it all: `CoE_Framework.pptx`, an Oceaneering customer deck about building and governing Copilot Studio agents. ClippySlide reproduces all 24 slides.
+The deck that started it all: `CoE_Framework.pptx`, an Template customer deck about building and governing Copilot Studio agents. ClippySlide reproduces all 24 slides.
 
 ![The reproduced CoE deck](/img/contact-sheet-legacy-coe.png)
 
@@ -49,7 +49,7 @@ The 24 slides map to the real CoE narrative:
 
 | Slides | Topic |
 | --- | --- |
-| 1 | Title -- Oceaneering Agent Orchestration |
+| 1 | Title -- Template Agent Orchestration |
 | 2 | Agent layers |
 | 3-8 | Use-case design, orchestration, child agents |
 | 9-15 | Platform capabilities (redirect, model picker, knowledge, hub, AI controls, evaluations, inventory) |

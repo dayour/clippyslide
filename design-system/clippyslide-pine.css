@@ -1,0 +1,237 @@
+/* ════════════════════════════════════════════════════════════════════════
+   ClippySlide · THEME LAYER · "pine"  ·  v1.1
+   ────────────────────────────────────────────────────────────────────────
+   Sits ON TOP of the source-true clippyslide.css. The core is never edited
+   (so the Template repro deck + token-drift QA stay faithful). Replaces
+   the magenta accent ROLE with pine #274C43.
+
+   Atomic design tokens, three tiers:
+     TIER 1  palette primitives      (--pine-*, carried peri/cyan/coral, status)
+     TIER 2  semantic role tokens    (--t-*)                  -> default from tier 1
+     TIER 3  component atomic tokens  (--chip/tile/flip/slide/wire-*) -> from tier 2
+
+   Tier 1 + 2 live on :root (namespaced, never collide with core --cs-*), so
+   every component resolves whether or not it is inside a themed wrapper.
+   .theme-pine / [data-theme="pine"] adds slide-canvas theming AND shadows the
+   core magenta tokens to pine for any core component used inside it.
+
+   Override model:
+     • per-theme   : wrap in .theme-pine  (or [data-theme="pine"])
+     • per-instance: set the component's atomic tokens inline
+                     style="--tile-border-a:#E8A05A; --tile-fill:#3a1d0e"
+     • status      : add .is-accent/.is-success/.is-info/.is-warning/.is-danger
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ─────────────── TIER 1 (palette) + TIER 2 (semantic) on :root ───────────── */
+:root{
+  /* tier 1 — palette */
+  --pine-050:#EAF4F0; --pine-100:#CDE6DE; --pine-200:#A6D2C5; --pine-300:#76B6A4;
+  --pine-400:#4F9685; --pine-500:#357567; --pine-600:#274C43; --pine-700:#1F3C35;
+  --pine-800:#172E29; --pine-900:#0E1C19;
+  --peri:#818EFF; --cyan:#39B0FF; --coral:#F77181;          /* carried from core */
+  --st-success:#2FA84F; --st-info:#39B0FF; --st-warning:#E8932F;
+  --st-danger:#F4364C;  --st-accent:#274C43;
+
+  /* tier 2 — semantic roles */
+  --t-bg:#000000; --t-bg-elev:#0A1512; --t-bg-elev-2:#0E1C19;
+  --t-fg:#FFFFFF; --t-fg-soft:rgba(255,255,255,.82); --t-fg-dim:rgba(255,255,255,.60);
+  --t-accent:var(--pine-600); --t-accent-text:var(--pine-300);
+  --t-accent-soft:rgba(79,150,133,.16);
+  --t-border:rgba(118,182,164,.45); --t-border-a:var(--pine-400); --t-border-b:var(--pine-600);
+  --t-glow:0 0 18px rgba(39,76,67,.42); --t-glow-color:rgba(79,150,133,.30);
+  --t-focus:var(--pine-300);
+  --t-radius:16px; --t-radius-sm:10px; --t-border-w:1.6px; --t-pad:20px;
+  --t-font:"Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;
+  --t-title-grad:linear-gradient(90deg,var(--coral) 0%,var(--pine-300) 50%,var(--peri) 100%);
+  --t-accent-grad:linear-gradient(135deg,var(--pine-400),var(--pine-600));
+  --t-health-grad:linear-gradient(90deg,#F4364C 0%,#E8932F 22%,#A9D63B 52%,#2FA84F 100%);
+
+  /* tier 3 defaults that the slide canvas needs globally */
+  --slide-bg:#000; --slide-fg:#fff; --slide-fg-dim:rgba(255,255,255,.6);
+  --slide-glow-1:radial-gradient(46% 70% at 96% 4%, rgba(39,76,67,.55) 0%, transparent 60%);
+  --slide-glow-2:radial-gradient(38% 60% at 2% 104%, rgba(53,117,103,.40) 0%, transparent 60%);
+  --slide-title-grad:var(--t-title-grad); --slide-kicker:var(--pine-300);
+  --slide-pad:54px; --slide-health-grad:var(--t-health-grad);
+}
+
+/* themed wrapper: shadow the core magenta tokens to pine so CORE components
+   (.cs-divider, .cs-accent-left, .cs-panel.hero, .cs-pill.mag, .cs-title…)
+   used inside themed content also go pine — without editing clippyslide.css. */
+.theme-pine, [data-theme="pine"]{
+  --cs-mag:#4F9685;
+  --cs-pill-mag:#357567;
+  --cs-grad-hero:linear-gradient(135deg,var(--cs-coral,#F77181) 0%,#4F9685 48%,var(--cs-peri,#818EFF) 100%);
+  --cs-grad-title:linear-gradient(90deg,var(--cs-coral,#F77181) 0%,#76B6A4 50%,var(--cs-peri,#818EFF) 100%);
+  --cs-glow-hero:0 0 22px rgba(53,117,103,.34);
+}
+
+/* reduced-motion: disable component transitions/animations */
+@media (prefers-reduced-motion: reduce){
+  .cs-chip, .cs-flipcard .flip-inner{ transition:none !important; }
+}
+
+/* ════════════════════════════ CHIPS (buttons) ═══════════════════════ */
+.cs-chip{
+  --chip-bg:var(--t-accent); --chip-fg:#fff; --chip-border:transparent;
+  --chip-border-w:1.4px; --chip-radius:999px; --chip-pad-x:16px; --chip-pad-y:8px;
+  --chip-font-size:15px; --chip-font-weight:600; --chip-gap:8px;
+  --chip-glow:0 0 0 rgba(0,0,0,0); --chip-bg-hover:var(--pine-500); --chip-icon-size:16px;
+
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--chip-gap);
+  box-sizing:border-box; padding:var(--chip-pad-y) var(--chip-pad-x);
+  border-radius:var(--chip-radius); border:var(--chip-border-w) solid var(--chip-border);
+  background:var(--chip-bg); color:var(--chip-fg);
+  font-family:var(--t-font); font-size:var(--chip-font-size); font-weight:var(--chip-font-weight);
+  line-height:1; cursor:pointer; box-shadow:var(--chip-glow);
+  transition:background .16s ease, box-shadow .16s ease, transform .12s ease, border-color .16s ease;
+  text-decoration:none; white-space:nowrap;
+}
+.cs-chip:hover{ background:var(--chip-bg-hover); }
+.cs-chip:active{ transform:translateY(1px); }
+.cs-chip:focus-visible{ outline:2px solid var(--t-focus); outline-offset:2px; }
+.cs-chip[disabled], .cs-chip.is-disabled{ opacity:.5; cursor:not-allowed; pointer-events:none; }
+.cs-chip > svg, .cs-chip .ico{ width:var(--chip-icon-size); height:var(--chip-icon-size); flex:0 0 auto; }
+
+/* variants */
+.cs-chip.outline{ --chip-bg:transparent; --chip-border:var(--t-accent); --chip-fg:var(--t-accent-text);
+  --chip-bg-hover:var(--t-accent-soft); }
+.cs-chip.ghost{ --chip-bg:transparent; --chip-border:transparent; --chip-fg:var(--t-accent-text);
+  --chip-bg-hover:var(--t-accent-soft); }
+
+/* sizes */
+.cs-chip.sm{ --chip-pad-x:12px; --chip-pad-y:5px; --chip-font-size:13px; --chip-icon-size:14px; }
+.cs-chip.lg{ --chip-pad-x:22px; --chip-pad-y:11px; --chip-font-size:18px; --chip-icon-size:20px; }
+
+/* status — solid (white text; dark text on the lighter warning fill for AA) */
+.cs-chip.is-success{ --chip-bg:var(--st-success); --chip-bg-hover:#3FBF60; }
+.cs-chip.is-info{    --chip-bg:#1E8AD6;            --chip-bg-hover:#2C97E2; }
+.cs-chip.is-warning{ --chip-bg:var(--st-warning); --chip-bg-hover:#F2A648; --chip-fg:#1c1206; }
+.cs-chip.is-danger{  --chip-bg:var(--st-danger);  --chip-bg-hover:#F85368; }
+/* status — outline/ghost (reset fill so they stay outline/ghost) */
+.cs-chip.outline.is-success,.cs-chip.ghost.is-success{ --chip-bg:transparent; --chip-bg-hover:rgba(47,168,79,.16); --chip-fg:#5FD17E; --chip-border:var(--st-success); }
+.cs-chip.outline.is-info,.cs-chip.ghost.is-info{       --chip-bg:transparent; --chip-bg-hover:rgba(57,176,255,.16); --chip-fg:#6BC6FF; --chip-border:var(--st-info); }
+.cs-chip.outline.is-warning,.cs-chip.ghost.is-warning{ --chip-bg:transparent; --chip-bg-hover:rgba(232,147,47,.16); --chip-fg:#F2B062; --chip-border:var(--st-warning); }
+.cs-chip.outline.is-danger,.cs-chip.ghost.is-danger{   --chip-bg:transparent; --chip-bg-hover:rgba(244,54,76,.16); --chip-fg:#FB6B7C; --chip-border:var(--st-danger); }
+
+/* ════════════════════════════ LIVETILES ════════════════════════════ */
+.cs-livetile{
+  --tile-radius:12px; --tile-border-w:1.7px;
+  --tile-border-a:var(--t-border-a); --tile-border-b:var(--t-border-b);
+  --tile-fill:#05100D; --tile-fill-2:#0A1512;
+  --tile-glow:0 0 18px var(--t-glow-color);
+  --tile-inner-glow:radial-gradient(130% 130% at 30% 10%, rgba(79,150,133,.18), rgba(39,76,67,.05) 100%);
+  --tile-pad:16px 20px; --tile-label-fg:#fff; --tile-label-size:18px; --tile-label-weight:600;
+  --tile-min-w:180px; --tile-min-h:78px;
+
+  position:relative; box-sizing:border-box; display:inline-flex;
+  min-width:var(--tile-min-w); min-height:var(--tile-min-h);
+  padding:var(--tile-border-w); border-radius:var(--tile-radius);
+  background:linear-gradient(135deg,var(--tile-border-a),var(--tile-border-b));
+  box-shadow:var(--tile-glow); font-family:var(--t-font);
+}
+.cs-livetile > .cs-in{
+  position:relative; flex:1 1 auto; display:flex; align-items:center; justify-content:center;
+  text-align:center; border-radius:calc(var(--tile-radius) - 1.5px);
+  padding:var(--tile-pad); background:linear-gradient(180deg,var(--tile-fill),var(--tile-fill-2));
+  overflow:hidden;
+}
+.cs-livetile > .cs-in::before{
+  content:""; position:absolute; inset:0; border-radius:inherit; background:var(--tile-inner-glow);
+}
+.cs-livetile .cs-in > *{ position:relative; z-index:2; }
+.cs-livetile .lbl{ color:var(--tile-label-fg); font-size:var(--tile-label-size); font-weight:var(--tile-label-weight); line-height:1.2; }
+
+/* diamond: rotate the border box, counter-rotate the inner content */
+.cs-livetile.diamond{ transform:rotate(45deg); }
+.cs-livetile.diamond > .cs-in{ transform:rotate(-45deg); }
+
+/* status palettes (one-line per-status remap of border + glow + fill) */
+.cs-livetile.is-accent { --tile-border-a:var(--pine-400);  --tile-border-b:var(--pine-600); --tile-glow:0 0 18px rgba(79,150,133,.30); }
+.cs-livetile.is-success{ --tile-border-a:#7CD08A; --tile-border-b:#2FA84F; --tile-glow:0 0 18px rgba(60,180,90,.28);  --tile-inner-glow:radial-gradient(130% 130% at 30% 10%,rgba(106,194,131,.18),rgba(47,168,79,.05) 100%); }
+.cs-livetile.is-info   { --tile-border-a:#818EFF; --tile-border-b:#39B0FF; --tile-glow:0 0 18px rgba(80,140,255,.28);  --tile-inner-glow:radial-gradient(130% 130% at 30% 10%,rgba(129,142,255,.18),rgba(57,176,255,.06) 100%); }
+.cs-livetile.is-warning{ --tile-border-a:#F0A968; --tile-border-b:#C85A2A; --tile-glow:0 0 18px rgba(220,120,50,.26);  --tile-fill:#3a1d0e; --tile-fill-2:#1c0f07; --tile-inner-glow:radial-gradient(130% 130% at 30% 10%,rgba(232,160,90,.22),rgba(200,90,42,.08) 100%); }
+.cs-livetile.is-danger { --tile-border-a:#F4364C; --tile-border-b:#7A1C26; --tile-glow:0 0 18px rgba(244,54,76,.26); }
+
+/* ════════════════════════════ FLIPCARDS ════════════════════════════
+   Contract (required): .cs-flipgrid > .cs-flipcard > .flip-inner >
+                        .flip-face.front + .flip-face.back
+   Flips on hover OR when .cs-flipcard carries .is-flipped (renderer/JS). */
+.cs-flipgrid{ display:flex; flex-wrap:wrap; gap:18px; font-family:var(--t-font); }
+.cs-flipcard{
+  --flip-w:260px; --flip-h:168px; --flip-radius:14px;
+  --flip-dur:.55s; --flip-ease:cubic-bezier(.2,.7,.2,1); --flip-perspective:1200px;
+  --flip-border-w:1.6px; --flip-border-a:var(--t-border-a); --flip-border-b:var(--t-border-b);
+  --flip-front-bg:linear-gradient(150deg,#0E1C19,#05100D);
+  --flip-back-bg:linear-gradient(150deg,#16302A,#0A1512);
+  --flip-fg:#fff; --flip-glow:0 10px 32px rgba(0,0,0,.5), 0 0 18px var(--t-glow-color);
+  --flip-pad:18px 20px;
+  width:var(--flip-w); height:var(--flip-h); perspective:var(--flip-perspective); background:transparent;
+}
+.cs-flipcard .flip-inner{
+  position:relative; width:100%; height:100%;
+  transition:transform var(--flip-dur) var(--flip-ease); transform-style:preserve-3d;
+}
+.cs-flipcard:hover .flip-inner,
+.cs-flipcard.is-flipped .flip-inner{ transform:rotateY(180deg); }
+.cs-flipcard:focus-visible{ outline:2px solid var(--t-focus); outline-offset:3px; border-radius:var(--flip-radius); }
+
+.cs-flipcard .flip-face{
+  position:absolute; inset:0; box-sizing:border-box;
+  backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border-radius:var(--flip-radius); padding:var(--flip-border-w);
+  background:linear-gradient(135deg,var(--flip-border-a),var(--flip-border-b));
+  box-shadow:var(--flip-glow);
+}
+.cs-flipcard .flip-face > .face-in{
+  width:100%; height:100%; box-sizing:border-box; border-radius:calc(var(--flip-radius) - 1.5px);
+  padding:var(--flip-pad); color:var(--flip-fg); display:flex; flex-direction:column;
+  justify-content:center; gap:8px; overflow:hidden;
+}
+.cs-flipcard .flip-face.front > .face-in{ background:var(--flip-front-bg); }
+.cs-flipcard .flip-face.back{ transform:rotateY(180deg); }
+.cs-flipcard .flip-face.back  > .face-in{ background:var(--flip-back-bg); }
+.cs-flipcard .face-title{ font-size:19px; font-weight:700; }
+.cs-flipcard .face-body{ font-size:15px; line-height:1.34; color:var(--t-fg-soft); }
+
+.cs-flipcard.is-success{ --flip-border-a:#7CD08A; --flip-border-b:#2FA84F; }
+.cs-flipcard.is-info{    --flip-border-a:#818EFF; --flip-border-b:#39B0FF; }
+.cs-flipcard.is-warning{ --flip-border-a:#F0A968; --flip-border-b:#C85A2A; }
+.cs-flipcard.is-danger{  --flip-border-a:#F4364C; --flip-border-b:#7A1C26; }
+
+/* ════════════════════════ CONNECTORS / WIRES ═══════════════════════
+   For dataflow/topology diagrams. Apply .cs-wire to the SVG layer; style
+   strokes with the tokens. Per-edge override via inline vars. */
+.cs-wire{
+  --wire-color:rgba(180,210,200,.62); --wire-w:1.6px;
+  --wire-arrow:rgba(150,200,185,.8); --wire-glow:rgba(79,150,133,0);
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+}
+.cs-wire path, .cs-wire line, .cs-wire polyline{
+  fill:none; stroke:var(--wire-color); stroke-width:var(--wire-w);
+}
+.cs-wire .arrow{ fill:var(--wire-arrow); }
+.cs-wire.is-accent{ --wire-color:rgba(118,182,164,.7); --wire-arrow:var(--pine-300); }
+
+/* ═══════════════════════ CLIPPYSLIDE (adaptive slide) ═══════════════
+   Works with the core .cs-stage (add .theme-pine) OR the standalone
+   .cs-adaptive canvas. Honors both wrapper and direct-class theming. */
+.cs-adaptive{
+  position:relative; width:1280px; height:720px; overflow:hidden;
+  background:var(--slide-glow-1), var(--slide-glow-2), var(--slide-bg);
+  color:var(--slide-fg); font-family:var(--t-font);
+}
+.cs-stage.theme-pine,
+[data-theme="pine"] .cs-stage{
+  background:var(--slide-glow-1), var(--slide-glow-2), var(--slide-bg);
+}
+.cs-slide-title{
+  font-weight:800; font-size:46px; line-height:1.04; letter-spacing:-.5px;
+  background:var(--slide-title-grad); -webkit-background-clip:text; background-clip:text;
+  color:transparent; width:max-content; max-width:92%;
+}
+.cs-slide-kicker{ font-weight:700; font-size:22px; letter-spacing:.4px; color:var(--slide-kicker); }
+.cs-slide-health{
+  position:absolute; left:0; bottom:0; width:100%; height:48px;
+  background:var(--slide-health-grad); display:flex; align-items:center;
+}
+.cs-slide-health .lbl{ color:#fff; font-size:18px; padding-left:18px; text-shadow:0 1px 2px rgba(0,0,0,.4); }

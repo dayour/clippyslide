@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>Atlassian Connectors · Next Steps</title>
+<link rel="stylesheet" href="../design-system/archive/clippyslide-legacy.css">
+<link rel="stylesheet" href="../design-system/clippyslide-pine.css">
+<link rel="stylesheet" href="deck.css">
+<style>
+.col{position:absolute;top:150px;width:562px;height:452px;box-sizing:border-box;
+  border-radius:14px;padding:22px 26px;border:1.4px solid rgba(118,182,164,.30);
+  background:linear-gradient(160deg,#0A1512,#05100D)}
+.col .h{font:700 21px var(--t-font);color:#fff;margin-bottom:14px}
+.rr{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.rr .who{flex:0 0 132px}
+.rr .what{font-size:15px;line-height:1.4;color:var(--t-fg-soft)}
+.ck{display:flex;gap:10px;align-items:flex-start;margin-bottom:13px;font-size:15.5px;line-height:1.4;color:var(--t-fg-soft)}
+.ck .box{flex:0 0 auto;width:16px;height:16px;border-radius:4px;border:1.6px solid var(--pine-400);margin-top:2px}
+</style></head><body>
+<div id="vp"><div class="cs-stage theme-pine">
+  <div class="kick cs-slide-kicker">Who does what &middot; what we still need</div>
+  <div class="ttl cs-slide-title">Roles, Next Steps &amp; Open Questions</div>
+
+  <!-- ROLES -->
+  <div class="col" style="left:54px">
+    <div class="h">Roles &amp; responsibilities</div>
+    <div class="rr"><span class="who cs-chip sm is-warning">Atlassian</span><span class="what">Atlassian-side architecture diagram &amp; connector documentation.</span></div>
+    <div class="rr"><span class="who cs-chip sm is-accent" style="--chip-bg:var(--pine-600)">Microsoft SME</span><span class="what">Microsoft-side architecture, dataflow, and connector enablement guidance.</span></div>
+    <div class="rr"><span class="who cs-chip sm is-info">Customer architect</span><span class="what">Validates pattern to standards: scope, app reg, permissions, owner, users (the Virtual Coach pattern).</span></div>
+    <div class="rr"><span class="who cs-chip sm is-success">Cyber review</span><span class="what">Approves connector usage against privacy/security policy.</span></div>
+    <div class="rr"><span class="who cs-chip sm ghost">Security SME</span><span class="what">Signs off auth method, token TTL, and storage specifics.</span></div>
+  </div>
+
+  <!-- OPEN QUESTIONS -->
+  <div class="col" style="left:664px">
+    <div class="h">Open questions &amp; next steps</div>
+    <div class="ck"><span class="box"></span><span>Confirm connector technology (Copilot/Graph connector vs Power Platform vs Copilot Studio).</span></div>
+    <div class="ck"><span class="box"></span><span>Confirm auth method (OAuth 3LO vs service credential) and exact <b>token TTL / refresh</b>.</span></div>
+    <div class="ck"><span class="box"></span><span>Confirm Atlassian <b>Cloud</b> vs Server / Data Center.</span></div>
+    <div class="ck"><span class="box"></span><span>Map current admin-center menu paths at deployment time.</span></div>
+    <div class="ck"><span class="box"></span><span>Align on privacy/data-handling policy (often the bigger gate than technical config).</span></div>
+    <div class="ck"><span class="box"></span><span>Schedule the joint architecture + security review.</span></div>
+  </div>
+  <div class="pg">7 / 7</div>
+</div></div>
+<script src="fit.js"></script>
+</body></html>

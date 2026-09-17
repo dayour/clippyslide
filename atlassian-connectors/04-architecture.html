@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>Atlassian Connectors · Architecture</title>
+<link rel="stylesheet" href="../design-system/archive/clippyslide-legacy.css">
+<link rel="stylesheet" href="../design-system/clippyslide-pine.css">
+<link rel="stylesheet" href="deck.css">
+<style>
+.an{position:absolute;top:200px;height:150px}
+.an .cs-in{flex-direction:column;gap:6px;text-align:center}
+.an .nt{font:700 19px var(--t-font);color:#fff;line-height:1.1}
+.an .ns{font-size:13.5px;color:var(--t-fg-soft);line-height:1.34}
+.idn{position:absolute;left:360px;top:430px;width:866px;height:92px}
+.idn .cs-in{flex-direction:column;gap:4px}
+.idn .nt{font:700 20px var(--t-font);color:#fff}
+.idn .ns{font-size:15px;color:var(--t-fg-soft)}
+.legend{position:absolute;left:54px;bottom:48px}
+.draftchip{position:absolute;right:54px;top:40px}
+</style></head><body>
+<div id="vp"><div class="cs-stage theme-pine">
+  <div class="kick cs-slide-kicker">Microsoft-side components</div>
+  <div class="ttl cs-slide-title">Architecture</div>
+  <span class="draftchip cs-chip sm is-warning">DRAFT &middot; validate w/ SME</span>
+
+  <!-- connector / wire layer -->
+  <svg class="cs-wire" viewBox="0 0 1280 720" preserveAspectRatio="none">
+    <defs>
+      <marker id="ah" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path class="arrow" d="M0,0 L7,3 L0,6 Z"/></marker>
+      <marker id="ahb" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6BC6FF"/></marker>
+    </defs>
+    <!-- index path (left to right) -->
+    <path d="M306,275 H360" marker-end="url(#ah)"/>
+    <path d="M612,275 H666" marker-end="url(#ah)"/>
+    <path d="M918,275 H972" marker-end="url(#ah)"/>
+    <!-- identity/auth wires (blue, up to nodes) -->
+    <path style="stroke:#6BC6FF;stroke-dasharray:5 4" d="M486,430 V350" marker-end="url(#ahb)"/>
+    <path style="stroke:#6BC6FF;stroke-dasharray:5 4" d="M792,430 V350" marker-end="url(#ahb)"/>
+    <path style="stroke:#6BC6FF;stroke-dasharray:5 4" d="M1099,430 V350" marker-end="url(#ahb)"/>
+  </svg>
+
+  <!-- main nodes -->
+  <div class="an cs-livetile is-warning" style="left:56px;width:250px"><div class="cs-in"><div><div class="nt">Atlassian Cloud</div><div class="ns">Jira &middot; Confluence<br>REST APIs over TLS</div></div></div></div>
+  <div class="an cs-livetile is-accent" style="left:360px;width:252px"><div class="cs-in"><div><div class="nt">Copilot connector</div><div class="ns">ingest &middot; normalize<br>map ACLs &middot; crawl</div></div></div></div>
+  <div class="an cs-livetile is-accent" style="left:666px;width:252px"><div class="cs-in"><div><div class="nt">Microsoft Graph</div><div class="ns">semantic index<br>security-trimmed</div></div></div></div>
+  <div class="an cs-livetile is-info" style="left:972px;width:254px"><div class="cs-in"><div><div class="nt">Microsoft Copilot</div><div class="ns">M365 Copilot<br>Copilot Studio agents</div></div></div></div>
+
+  <!-- identity layer -->
+  <div class="idn cs-livetile is-info"><div class="cs-in"><div><div class="nt">Microsoft Entra ID</div><div class="ns">OAuth 2.0 &middot; app registration &middot; admin consent &middot; Conditional Access &middot; least-privilege scopes</div></div></div></div>
+
+  <div class="legend row">
+    <span class="cs-chip sm is-accent" style="--chip-bg:var(--pine-600)">MSFT-managed</span>
+    <span class="cs-chip sm is-info">Identity / auth</span>
+    <span class="cs-chip sm is-warning">External (Atlassian)</span>
+    <span class="cs-chip sm ghost">— index path&nbsp;&nbsp;┄ auth path</span>
+  </div>
+  <div class="pg">4 / 7</div>
+</div></div>
+<script src="fit.js"></script>
+</body></html>

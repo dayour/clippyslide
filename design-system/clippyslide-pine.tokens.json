@@ -1,0 +1,144 @@
+{
+  "$schema": "clippyslide-theme/1.0",
+  "theme": "pine",
+  "anchor": "#274C43",
+  "note": "Pine theme layer for ClippySlide/ClippyFlow. Sits ON TOP of the source-true clippyslide.css (which is left untouched so the Template repro deck + token-drift QA stay faithful). Replaces the magenta accent ROLE with pine #274C43. Three token tiers: palette -> semantic -> component-atomic. Every component token defaults to a semantic token and can be overridden per-instance via inline CSS custom properties.",
+
+  "tier1_palette": {
+    "pine": {
+      "050": "#EAF4F0", "100": "#CDE6DE", "200": "#A6D2C5", "300": "#76B6A4",
+      "400": "#4F9685", "500": "#357567", "600": "#274C43", "700": "#1F3C35",
+      "800": "#172E29", "900": "#0E1C19"
+    },
+    "carry_over_from_core": {
+      "peri": "#818EFF", "cyan": "#39B0FF", "coral": "#F77181",
+      "comment": "magenta #CA5BCD is intentionally NOT carried; pine replaces its role"
+    },
+    "status": {
+      "success": "#2FA84F", "info": "#39B0FF", "warning": "#E8932F",
+      "danger": "#F4364C", "accent": "#274C43"
+    }
+  },
+
+  "tier2_semantic": {
+    "--t-bg": "#000000",
+    "--t-bg-elev": "#0A1512",
+    "--t-bg-elev-2": "#0E1C19",
+    "--t-fg": "#FFFFFF",
+    "--t-fg-soft": "rgba(255,255,255,.82)",
+    "--t-fg-dim": "rgba(255,255,255,.60)",
+    "--t-accent": "#274C43",
+    "--t-accent-text": "#76B6A4",
+    "--t-accent-soft": "rgba(79,150,133,.16)",
+    "--t-border": "rgba(118,182,164,.45)",
+    "--t-border-a": "#4F9685",
+    "--t-border-b": "#274C43",
+    "--t-glow": "0 0 18px rgba(39,76,67,.42)",
+    "--t-glow-color": "rgba(79,150,133,.30)",
+    "--t-radius": "16px",
+    "--t-radius-sm": "10px",
+    "--t-border-w": "1.6px",
+    "--t-pad": "20px",
+    "--t-font": "\"Segoe UI Variable\",\"Segoe UI\",system-ui,-apple-system,sans-serif",
+    "--t-title-grad": "linear-gradient(90deg,#F77181 0%,#76B6A4 50%,#818EFF 100%)",
+    "--t-accent-grad": "linear-gradient(135deg,#4F9685,#274C43)",
+    "--t-health-grad": "linear-gradient(90deg,#F4364C 0%,#E8932F 22%,#A9D63B 52%,#2FA84F 100%)"
+  },
+
+  "tier3_components": {
+    "chip": {
+      "selector": ".cs-chip",
+      "desc": "Compact pill button/label. Variants: solid|outline|ghost; status: accent|success|info|warning|danger; size: sm|md|lg.",
+      "tokens": {
+        "--chip-bg": "var(--t-accent)",
+        "--chip-fg": "#fff",
+        "--chip-border": "transparent",
+        "--chip-border-w": "1.4px",
+        "--chip-radius": "999px",
+        "--chip-pad-x": "16px",
+        "--chip-pad-y": "8px",
+        "--chip-font-size": "15px",
+        "--chip-font-weight": "600",
+        "--chip-gap": "8px",
+        "--chip-glow": "0 0 0 rgba(0,0,0,0)",
+        "--chip-bg-hover": "var(--pine-500)",
+        "--chip-icon-size": "16px"
+      },
+      "sizes": { "sm": {"pad":"5px 12px","font":"13px"}, "md": {"pad":"8px 16px","font":"15px"}, "lg": {"pad":"11px 22px","font":"18px"} }
+    },
+    "livetile": {
+      "selector": ".cs-livetile",
+      "desc": "Gradient-border tile/node with inner radial glow. Shapes: rect (default) | diamond. Override color/tokens per tile via inline --tile-* custom props.",
+      "tokens": {
+        "--tile-radius": "12px",
+        "--tile-border-w": "1.7px",
+        "--tile-border-a": "var(--t-border-a)",
+        "--tile-border-b": "var(--t-border-b)",
+        "--tile-fill": "#05100D",
+        "--tile-fill-2": "#0A1512",
+        "--tile-glow": "0 0 18px var(--t-glow-color)",
+        "--tile-inner-glow": "radial-gradient(130% 130% at 30% 10%, rgba(79,150,133,.18), rgba(39,76,67,.05) 100%)",
+        "--tile-pad": "16px 20px",
+        "--tile-label-fg": "#fff",
+        "--tile-label-size": "18px",
+        "--tile-label-weight": "600",
+        "--tile-min-w": "180px",
+        "--tile-min-h": "78px"
+      }
+    },
+    "flipcard": {
+      "selector": ".cs-flipgrid > .cs-flipcard",
+      "desc": "Renderer-friendly flip card using the flipgrid/flipcard/flip-face front+back contract. Flips on hover OR .is-flipped class.",
+      "contract": ["cs-flipgrid", "cs-flipcard", "flip-face front", "flip-face back"],
+      "tokens": {
+        "--flip-w": "260px",
+        "--flip-h": "168px",
+        "--flip-radius": "14px",
+        "--flip-dur": ".55s",
+        "--flip-ease": "cubic-bezier(.2,.7,.2,1)",
+        "--flip-perspective": "1200px",
+        "--flip-border-w": "1.6px",
+        "--flip-border-a": "var(--t-border-a)",
+        "--flip-border-b": "var(--t-border-b)",
+        "--flip-front-bg": "linear-gradient(150deg,#0E1C19,#05100D)",
+        "--flip-back-bg": "linear-gradient(150deg,#16302A,#0A1512)",
+        "--flip-fg": "#fff",
+        "--flip-glow": "0 10px 32px rgba(0,0,0,.5), 0 0 18px var(--t-glow-color)",
+        "--flip-pad": "18px 20px"
+      }
+    },
+    "slide": {
+      "selector": ".cs-stage.theme-pine | .cs-adaptive",
+      "desc": "Adaptive slide canvas (1280x720 internal). Pine glow + title gradient + health bar.",
+      "tokens": {
+        "--slide-w": "1280px",
+        "--slide-h": "720px",
+        "--slide-bg": "#000",
+        "--slide-glow-1": "radial-gradient(46% 70% at 96% 4%, rgba(39,76,67,.55) 0%, transparent 60%)",
+        "--slide-glow-2": "radial-gradient(38% 60% at 2% 104%, rgba(53,117,103,.40) 0%, transparent 60%)",
+        "--slide-fg": "#fff",
+        "--slide-fg-dim": "rgba(255,255,255,.6)",
+        "--slide-title-grad": "var(--t-title-grad)",
+        "--slide-kicker": "#76B6A4",
+        "--slide-pad": "54px",
+        "--slide-health-grad": "var(--t-health-grad)"
+      }
+    },
+    "wire": {
+      "selector": ".cs-wire (on the SVG connector layer)",
+      "desc": "Connector/wire tokens for dataflow/topology diagrams. Per-edge override via inline vars; .is-accent variant for pine wires.",
+      "tokens": {
+        "--wire-color": "rgba(180,210,200,.62)",
+        "--wire-w": "1.6px",
+        "--wire-arrow": "rgba(150,200,185,.8)",
+        "--wire-glow": "rgba(79,150,133,0)"
+      }
+    }
+  },
+
+  "override_pattern": {
+    "per_instance": "Set the component's atomic tokens inline, e.g. <div class=\"cs-livetile\" style=\"--tile-border-a:#E8A05A;--tile-border-b:#C85A2A;--tile-fill:#3a1d0e\">",
+    "per_theme": "Wrap content in .theme-pine (or [data-theme=pine]) to apply tier1+tier2 defaults to all descendant components.",
+    "status_shortcut": "Add a status class (.is-accent/.is-success/.is-info/.is-warning/.is-danger) to remap a component's accent tokens to a status color."
+  }
+}

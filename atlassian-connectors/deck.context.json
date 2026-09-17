@@ -1,0 +1,44 @@
+{
+  "deck": "Enabling Atlassian Connectors for Microsoft Copilot",
+  "purpose": "Admin enablement/governance package to ALLOW the Atlassian Jira & Confluence connectors to be used (not a specific agent/design). Provides the MSFT-side artifacts a customer Cyber/Security team needs to approve usage.",
+  "audience": "Customer Cyber/Security review board + Power Platform/M365 admins",
+  "cyber_asks": [
+    "Architecture diagram (MSFT side)",
+    "Dataflow (MSFT side)",
+    "Security architecture (token management, TTL, auth)"
+  ],
+  "scope_note": "Enablement of the connectors themselves. Per-agent design/architecture is a separate, downstream workstream led by the customer architecture team.",
+  "assumptions_to_validate": [
+    "Connector technology = Microsoft Copilot connectors (Graph connectors) for Jira & Confluence (confirm vs Power Platform / Copilot Studio connectors)",
+    "Atlassian Cloud (not Server/Data Center)",
+    "Auth method, exact token TTL, and storage specifics require Security SME sign-off"
+  ],
+  "governance_surfaces": {
+    "admin.microsoft.com": "Microsoft 365 admin center — Copilot connectors / Search & intelligence data sources; Integrated apps consent",
+    "admin.teams.microsoft.com": "Teams admin center — app management + permission/setup policies for the Atlassian app surface",
+    "admin.cloud.microsoft.com": "Microsoft 365 admin (Copilot Control System) — agents & connectors governance"
+  },
+  "design": {
+    "theme": "pine (clippyslide.theme-pine.css)",
+    "anchor": "#274C43",
+    "components": ["cs-livetile (nodes)", "cs-wire (dataflow)", "cs-chip (status/labels)", "cs-flipcard (security facets)", "cs-slide-title/kicker/health"],
+    "canvas": "1280x720 with responsive harness (#vp + ResizeObserver fit)",
+    "rules": "pure-black canvas, pine accent, zero emoji, gradient-border tiles + inner glow"
+  },
+  "slides": [
+    {"n":1, "id":"01-title", "title":"Enabling Atlassian Connectors for Microsoft Copilot", "kicker":"Connector enablement · Jira & Confluence"},
+    {"n":2, "id":"02-ask", "title":"The Ask", "body":"Three MSFT-side artifacts for Cyber approval + scope clarification"},
+    {"n":3, "id":"03-surfaces", "title":"Enablement Surfaces", "body":"Three admin centers governing connector availability"},
+    {"n":4, "id":"04-architecture", "title":"Architecture (Microsoft side)", "body":"Components: connector platform, Graph/substrate, Copilot, Atlassian Cloud"},
+    {"n":5, "id":"05-dataflow", "title":"Dataflow (Microsoft side)", "body":"Index path + query path, security-trimmed"},
+    {"n":6, "id":"06-security", "title":"Security Architecture", "body":"Auth, token management, TTL, least privilege — DRAFT pending SME"},
+    {"n":7, "id":"07-next", "title":"Roles, Next Steps & Open Questions", "body":"RACI + Cyber validation checklist"}
+  ],
+  "status_legend": {
+    "is-accent": "MSFT-managed",
+    "is-info": "identity/auth",
+    "is-success": "approved/enabled",
+    "is-warning": "external (Atlassian)",
+    "DRAFT chip": "pending SME validation"
+  }
+}

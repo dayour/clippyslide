@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  TileSlide Theme  -  v1.0
+  TileSlide Theme  ·  v1.0
   OOXML-aligned theme profile. Mirrors a DrawingML <a:theme> color scheme plus
   TileSlide-specific gradient definitions so the system round-trips back to PowerPoint.
-  Source: CoE_Framework.pptx (Oceaneering, 01FY26), slide3 + theme1.
+  Source: CoE_Framework.pptx (Template, 01FY26), slide3 + theme1.
 -->
 <tileslideTheme xmlns="https://darbotlm.github.io/tileslide/theme"
                 xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"

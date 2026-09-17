@@ -1,0 +1,23 @@
+/* Atlassian connector deck — shared layout (pine theme).
+   Links after clippyslide.css + clippyslide.theme-pine.css. */
+html,body{margin:0;height:100%;background:#000;overflow:hidden}
+#vp{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+#vp>.cs-stage{flex:0 0 auto;transform-origin:center center}
+
+.kick{position:absolute;left:54px;top:34px}
+.ttl{position:absolute;left:54px;top:60px}
+.sub{position:absolute;left:56px;font-size:21px;line-height:1.4;color:var(--t-fg-soft)}
+.pg{position:absolute;right:22px;bottom:14px;font-size:13px;color:var(--t-fg-dim);z-index:5}
+.foot{position:absolute;left:54px;bottom:18px;font-size:13px;color:var(--t-fg-dim)}
+.sec-h{font:700 15px var(--t-font);color:var(--pine-300);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.draft{position:absolute;right:54px;top:40px}
+
+/* simple panel for text blocks */
+.panel{position:absolute;box-sizing:border-box;border-radius:14px;padding:22px 26px;
+  border:1.4px solid rgba(118,182,164,.30);background:linear-gradient(160deg,#0A1512,#05100D)}
+.panel .h{font:700 20px var(--t-font);color:#fff;margin-bottom:8px}
+.panel .b{font-size:17px;line-height:1.42;color:var(--t-fg-soft)}
+.panel ul{margin:8px 0 0;padding-left:20px}
+.panel li{font-size:16px;line-height:1.5;color:var(--t-fg-soft);margin-bottom:4px}
+
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}

@@ -17,8 +17,9 @@ The presenter is keyboard-first, with a fallback header and invisible edge click
 | `End` | last slide |
 | `F` | toggle **present** (fullscreen) |
 | `G` | toggle the **measurement grid** |
+| `L` | open the **deck library** |
 | `H` | hide / show the floating header |
-| `Esc` | exit fullscreen |
+| `Esc` | close the library, or exit fullscreen |
 
 ## Mouse
 

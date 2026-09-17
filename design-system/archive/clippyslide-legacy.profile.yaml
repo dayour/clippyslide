@@ -1,15 +1,15 @@
-# ========================================================================
-# TileSlide Profile - v1.0
+# ════════════════════════════════════════════════════════════════════════
+# TileSlide Profile · v1.0
 # Authoring profile for the TileSlide design system. Consumed by the
 # `tileslide` Clawpilot skill and the tileslide UI extension. This is the
 # human/agent-facing contract: what the system is, how to use it, the rules.
-# ========================================================================
+# ════════════════════════════════════════════════════════════════════════
 apiVersion: tileslide/v1
 kind: DesignProfile
 metadata:
   name: TileSlide
   version: 1.0.0
-  source: CoE_Framework.pptx (Oceaneering, 01FY26)
+  source: CoE_Framework.pptx (Template, 01FY26)
   extractedBy: verbatim OOXML gradient extraction
   authors: [dayour]
 

@@ -1,24 +1,24 @@
-/* ========================================================================
-   TileSlide Design System  -  v1.0
-   Extracted verbatim from CoE_Framework.pptx (Oceaneering, 01FY26).
-   Pure-black canvas - glowing gradient-border panels - magenta-gradient titles.
+/* ════════════════════════════════════════════════════════════════════════
+   TileSlide Design System  ·  v1.0
+   Adapted from the source CoE framework presentation.
+   Pure-black canvas · glowing gradient-border panels · magenta-gradient titles.
    Every value below is a real token lifted from the source deck XML.
-   ======================================================================== */
+   ════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* -- Core gradient ramp (the signature 4 colors) -- */
+  /* ── Core gradient ramp (the signature 4 colors) ── */
   --cs-peri:  #818EFF;   /* periwinkle */
   --cs-cyan:  #39B0FF;   /* cyan-blue  */
   --cs-coral: #F77181;   /* coral-pink */
   --cs-mag:   #CA5BCD;   /* magenta    */
 
-  /* -- Gradients -- */
+  /* ── Gradients ── */
   --cs-grad-blue: linear-gradient(135deg, var(--cs-peri), var(--cs-cyan));
   --cs-grad-hero: linear-gradient(135deg, var(--cs-coral) 0%, var(--cs-mag) 48%, var(--cs-peri) 100%);
   --cs-grad-title: linear-gradient(90deg, var(--cs-coral) 0%, var(--cs-mag) 50%, var(--cs-peri) 100%);
   --cs-grad-health: linear-gradient(90deg,#E33B3B 0%,#E8932F 22%,#E7D63B 44%,#A9D63B 68%,#22C24E 100%);
 
-  /* -- Surfaces -- */
+  /* ── Surfaces ── */
   --cs-black: #000000;
   --cs-ink:   #07070C;   /* near-black panel base */
   --cs-white-panel: #FFFFFF;
@@ -26,30 +26,32 @@
   --cs-pill-blue:   #1666C7;
   --cs-pill-mag:    #C746B8;
 
-  /* -- Environment card gradients (lifecycle) -- */
+  /* ── Environment card gradients (lifecycle) ── */
   --cs-env-dev:     linear-gradient(135deg,#A85546 0%,#5E2A22 100%);  /* brick-red */
   --cs-env-sandbox: linear-gradient(135deg,#4E6E96 0%,#2A3F5C 100%);  /* steel-blue */
 
-  /* -- Foreground -- */
+  /* ── Foreground ── */
   --cs-fg:        #FFFFFF;
   --cs-fg-soft:   rgba(255,255,255,.82);
   --cs-fg-dim:    rgba(255,255,255,.60);
   --cs-ink-fg:    #14161D;   /* text on white inner panel */
 
-  /* -- Geometry -- */
+  /* ── Geometry ── */
   --cs-radius:    16px;
   --cs-radius-sm: 10px;
-  --cs-border:    1.6px;     /* gradient border thickness (~2px @ source) */
+  --cs-border:    1.5px;     /* crisp gradient border at presentation scale */
   --cs-pad:       20px;
 
-  /* -- Glow shadows -- */
-  --cs-glow-blue: 0 0 18px rgba(80,140,255,.28);
-  --cs-glow-hero: 0 0 22px rgba(202,91,205,.34);
+  /* ── Glow shadows ── */
+  --cs-glow-blue: 0 0 12px rgba(80,140,255,.20);
+  --cs-glow-hero: 0 0 14px rgba(202,91,205,.24);
 
   --cs-font: "Segoe UI Variable","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 
-/* ==== Canvas ==== */
+*,*::before,*::after{ box-sizing:border-box; }
+
+/* ════ Canvas ════ */
 .cs-stage{
   position:relative; width:1280px; height:720px; overflow:hidden;
   background:var(--cs-black); color:var(--cs-fg);
@@ -70,7 +72,7 @@
     var(--cs-black);
 }
 
-/* ==== Gradient-border panel ====
+/* ════ Gradient-border panel ════
    border = padding holding the gradient; .cs-in = dark body w/ 10%-alpha radial glow */
 .cs-panel{ position:absolute; border-radius:var(--cs-radius); padding:var(--cs-border); }
 .cs-panel > .cs-in{
@@ -92,13 +94,13 @@
 .cs-panel.white > .cs-in{ background:var(--cs-white-panel); }
 .cs-panel.white > .cs-in::before{ display:none; }
 
-/* ==== Coral accent bar -- bleeds off the left edge ==== */
+/* ════ Coral accent bar — bleeds off the left edge ════ */
 .cs-accent-left{
   position:absolute; left:-6px; width:10px; border-radius:6px;
   background:var(--cs-grad-hero); box-shadow:var(--cs-glow-hero);
 }
 
-/* ==== Typography ==== */
+/* ════ Typography ════ */
 .cs-title{
   font-weight:800; font-size:46px; line-height:1.04; letter-spacing:-.5px;
   background:var(--cs-grad-title); -webkit-background-clip:text;
@@ -112,7 +114,7 @@
 .cs-body{ font-weight:400; font-size:16px; line-height:1.42; color:var(--cs-fg-soft); }
 .cs-mono{ font-family:"Cascadia Code","Consolas",monospace; font-size:14px; color:var(--cs-fg-soft); }
 
-/* ==== Diagram primitives ==== */
+/* ════ Diagram primitives ════ */
 .cs-pill{
   display:flex; align-items:center; justify-content:center; height:52px;
   border-radius:8px; font-weight:600; font-size:17px; color:#fff;
@@ -139,14 +141,14 @@
 }
 .cs-divider::before{ left:-2px; } .cs-divider::after{ right:-2px; }
 
-/* ==== Side green-bullets panel (Agent Layers) ==== */
+/* ════ Side green-bullets panel (Agent Layers) ════ */
 .cs-greenpanel{
   position:absolute; border-radius:6px; background:#3F8A2E; padding:22px 24px;
   display:flex; flex-direction:column; gap:18px;
 }
 .cs-greenpanel .cs-body{ color:#fff; font-size:18px; }
 
-/* ==== Connected-agent cards (white, icon + label) ==== */
+/* ════ Connected-agent cards (white, icon + label) ════ */
 .cs-agentcard{
   display:flex; align-items:center; gap:12px; height:64px; padding:0 14px;
   border-radius:8px; background:#fff; color:var(--cs-ink-fg);
@@ -154,7 +156,7 @@
 }
 .cs-agentcard .ico{ width:34px; height:34px; flex:0 0 34px; border-radius:6px; }
 
-/* ==== Lifecycle environment cards ==== */
+/* ════ Lifecycle environment cards ════ */
 .cs-env{
   position:absolute; border-radius:8px; padding:14px 18px; color:#fff;
   display:flex; flex-direction:column; justify-content:center; gap:2px;
@@ -165,7 +167,7 @@
 .cs-env .name{ font-size:18px; font-weight:600; }
 .cs-env .ver{  font-size:18px; font-style:italic; font-weight:600; }
 
-/* ==== Rainbow health bar ==== */
+/* ════ Rainbow health bar ════ */
 .cs-health{
   position:absolute; left:0; bottom:0; width:100%; height:40px;
   background:var(--cs-grad-health); display:flex; align-items:center;

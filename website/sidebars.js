@@ -5,6 +5,7 @@ const sidebars = {
   wiki: [
     'intro',
     'quick-start',
+    'library',
     {
       type: 'category',
       label: 'Design System',
@@ -31,6 +32,7 @@ const sidebars = {
         'generator/overview',
         'generator/archetypes',
         'generator/content-model',
+        'generator/packaging',
       ],
     },
     {

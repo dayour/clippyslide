@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>Atlassian Connectors · Security</title>
+<link rel="stylesheet" href="../design-system/archive/clippyslide-legacy.css">
+<link rel="stylesheet" href="../design-system/clippyslide-pine.css">
+<link rel="stylesheet" href="deck.css">
+<style>
+.sp{position:absolute;width:562px;height:198px}
+.sp .h{display:flex;align-items:center;gap:10px;font:700 20px var(--t-font);color:#fff;margin-bottom:6px}
+.sp ul{margin:6px 0 0;padding-left:20px}
+.sp li{font-size:15.5px;line-height:1.46;color:var(--t-fg-soft);margin-bottom:3px}
+.sp li b{color:#CDE6DE}
+.draftchip{position:absolute;right:54px;top:40px}
+.note{position:absolute;left:54px;bottom:18px;font-size:13px;color:var(--t-fg-dim)}
+</style></head><body>
+<div id="vp"><div class="cs-stage theme-pine">
+  <div class="kick cs-slide-kicker">Authentication, tokens &amp; least privilege</div>
+  <div class="ttl cs-slide-title">Security Architecture</div>
+  <span class="draftchip cs-chip sm is-warning">DRAFT &middot; pending Security SME</span>
+
+  <div class="sp panel" style="left:54px;top:150px">
+    <div class="h"><span class="cs-chip sm is-info">Auth</span> Authentication</div>
+    <ul>
+      <li><b>OAuth 2.0</b> via Microsoft Entra app registration with <b>admin consent</b></li>
+      <li>Atlassian Cloud OAuth (3LO) or service credential <span class="cs-chip sm outline is-warning" style="--chip-pad-x:8px">confirm</span></li>
+      <li><b>Conditional Access</b> &amp; MFA policies apply to the identity</li>
+    </ul>
+  </div>
+
+  <div class="sp panel" style="left:664px;top:150px">
+    <div class="h"><span class="cs-chip sm is-accent" style="--chip-bg:var(--pine-600)">TTL</span> Token management &amp; TTL</div>
+    <ul>
+      <li>Short-lived <b>access tokens</b>; rotating <b>refresh tokens</b></li>
+      <li>Connector platform <b>auto-refreshes</b>; tokens never exposed to makers/users</li>
+      <li>Access TTL <b>~60 min</b> <span class="cs-chip sm outline is-warning" style="--chip-pad-x:8px">validate value</span></li>
+    </ul>
+  </div>
+
+  <div class="sp panel" style="left:54px;top:372px">
+    <div class="h"><span class="cs-chip sm is-accent" style="--chip-bg:var(--pine-600)">Vault</span> Storage &amp; encryption</div>
+    <ul>
+      <li>Secrets/tokens <b>encrypted at rest</b> (Microsoft-managed)</li>
+      <li><b>TLS 1.2+</b> in transit to Atlassian Cloud APIs</li>
+      <li>Indexed content stays within the <b>M365 compliance boundary</b></li>
+    </ul>
+  </div>
+
+  <div class="sp panel" style="left:664px;top:372px">
+    <div class="h"><span class="cs-chip sm is-success">Govern</span> Least privilege &amp; control</div>
+    <ul>
+      <li><b>Scoped</b> permissions; admin-consented only</li>
+      <li><b>DLP</b> policy, audit logging, and usage governance</li>
+      <li><b>Revocation</b> at Entra/admin immediately disables access</li>
+    </ul>
+  </div>
+
+  <div class="note">Bold/labelled items marked <b>confirm</b> / <b>validate</b> require Security SME + Atlassian documentation sign-off before submission to Cyber.</div>
+</div></div>
+<script src="fit.js"></script>
+</body></html>

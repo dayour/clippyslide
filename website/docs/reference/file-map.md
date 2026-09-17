@@ -17,11 +17,17 @@ clippyslide/
 |   ├-- clippyslide.theme.xml      #   OOXML-aligned theme projection
 |   +-- clippyslide.profile.yaml   #   authoring contract + QA checklist
 ├-- generator/
-|   +-- build-deck.js              # data-driven 24-slide generator (zero deps)
+|   ├-- build-deck.js              # data-driven 24-slide generator (zero deps)
+|   +-- build-clippydecks.js       # packages deck folders into single-file decks
 ├-- deck/                          # generated output (do not hand-edit)
 |   ├-- NN.html                    #   one standalone slide per file
 |   ├-- NN.png                     #   rendered preview
-|   +-- index.json                 #   manifest the presenter reads
+|   ├-- index.json                 #   manifest the presenter reads
+|   +-- *-clippydeck.html          #   packaged single-file presentation
+├-- brand-deck/                    # ClippyFlow brand + mood board (11 slides)
+├-- planner-card-math/             # ClippyFlow task planning deck (8 slides)
+├-- atlassian-connectors/          # pine-themed connector deck (7 slides)
+├-- slides-clippyflow/             # ClippyFlow reference slides
 ├-- slides/                        # bespoke, hand-authored slides
 |   ├-- 01-title.html
 |   ├-- 07-orchestration.html      #   the one slide the generator references
@@ -38,6 +44,8 @@ clippyslide/
 |   +-- coe-sample/                #   two-slide AC sample deck
 +-- website/                       # this Docusaurus wiki
     ├-- docs/                      #   the wiki content
+    |   +-- library.mdx            #     generated deck library page
+    ├-- static/decks/              #   packaged decks published to Pages
     ├-- docusaurus.config.js
     +-- sidebars.js
 ```
@@ -51,6 +59,8 @@ clippyslide/
 | the look of all panels | `design-system/clippyslide.css` | individual slides |
 | slide 7 | `slides/07-orchestration.html` | the generator |
 | the presenter | `presenter/present.html` | -- |
+| the deck list / Library | `DECKS` in `generator/build-clippydecks.js` | `website/docs/library.mdx` |
+| a packaged deck | the deck's slide sources, then rebuild | `*-clippydeck.html` |
 
 ## Two CSS copies
 

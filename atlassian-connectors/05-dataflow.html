@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>Atlassian Connectors · Dataflow</title>
+<link rel="stylesheet" href="../design-system/archive/clippyslide-legacy.css">
+<link rel="stylesheet" href="../design-system/clippyslide-pine.css">
+<link rel="stylesheet" href="deck.css">
+<style>
+.lane{position:absolute;font:700 14px var(--t-font);color:var(--pine-300);letter-spacing:.5px;text-transform:uppercase}
+.dn{position:absolute;height:112px}
+.dn .cs-in{flex-direction:column;gap:5px;text-align:center}
+.dn .nt{font:700 18px var(--t-font);color:#fff;line-height:1.1}
+.dn .ns{font-size:13px;color:var(--t-fg-soft);line-height:1.32}
+.wl{font:600 13px var(--t-font);fill:#A6D2C5}
+.note{position:absolute;left:54px;bottom:46px;width:1172px;height:84px}
+.draftchip{position:absolute;right:54px;top:40px}
+</style></head><body>
+<div id="vp"><div class="cs-stage theme-pine">
+  <div class="kick cs-slide-kicker">How content &amp; queries move</div>
+  <div class="ttl cs-slide-title">Dataflow</div>
+  <span class="draftchip cs-chip sm is-warning">DRAFT &middot; validate w/ SME</span>
+
+  <svg class="cs-wire" viewBox="0 0 1280 720" preserveAspectRatio="none">
+    <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path class="arrow" d="M0,0 L7,3 L0,6 Z"/></marker></defs>
+    <!-- lane A -->
+    <path d="M286,236 H430" marker-end="url(#ah)"/><text class="wl" x="305" y="226">OAuth 2.0</text>
+    <path d="M682,236 H822" marker-end="url(#ah)"/><text class="wl" x="700" y="226">ACL-mapped items</text>
+    <!-- lane B -->
+    <path d="M286,470 H430" marker-end="url(#ah)"/><text class="wl" x="300" y="460">Entra identity</text>
+    <path d="M682,470 H822" marker-end="url(#ah)"/><text class="wl" x="700" y="460">security-trimmed</text>
+  </svg>
+
+  <!-- LANE A: index/ingestion -->
+  <div class="lane" style="left:54px;top:150px">Index path &middot; ingestion (scheduled crawl)</div>
+  <div class="dn cs-livetile is-warning" style="left:54px;top:180px;width:232px"><div class="cs-in"><div><div class="nt">Atlassian Cloud</div><div class="ns">Jira &middot; Confluence content via REST</div></div></div></div>
+  <div class="dn cs-livetile is-accent" style="left:430px;top:180px;width:252px"><div class="cs-in"><div><div class="nt">Copilot connector</div><div class="ns">crawl &middot; normalize &middot; map source ACLs</div></div></div></div>
+  <div class="dn cs-livetile is-accent" style="left:822px;top:180px;width:252px"><div class="cs-in"><div><div class="nt">Microsoft Graph</div><div class="ns">semantic index (ACLs retained)</div></div></div></div>
+
+  <!-- LANE B: query/runtime -->
+  <div class="lane" style="left:54px;top:384px">Query path &middot; runtime (per user)</div>
+  <div class="dn cs-livetile is-info" style="left:54px;top:414px;width:232px"><div class="cs-in"><div><div class="nt">User &middot; Copilot</div><div class="ns">prompt in M365 Copilot / agent</div></div></div></div>
+  <div class="dn cs-livetile is-accent" style="left:430px;top:414px;width:252px"><div class="cs-in"><div><div class="nt">Query semantic index</div><div class="ns">retrieve grounded results</div></div></div></div>
+  <div class="dn cs-livetile is-success" style="left:822px;top:414px;width:252px"><div class="cs-in"><div><div class="nt">Grounded answer</div><div class="ns">response with citations</div></div></div></div>
+
+  <div class="note panel"><div class="b"><b>Security trimming:</b> source permissions captured at index time are enforced at query time against the user&rsquo;s Entra identity &mdash; users only see Jira/Confluence content they are already entitled to. Content stays within the Microsoft 365 service boundary.</div></div>
+  <div class="pg">5 / 7</div>
+</div></div>
+<script src="fit.js"></script>
+</body></html>

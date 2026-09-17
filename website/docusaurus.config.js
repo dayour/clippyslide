@@ -62,6 +62,7 @@ const config = {
           {type: 'docSidebar', sidebarId: 'wiki', position: 'left', label: 'Wiki'},
           {to: '/quick-start', label: 'Quick Start', position: 'left'},
           {to: '/presenter/overview', label: 'Presenter', position: 'left'},
+          {to: '/library', label: 'Library', position: 'left'},
           {href: 'https://github.com/dayour/clippyslide', label: 'GitHub', position: 'right'},
         ],
       },
@@ -80,6 +81,7 @@ const config = {
             title: 'Build',
             items: [
               {label: 'Deck Generator', to: '/generator/overview'},
+              {label: 'Deck Library', to: '/library'},
               {label: 'Presenter', to: '/presenter/overview'},
               {label: 'Clawpilot Skill', to: '/skill/overview'},
             ],

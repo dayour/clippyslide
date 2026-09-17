@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>Atlassian Connectors · The Ask</title>
+<link rel="stylesheet" href="../design-system/archive/clippyslide-legacy.css">
+<link rel="stylesheet" href="../design-system/clippyslide-pine.css">
+<link rel="stylesheet" href="deck.css">
+<style>
+.ask{position:absolute;top:150px;width:368px;height:300px}
+.ask .cs-in{flex-direction:column;align-items:flex-start;gap:10px;justify-content:flex-start}
+.ask .n{font:800 30px var(--t-font);color:var(--pine-300)}
+.ask .t{font:700 22px var(--t-font);color:#fff}
+.ask .d{font-size:16px;line-height:1.4;color:var(--t-fg-soft)}
+.scope{position:absolute;left:54px;top:478px;width:1172px;height:150px}
+</style></head><body>
+<div id="vp"><div class="cs-stage theme-pine">
+  <div class="kick cs-slide-kicker">What Cyber needs from Microsoft</div>
+  <div class="ttl cs-slide-title">The Ask</div>
+
+  <div class="ask cs-livetile is-accent" style="left:54px;--tile-pad:24px 26px">
+    <div class="cs-in"><div><div class="n">1</div><div class="t">Architecture diagram</div>
+      <div class="d">The Microsoft-side component architecture for the Jira &amp; Confluence connectors (Atlassian provides their side).</div></div></div>
+  </div>
+  <div class="ask cs-livetile is-info" style="left:456px;--tile-pad:24px 26px">
+    <div class="cs-in"><div><div class="n">2</div><div class="t">Dataflow</div>
+      <div class="d">How content and queries move between Atlassian Cloud, the connector platform, and Copilot &mdash; with security trimming.</div></div></div>
+  </div>
+  <div class="ask cs-livetile" style="left:858px;--tile-border-a:#F0A968;--tile-border-b:#C85A2A;--tile-glow:0 0 18px rgba(220,120,50,.26);--tile-pad:24px 26px">
+    <div class="cs-in"><div><div class="n" style="color:#F0A968">3</div><div class="t">Security architecture</div>
+      <div class="d">Authentication, token management, TTL/refresh, storage, and least-privilege scoping.</div></div></div>
+  </div>
+
+  <div class="scope panel">
+    <div class="h">Scope clarification</div>
+    <div class="b">This package enables the <b>connectors</b> to be used tenant-wide &mdash; it is <b>not</b> a specific agent or solution design. Per-agent architecture, app registrations, and use-case scoping are a separate, downstream workstream led by the customer architecture team.</div>
+  </div>
+  <div class="pg">2 / 7</div>
+</div></div>
+<script src="fit.js"></script>
+</body></html>
