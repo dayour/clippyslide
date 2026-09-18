@@ -18,6 +18,27 @@ One command packages every registered deck, publishes the results into
 `website/static/decks/`, regenerates the ClippyFlow `planner-card-math` slides,
 and rewrites [the Library page](/library).
 
+To rebuild only the eight planner slides and their local/published single-file
+decks without changing another deck:
+
+```bash
+node generator/build-clippydecks.js --planner-only
+node --test generator/build-clippydecks.test.js
+```
+
+The planner uses the same `clippyflow.css` and `clippyflow-terminal.css` as
+`brand-deck`: a dark spectrum canvas, terminal window chrome, spectrum titles,
+translucent panels, and nitrous-blue rims. These styles are linked in individual
+slides and inlined in the packaged deck. Do not substitute the separate light
+PowerPoint preset or apply the theme only to the viewer. The planner viewer also
+stays dark regardless of the operating-system color preference.
+
+The planner content is stored in the generator; its original HTML path is
+provenance, not a build dependency. Visual review must compare **all eight**
+rendered slides with the brand deck, including the overview, function labels,
+question-card identifiers, and schema table. A slide loading successfully does
+not establish theme fidelity, readability, or freedom from clipping.
+
 ## The deck registry
 
 `DECKS`, at the top of the script, is the single source of truth. It drives the

@@ -1,39 +1,52 @@
 {
   "title": "Task Planning Flow Architecture",
   "theme": "clippyflow",
+  "designReference": "brand-deck",
+  "stylesheets": [
+    "../design-system/clippyflow.css",
+    "../design-system/clippyflow-terminal.css"
+  ],
   "source": "C:\\Users\\dayour\\Microsoft\\Darbot - FY27\\Documents\\planner_card_math.html",
   "slides": [
     {
       "n": 1,
-      "file": "01.html"
+      "file": "01.html",
+      "title": "Task Planning Flow Architecture"
     },
     {
       "n": 2,
-      "file": "02.html"
+      "file": "02.html",
+      "title": "Three routes, one governed output"
     },
     {
       "n": 3,
-      "file": "03.html"
+      "file": "03.html",
+      "title": "Classify before asking"
     },
     {
       "n": 4,
-      "file": "04.html"
+      "file": "04.html",
+      "title": "Resolve ambiguous scope"
     },
     {
       "n": 5,
-      "file": "05.html"
+      "file": "05.html",
+      "title": "Choose the right intake depth"
     },
     {
       "n": 6,
-      "file": "06.html"
+      "file": "06.html",
+      "title": "Reuse the same planning engine"
     },
     {
       "n": 7,
-      "file": "07.html"
+      "file": "07.html",
+      "title": "Generate, review, approve"
     },
     {
       "n": 8,
-      "file": "08.html"
+      "file": "08.html",
+      "title": "Stable identifiers and rollups"
     }
   ]
 }

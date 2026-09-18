@@ -1,57 +1,60 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><style>:root{--cf-teal:#00B4D8;--cf-violet:#7B2FF7;--cf-navy:#0D1B2A;--cf-midnight:#1B2838;--cf-slate:#415A77;--cf-ice:#E0FBFC;--cf-snow:#F8FFFE;--cf-coral:#FF6B6B;--cf-gold:#FFD93D;--cf-mint:#6BCB77;--cf-purple:#C77DFF;--cf-hero:linear-gradient(135deg,#00B4D8 0%,#7B2FF7 100%);--cf-dark:linear-gradient(100deg,#0D1B2A 0%,#1B2838 100%);--cf-bar:linear-gradient(90deg,#00B4D8 0%,#7B2FF7 100%);--cf-head:"Trebuchet MS","Segoe UI",sans-serif;--cf-body:Calibri,"Segoe UI",sans-serif;--cf-mono:Consolas,"Courier New",monospace}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:var(--cf-body)}
-.slide{position:relative;display:flex;flex-direction:column;width:1280px;height:720px;padding:56px 64px 44px;overflow:hidden}
-.slide::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--cf-bar)}
-.slide.light{background:var(--cf-snow);color:var(--cf-navy)}
-.slide.ice{background:var(--cf-ice);color:var(--cf-navy)}
-.slide.dark{background:var(--cf-dark);color:#fff}
-.slide.hero{background:var(--cf-hero);color:#fff;justify-content:center;padding:64px 80px 56px}
-.dots{position:absolute;right:70px;top:74px;display:grid;grid-template-columns:repeat(4,12px);gap:16px;opacity:.28}
-.dots i{width:12px;height:12px;border-radius:50%;background:#fff;display:block}
-.head{flex:0 0 auto}
-.kicker{font-family:var(--cf-body);font-size:14px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
-.light .kicker,.ice .kicker{color:var(--cf-violet)}.dark .kicker{color:var(--cf-teal)}.hero .kicker{color:var(--cf-ice)}
-h1{font-family:var(--cf-head);font-size:42px;line-height:1.06;font-weight:700;letter-spacing:.01em;margin:12px 0 10px;max-width:1080px}
-.hero h1{font-size:56px;letter-spacing:.02em;max-width:900px}
-.sub{font-size:20px;line-height:1.4;max-width:1000px}
-.light .sub,.ice .sub{color:var(--cf-slate)}.dark .sub{color:var(--cf-ice)}.hero .sub{color:var(--cf-ice);font-size:23px;max-width:820px}
-.meta{margin-top:34px;font-family:var(--cf-mono);font-size:14px;color:rgba(255,255,255,.82)}
-.content{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:24px 0 8px}
-.grid{display:grid;gap:20px}.cols2{grid-template-columns:repeat(2,1fr)}.cols3{grid-template-columns:repeat(3,1fr)}
-.card{display:flex;flex-direction:column;padding:24px;border-radius:16px}
-.light .card,.ice .card{background:#fff;box-shadow:0 6px 18px rgba(13,27,42,.08)}
-.dark .card{background:var(--cf-midnight);border:1px solid rgba(224,251,252,.14)}
-.cols3>.card{min-height:196px}.cols2>.card{min-height:252px}.flow>.card{min-height:196px}
-.card>.bar{height:4px;width:52px;border-radius:999px;margin-bottom:16px;background:var(--cf-bar)}
-.card.teal>.bar{background:var(--cf-teal)}.card.violet>.bar{background:var(--cf-violet)}
-.card.mint>.bar{background:var(--cf-mint)}.card.coral>.bar{background:var(--cf-coral)}.card.gold>.bar{background:var(--cf-gold)}
-h2{font-family:var(--cf-head);font-size:22px;font-weight:700;margin:0 0 10px}
-.dark h2{color:#fff}.light h2,.ice h2{color:var(--cf-navy)}
-.id{align-self:flex-start;margin-bottom:12px;padding:5px 10px;border-radius:999px;font:700 12px var(--cf-mono);letter-spacing:.02em}
-.light .id,.ice .id{background:rgba(123,47,247,.1);color:var(--cf-violet)}
-.dark .id{background:rgba(0,180,216,.16);color:var(--cf-teal)}
-p,li{font-size:16px;line-height:1.5}
-.light p,.light li,.ice p,.ice li{color:var(--cf-slate)}.dark p,.dark li{color:var(--cf-ice)}
-ul{margin:8px 0 0;padding-left:20px}li+li{margin-top:7px}
-.flow{display:flex;align-items:stretch;gap:16px}.flow .card{flex:1}
-.step{display:flex;align-items:center;justify-content:center;width:42px;height:42px;margin-bottom:14px;border-radius:50%;font:700 17px var(--cf-head);color:#fff;background:var(--cf-teal)}
-.card.violet .step{background:var(--cf-violet)}.card.mint .step{background:var(--cf-mint)}.card.coral .step{background:var(--cf-coral)}
-.arrow{align-self:center;font-size:26px;font-weight:700;color:var(--cf-teal)}
-.table{width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 6px 18px rgba(13,27,42,.08)}
-.table th,.table td{text-align:left;padding:13px 16px;font-size:15px;border-bottom:1px solid rgba(65,90,119,.14)}
-.table tr:last-child td{border-bottom:none}
-.table th{font:700 12px var(--cf-body);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:linear-gradient(90deg,#00B4D8,#7B2FF7)}
-.table td{color:var(--cf-slate)}
-code{font-family:var(--cf-mono);font-size:14px;color:var(--cf-violet)}.dark code{color:var(--cf-purple)}
-.footer{flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;font:12px var(--cf-mono);letter-spacing:.04em}
-.light .footer,.ice .footer{color:var(--cf-slate)}.dark .footer{color:rgba(224,251,252,.6)}</style></head><body>
-<section class="slide dark">
-<div class="head"><div class="kicker">Entry and routing</div><h1>Classify before asking</h1><div class="sub">Every request enters through the same clarity and context gate.</div></div>
-<div class="content"><div class="flow">
-<div class="card teal"><div class="step">1</div><span class="id">e1</span><h2>capturePlanningRequest()</h2><p>Accept a task, project, or work request.</p></div>
-<div class="arrow">&rarr;</div>
-<div class="card violet"><div class="step">2</div><span class="id">e2</span><h2>classifyPlanningIntent()</h2><p>Score clarity, context, complexity, and guided-intake need.</p></div>
-<div class="arrow">&rarr;</div>
-<div class="card coral"><div class="step">3</div><span class="id">e3</span><h2>Decision gate</h2><p>Route to Path A, B, or C.</p></div></div></div>
-<div class="footer"><span>Task Planning Flow Architecture</span><span>3 / 8</span></div>
-</section></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Classify before asking - Task Planning</title>
+<link rel="stylesheet" href="../design-system/clippyflow.css">
+<link rel="stylesheet" href="../design-system/clippyflow-terminal.css">
+<style>
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--cf-navy-deep);color:var(--cf-fg)}
+.planner-body{display:flex;flex-direction:column;gap:24px;min-height:0;--cf-win-pad:30px 38px 24px}
+.planner-head{flex:0 0 auto;min-width:0}
+.planner-title{font-size:42px;line-height:1.1;max-width:100%;margin:12px 0 14px}
+.planner-sub{font-size:19px;line-height:1.45;max-width:1080px;margin:0}
+.planner-content{display:flex;flex-direction:column;flex:1;min-height:0;gap:18px}
+.planner-grid{display:grid;gap:18px;flex:1;min-height:0}
+.cols2{grid-template-columns:repeat(2,minmax(0,1fr))}.cols3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.planner-card{position:relative;inset:auto;display:flex;flex-direction:column;gap:16px;padding:24px;min-width:0}
+.planner-card .cf-chip{align-self:flex-start;font-family:var(--cf-mono);color:var(--clippy-cyan-br)}
+.planner-card h2{font-size:23px;line-height:1.25;margin:0;color:var(--cf-fg)}
+.planner-card h2.fn{font-family:var(--cf-mono);font-size:19px;overflow-wrap:anywhere}
+.planner-card p,.planner-card li{font-size:18px;line-height:1.5;color:var(--cf-fg-soft);margin:0}
+.planner-card ul{padding-left:20px;margin:0}.planner-card li+li{margin-top:12px}
+.planner-card li::marker{color:var(--nitrous)}
+.planner-card .sequence{font-family:var(--cf-mono);font-size:13px;color:var(--cf-fg-soft)}
+.planner-card .route{font-family:var(--cf-mono);font-size:34px;font-weight:700;line-height:1}
+.route.cyan{color:var(--clippy-cyan-br)}.route.purple{color:var(--clippy-purple)}.route.green{color:var(--clippy-green-br)}
+.planner-card .cf-ml{margin-top:auto;color:var(--cf-fg-soft)}
+.planner-result{min-height:54px;height:auto;padding:14px 20px;flex:0 0 auto}
+.planner-result strong{color:var(--clippy-cyan-br);font-weight:600}
+.planner-result span{color:var(--cf-fg-soft)}
+.planner-flow{display:grid;grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr);gap:12px;flex:1}
+.planner-arrow{align-self:center;width:26px;height:26px;color:var(--nitrous)}
+.planner-step{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;border:1px solid var(--nitrous-rim);background:var(--cf-surface-2);font:600 20px var(--cf-mono);color:var(--clippy-cyan-br)}
+.planner-table-panel{position:relative;inset:auto;padding:0;overflow:hidden}
+.planner-table{width:100%;border-collapse:collapse}
+.planner-table th,.planner-table td{text-align:left;padding:14px 18px;border-bottom:1px solid var(--nitrous-tint)}
+.planner-table th{font:600 12px var(--cf-mono);letter-spacing:1.3px;text-transform:uppercase;color:var(--clippy-cyan-br);background:var(--cf-surface-2)}
+.planner-table td{font-size:16px;line-height:1.4;color:var(--cf-fg-soft)}
+.planner-table tr:last-child td{border-bottom:0}
+code{font-family:var(--cf-mono);font-size:.88em;color:var(--clippy-cyan-br)}
+.planner-foot{display:flex;align-items:center;justify-content:space-between;gap:20px;flex:0 0 auto}
+.planner-foot .cf-prompt{font-size:13px}.planner-foot .cf-ml{font-size:10px;color:var(--cf-fg-soft)}
+.planner-hero{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:44px;align-items:center;flex:1;min-height:0}
+.planner-hero .planner-title{font-size:58px;margin:22px 0;line-height:1.06;width:auto;text-wrap:balance}
+.planner-hero .planner-sub{font-size:21px}
+.planner-hero-flow{display:flex;flex-direction:column;gap:12px}
+.planner-hero-flow .planner-card{padding:20px;gap:10px}
+.planner-hero-flow .planner-arrow{transform:rotate(90deg)}
+.planner-hero-flow .cf-ml{margin:0}
+@media(prefers-reduced-motion:reduce){.cf-cursor{animation:none}}
+</style></head><body>
+<section class="cf-stage cf-scan" aria-label="Slide 3 of 8">
+<div class="cf-win">
+<div class="cf-win-bar"><span class="cf-win-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="cf-win-title"><b>planning</b> --slide 03</span><span class="cf-win-meta"><span>03 / 08</span><span class="on">ClippyFlow</span></span></div>
+<div class="cf-win-body planner-body">
+<div class="planner-head"><span class="cf-mk">Entry and routing</span><h1 class="cf-title planner-title">Classify before asking</h1><p class="cf-body planner-sub">Every request enters through the same clarity and context gate.</p></div><div class="planner-content"><div class="planner-flow">
+<div class="cf-panel planner-card"><div class="planner-step">1</div><span class="cf-chip">e1</span><h2 class="fn">capturePlanningRequest()</h2><p>Accept a task, project, or work request.</p><span class="cf-ml">Capture</span></div>
+<svg class="planner-arrow" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M2 13h20m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div class="cf-panel planner-card"><div class="planner-step">2</div><span class="cf-chip">e2</span><h2 class="fn">classifyPlanningIntent()</h2><p>Score clarity, context, complexity, and guided-intake need.</p><span class="cf-ml">Classify</span></div>
+<svg class="planner-arrow" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M2 13h20m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div class="cf-panel planner-card"><div class="planner-step">3</div><span class="cf-chip">e3</span><h2>Decision gate</h2><p>Route to Path A, B, or C.</p><span class="cf-ml">Route</span></div></div></div>
+<div class="planner-foot"><div class="cf-prompt">classify --clarity --context --complexity<span class="cf-cursor" aria-hidden="true"></span></div><span class="cf-ml">Task Planning Flow Architecture</span></div>
+</div></div></section></body></html>
