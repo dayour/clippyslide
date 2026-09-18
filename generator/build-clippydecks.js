@@ -182,18 +182,25 @@ const LIBRARY_CSS = `#library{position:fixed;inset:0;z-index:20;display:flex;ali
 .lib-meta{margin-top:4px;font:10.5px Consolas,"Courier New",Courier,monospace;color:var(--cp-text-soft)}
 .lib-foot{margin-top:18px;padding-top:12px;border-top:1px solid var(--cp-border);font:10.5px Consolas,"Courier New",Courier,monospace;color:var(--cp-text-soft)}`;
 
-function presentation(title, slides, deckId, clippyflow = false) {
+function presentation(title, slides, deckId, clippyflow = false, responsive = false) {
   const payload = JSON.stringify(slides.map(s => ({ title: s.title, data: b64(s.html) }))).replace(/</g, '\\u003c');
+  const stageCss = responsive
+    ? '#stage{position:absolute;inset:0;overflow:hidden}iframe{width:100%;height:100%;border:0;display:block;background:var(--cp-bg)}'
+    : '#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform:translate(-50%,-50%) scale(var(--deck-scale,1));transform-origin:center;background:var(--cp-surface);box-shadow:var(--cp-shadow);border:1px solid var(--cp-border);overflow:hidden}iframe{width:1280px;height:720px;border:0;display:block;background:var(--cp-surface)}';
   return `<!DOCTYPE html>
-<html lang="en"${clippyflow ? ' data-theme="clippyflow"' : ''}><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en"${clippyflow ? ' data-theme="clippyflow"' : ''}${responsive ? ' data-layout="responsive"' : ''}><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title} - ClippyDeck</title>
 ${clippyflow ? '' : THEME_SCRIPT}
 <style>
 ${clippyflow ? CLIPPYFLOW_VIEWER_CSS : THEME_CSS}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:"Segoe UI",Aptos,Calibri,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--cp-bg);color:var(--cp-text)}
-main{position:fixed;inset:0;background:var(--cp-bg)}#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform:translate(-50%,-50%) scale(var(--deck-scale,1));transform-origin:center;background:var(--cp-surface);box-shadow:var(--cp-shadow);border:1px solid var(--cp-border);overflow:hidden}iframe{width:1280px;height:720px;border:0;display:block;background:var(--cp-surface)}
+main{position:fixed;inset:0;background:var(--cp-bg)}${stageCss}
 header{position:fixed;z-index:10;top:0;left:0;right:0;height:36px;display:flex;align-items:center;gap:10px;padding:0 14px;background:linear-gradient(180deg,var(--cp-overlay) 0%,var(--cp-panel) 58%,transparent 100%);opacity:0;transition:opacity .25s ease}header:hover,header.show{opacity:1}header:not(:hover):not(.show){pointer-events:none}.brand{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--cp-accent);white-space:nowrap}.title{margin-right:auto;max-width:38vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--cp-text-muted);font-size:12px;font-weight:600}.count{font-family:Consolas,"Courier New",Courier,monospace;font-size:11px;color:var(--cp-text-muted);padding:2px 8px;border:1px solid var(--cp-border);border-radius:999px;background:var(--cp-surface-soft);white-space:nowrap}.sep{width:1px;height:16px;background:var(--cp-border)}button{height:24px;min-width:28px;padding:0 9px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--cp-border);border-radius:7px;background:transparent;color:var(--cp-text-muted);font:600 12px "Segoe UI",Aptos,Calibri,-apple-system,BlinkMacSystemFont,sans-serif;cursor:pointer;transition:color .15s,border-color .15s,background .15s}button:hover{color:var(--cp-accent);border-color:var(--cp-accent);background:var(--cp-accent-soft)}button:disabled{opacity:.35;cursor:default}#hint{position:fixed;z-index:9;left:50%;bottom:14px;transform:translateX(-50%);font:11px Consolas,"Courier New",Courier,monospace;color:var(--cp-text-soft);background:var(--cp-panel);border:1px solid var(--cp-border);padding:4px 11px;border-radius:999px;transition:opacity .6s ease}.zone{position:fixed;z-index:5;top:36px;bottom:0;width:11%;border:0;background:transparent;cursor:pointer}.zone.prev{left:0}.zone.next{right:0}
 ${LIBRARY_CSS}
+${responsive ? `@media(max-width:640px){
+header{gap:6px;padding:0 8px}header .brand{display:none}header .title{min-width:0;max-width:none}
+#library{padding:12px}.lib-panel{padding:16px}.lib-grid{grid-template-columns:minmax(0,1fr)}
+}` : ''}
 </style></head><body><main><div id="stage"><iframe id="frame" title="Slide"></iframe></div></main>
 <button class="zone prev" id="zonePrev" aria-label="Previous slide"></button><button class="zone next" id="zoneNext" aria-label="Next slide"></button>
 <header id="controls"><span class="brand">ClippyDeck</span><span class="title" id="title"></span><button id="prev" aria-label="Previous">&lsaquo;</button><span class="count" id="count"></span><button id="next" aria-label="Next">&rsaquo;</button><span class="sep"></span><button id="full">Present</button><button id="lib">Library</button></header>
@@ -202,23 +209,25 @@ ${libraryMarkup(deckId)}
 <script>
 const slides=${payload};let index=0;const frame=document.getElementById('frame'),count=document.getElementById('count'),title=document.getElementById('title'),controls=document.getElementById('controls');
 function decode(v){const bytes=Uint8Array.from(atob(v),c=>c.charCodeAt(0));return new TextDecoder().decode(bytes)}
-function fit(){document.documentElement.style.setProperty('--deck-scale',Math.min(innerWidth/1280,innerHeight/720))}
+${responsive ? '' : "function fit(){document.documentElement.style.setProperty('--deck-scale',Math.min(innerWidth/1280,innerHeight/720))}"}
 function show(i){index=Math.max(0,Math.min(slides.length-1,i));frame.srcdoc=decode(slides[index].data);count.textContent=(index+1)+' / '+slides.length;title.textContent=slides[index].title;document.getElementById('prev').disabled=index===0;document.getElementById('next').disabled=index===slides.length-1}
 function next(){show(index+1)}function prev(){show(index-1)}
 document.getElementById('next').onclick=next;document.getElementById('prev').onclick=prev;document.getElementById('zoneNext').onclick=next;document.getElementById('zonePrev').onclick=prev;document.getElementById('full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!library.hidden){e.preventDefault();setLibrary(false);return}if(!library.hidden)return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next()}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev()}else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);else if(e.key.toLowerCase()==='f')document.getElementById('full').click();else if(e.key.toLowerCase()==='l'){e.preventDefault();setLibrary(true)}else if(e.key.toLowerCase()==='h')controls.classList.toggle('show')});
+function handleKey(e){if(e.defaultPrevented||e.target.closest('input,textarea,select'))return;if(e.key==='Escape'&&!library.hidden){e.preventDefault();setLibrary(false);return}if(!library.hidden)return;if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();next()}else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();prev()}else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);else if(e.key.toLowerCase()==='f')document.getElementById('full').click();else if(e.key.toLowerCase()==='l'){e.preventDefault();setLibrary(true)}else if(e.key.toLowerCase()==='h'){pinned=!pinned;reveal()}}
+document.addEventListener('keydown',handleKey);
 const library=document.getElementById('library');
 function setLibrary(open){library.hidden=!open;if(open)controls.classList.add('show')}
 document.getElementById('lib').onclick=()=>setLibrary(true);
 document.getElementById('libClose').onclick=()=>setLibrary(false);
 library.addEventListener('click',e=>{if(e.target===library)setLibrary(false)});
-let idleTimer;function reveal(){controls.classList.add('show');clearTimeout(idleTimer);idleTimer=setTimeout(()=>controls.classList.remove('show'),2500)}
-document.addEventListener('mousemove',reveal);window.addEventListener('resize',fit);fit();show(0);
+let idleTimer,pinned=false;function reveal(){controls.classList.add('show');clearTimeout(idleTimer);if(!pinned)idleTimer=setTimeout(()=>controls.classList.remove('show'),2500)}
+${responsive ? "frame.addEventListener('load',()=>{frame.contentDocument.addEventListener('mousemove',reveal);frame.contentDocument.addEventListener('keydown',handleKey)});" : ''}
+document.addEventListener('mousemove',reveal);${responsive ? '' : "window.addEventListener('resize',fit);fit();"}show(0);
 setTimeout(()=>{const h=document.getElementById('hint');if(h)h.style.opacity='0'},4200);
 <\/script></body></html>`;
 }
 
-function packageDeck(dirName, specs, outputName, title, deckId, clippyflow = false) {
+function packageDeck(dirName, specs, outputName, title, deckId, clippyflow = false, responsive = false) {
   const dir = path.join(ROOT, dirName);
   const slides = specs.map((spec, i) => {
     const file = path.resolve(dir, spec.file);
@@ -227,7 +236,7 @@ function packageDeck(dirName, specs, outputName, title, deckId, clippyflow = fal
     if (fs.existsSync(png)) return { title: spec.title || `Slide ${i + 1}`, html: imageSlide(png, spec.title || `Slide ${i + 1}`) };
     throw new Error(`Missing slide source and fallback: ${file}`);
   });
-  const html = presentation(title, slides, deckId || dirName, clippyflow);
+  const html = presentation(title, slides, deckId || dirName, clippyflow, responsive);
   fs.writeFileSync(path.join(dir, outputName), html);
   fs.mkdirSync(STATIC_DECKS, { recursive: true });
   fs.writeFileSync(path.join(STATIC_DECKS, outputName), html);
@@ -237,7 +246,8 @@ function packageDeck(dirName, specs, outputName, title, deckId, clippyflow = fal
 
 /* Layout only: palette, typography, window chrome and cards come from brand-deck's two stylesheets. */
 const PLANNER_CSS = `
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--cf-navy-deep);color:var(--cf-fg)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:var(--cf-navy-deep);color:var(--cf-fg)}
+.cf-stage{position:absolute;top:0;left:0;transform-origin:top left}
 .planner-body{display:flex;flex-direction:column;gap:24px;min-height:0;--cf-win-pad:30px 38px 24px}
 .planner-head{flex:0 0 auto;min-width:0}
 .planner-title{font-size:42px;line-height:1.1;max-width:100%;margin:12px 0 14px}
@@ -281,6 +291,22 @@ code{font-family:var(--cf-mono);font-size:.88em;color:var(--clippy-cyan-br)}
 @media(prefers-reduced-motion:reduce){.cf-cursor{animation:none}}
 `;
 
+const PLANNER_VIEWPORT_SCRIPT = `(() => {
+  const stage = document.querySelector('.cf-stage');
+  function fit() {
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    // A hidden iframe has no drawable viewport; resize will refit it when shown.
+    if (!width || !height) return;
+    const scale = Math.min(width / 1280, height / 720);
+    stage.style.width = (width / scale) + 'px';
+    stage.style.height = (height / scale) + 'px';
+    stage.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+})();`;
+
 const FLOW_ARROW = '<svg class="planner-arrow" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M2 13h20m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 function cfSlide({ n, total, hero = false, kicker, title, subtitle, body, command }) {
@@ -296,7 +322,7 @@ function cfSlide({ n, total, hero = false, kicker, title, subtitle, body, comman
 <div class="cf-win-body planner-body">
 ${hero ? `<div class="planner-hero">${head}${body}</div>` : `${head}<div class="planner-content">${body}</div>`}
 <div class="planner-foot"><div class="cf-prompt">${command}<span class="cf-cursor" aria-hidden="true"></span></div><span class="cf-ml">Task Planning Flow Architecture</span></div>
-</div></div></section></body></html>`;
+</div></div></section><script>${PLANNER_VIEWPORT_SCRIPT}<\/script></body></html>`;
 }
 
 function plannerSlides() {
@@ -350,7 +376,7 @@ function buildPlannerDeck() {
   slides.forEach((html, i) => fs.writeFileSync(path.join(dir, `${String(i+1).padStart(2,'0')}.html`), html));
   const specs = slides.map((html,i)=>({n:i+1,file:`${String(i+1).padStart(2,'0')}.html`,title:html.match(/<h1\b[^>]*>([^<]+)<\/h1>/)[1]}));
   fs.writeFileSync(path.join(dir, 'deck.context.json'), JSON.stringify({title:'Task Planning Flow Architecture',theme:'clippyflow',designReference:'brand-deck',stylesheets:['../design-system/clippyflow.css','../design-system/clippyflow-terminal.css'],source:SOURCE,slides:specs}, null, 2));
-  return packageDeck('planner-card-math', specs, deckFile('planner-card-math'), 'Task Planning Flow Architecture', 'planner-card-math', true);
+  return packageDeck('planner-card-math', specs, deckFile('planner-card-math'), 'Task Planning Flow Architecture', 'planner-card-math', true, true);
 }
 
 function deckFile(id) {

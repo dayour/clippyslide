@@ -3,7 +3,8 @@
 <link rel="stylesheet" href="../design-system/clippyflow.css">
 <link rel="stylesheet" href="../design-system/clippyflow-terminal.css">
 <style>
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--cf-navy-deep);color:var(--cf-fg)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:var(--cf-navy-deep);color:var(--cf-fg)}
+.cf-stage{position:absolute;top:0;left:0;transform-origin:top left}
 .planner-body{display:flex;flex-direction:column;gap:24px;min-height:0;--cf-win-pad:30px 38px 24px}
 .planner-head{flex:0 0 auto;min-width:0}
 .planner-title{font-size:42px;line-height:1.1;max-width:100%;margin:12px 0 14px}
@@ -54,4 +55,18 @@ code{font-family:var(--cf-mono);font-size:.88em;color:var(--clippy-cyan-br)}
 <div class="cf-panel planner-card"><span class="cf-chip">A1 / Deliverable selected</span><h2>User picks a deliverable shape</h2><div class="sequence">a0 / a1t1 / a1t2 / a1t3</div><ul><li>Confirm the selected planning lane.</li><li>Ask remaining core questions.</li><li>Rollups: <code>a1:q2/3</code>, <code>a1:q3/3</code>, or <code>a1c:q2/2</code>.</li><li>Draft the task plan.</li></ul></div>
 <div class="cf-panel planner-card"><span class="cf-chip">A2 / Decision support</span><h2>Help me decide</h2><div class="sequence">a2t1 to a2t4</div><ul><li>Start a short decision-support sequence.</li><li>Collect <code>a2d:q1/n</code>, <code>a2d:q2/n</code>, and so on.</li><li>Reset into <code>a2p:q1/3</code> through <code>a2p:q3/3</code>.</li><li>Draft the task plan.</li></ul></div></div></div>
 <div class="planner-foot"><div class="cf-prompt">clarify --lane A1 --or decision-support<span class="cf-cursor" aria-hidden="true"></span></div><span class="cf-ml">Task Planning Flow Architecture</span></div>
-</div></div></section></body></html>
+</div></div></section><script>(() => {
+  const stage = document.querySelector('.cf-stage');
+  function fit() {
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    // A hidden iframe has no drawable viewport; resize will refit it when shown.
+    if (!width || !height) return;
+    const scale = Math.min(width / 1280, height / 720);
+    stage.style.width = (width / scale) + 'px';
+    stage.style.height = (height / scale) + 'px';
+    stage.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+})();</script></body></html>

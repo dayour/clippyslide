@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
+const vm = require('node:vm');
 const { plannerSlides, presentation, inlineHtml } = require('./build-clippydecks');
 
 const ROOT = path.join(__dirname, '..');
@@ -56,6 +57,68 @@ test('planner viewer uses fixed ClippyFlow tokens, not OS-selected gray and pink
   assert.doesNotMatch(viewer, /prefers-color-scheme|#fd8ea1|#3d3b3a/i);
 });
 
+test('responsive viewer fills the viewport without a second scaling or border layer', () => {
+  const viewer = presentation('Planning', [], 'planner-card-math', true, true);
+  assert.match(viewer, /data-layout="responsive"/);
+  assert.match(viewer, /#stage\{position:absolute;inset:0;overflow:hidden\}/);
+  assert.match(viewer, /iframe\{width:100%;height:100%;border:0;/);
+  assert.doesNotMatch(viewer, /--deck-scale|function fit\(\)/);
+  assert.match(viewer, /@media\(max-width:640px\)/);
+  assert.match(viewer, /\.lib-grid\{grid-template-columns:minmax\(0,1fr\)\}/);
+  assert.match(viewer, /frame\.contentDocument\.addEventListener\('mousemove',reveal\)/);
+  assert.match(viewer, /frame\.contentDocument\.addEventListener\('keydown',handleKey\)/);
+  assert.match(viewer, /if\(!pinned\)idleTimer=setTimeout/);
+
+  const fixed = presentation('Legacy', [], 'deck');
+  assert.doesNotMatch(fixed, /data-layout="responsive"/);
+  assert.match(fixed, /--deck-scale/);
+  assert.match(fixed, /Math\.min\(innerWidth\/1280,innerHeight\/720\)/);
+});
+
+test('each planner source fills wide, tall, compact and resized viewports with uniform scaling', () => {
+  const sizes = [[1280,720], [1800,900], [1920,1080], [1440,900], [1024,768], [800,450], [600,900], [2560,1080]];
+  const close = (actual, expected) => assert.ok(Math.abs(actual - expected) < 0.000001, `${actual} != ${expected}`);
+  for (const html of slides) {
+    const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+    const stage = {style:{}};
+    const viewport = {clientWidth:1280, clientHeight:720};
+    let onResize;
+    vm.runInNewContext(script, {
+      document: {documentElement:viewport, querySelector:selector => {
+        assert.equal(selector, '.cf-stage');
+        return stage;
+      }},
+      window: {addEventListener:(event, callback) => {
+        assert.equal(event, 'resize');
+        onResize = callback;
+      }},
+    });
+    assert.equal(typeof onResize, 'function');
+    assert.equal(stage.style.transform, 'scale(1)');
+    for (const [width, height] of sizes) {
+      viewport.clientWidth = width;
+      viewport.clientHeight = height;
+      onResize();
+      const scale = Number(stage.style.transform.match(/^scale\(([^)]+)\)$/)[1]);
+      const logicalWidth = parseFloat(stage.style.width);
+      const logicalHeight = parseFloat(stage.style.height);
+      close(scale, Math.min(width / 1280, height / 720));
+      close(logicalWidth * scale, width);
+      close(logicalHeight * scale, height);
+      assert.ok(logicalWidth >= 1280 - 0.000001);
+      assert.ok(logicalHeight >= 720 - 0.000001);
+    }
+    const visibleStyle = {...stage.style};
+    viewport.clientWidth = viewport.clientHeight = 0;
+    onResize();
+    assert.deepEqual(stage.style, visibleStyle);
+    viewport.clientWidth = 1280;
+    viewport.clientHeight = 720;
+    onResize();
+    assert.equal(stage.style.transform, 'scale(1)');
+  }
+});
+
 test('generated sources and both packaged copies contain the current eight slides', () => {
   const normalize = text => text.replace(/\r\n/g, '\n');
   slides.forEach((slide, i) => {
@@ -70,6 +133,8 @@ test('generated sources and both packaged copies contain the current eight slide
   const local = fs.readFileSync(path.join(ROOT, 'planner-card-math', deckFile), 'utf8');
   const published = fs.readFileSync(path.join(ROOT, 'website', 'static', 'decks', deckFile), 'utf8');
   assert.equal(normalize(local), normalize(published));
+  assert.match(local, /data-layout="responsive"/);
+  assert.doesNotMatch(local, /--deck-scale/);
   const payload = JSON.parse(local.match(/const slides=(.*);let index=0;/)[1]);
   assert.equal(payload.length, 8);
   payload.forEach((slide, i) => {
@@ -77,6 +142,7 @@ test('generated sources and both packaged copies contain the current eight slide
     const html = Buffer.from(slide.data, 'base64').toString('utf8');
     assert.match(html, /class="cf-stage cf-scan/);
     assert.match(html, /\.cf-win-bar\s*\{/);
+    assert.match(html, /stage\.style\.width = \(width \/ scale\)/);
     assert.doesNotMatch(html, /<link\b|<img\b|slide (?:light|ice)/);
     assert.ok(html.includes(titles[i]));
   });

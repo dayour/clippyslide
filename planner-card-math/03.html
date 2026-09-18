@@ -3,7 +3,8 @@
 <link rel="stylesheet" href="../design-system/clippyflow.css">
 <link rel="stylesheet" href="../design-system/clippyflow-terminal.css">
 <style>
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--cf-navy-deep);color:var(--cf-fg)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:var(--cf-navy-deep);color:var(--cf-fg)}
+.cf-stage{position:absolute;top:0;left:0;transform-origin:top left}
 .planner-body{display:flex;flex-direction:column;gap:24px;min-height:0;--cf-win-pad:30px 38px 24px}
 .planner-head{flex:0 0 auto;min-width:0}
 .planner-title{font-size:42px;line-height:1.1;max-width:100%;margin:12px 0 14px}
@@ -57,4 +58,18 @@ code{font-family:var(--cf-mono);font-size:.88em;color:var(--clippy-cyan-br)}
 <svg class="planner-arrow" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M2 13h20m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 <div class="cf-panel planner-card"><div class="planner-step">3</div><span class="cf-chip">e3</span><h2>Decision gate</h2><p>Route to Path A, B, or C.</p><span class="cf-ml">Route</span></div></div></div>
 <div class="planner-foot"><div class="cf-prompt">classify --clarity --context --complexity<span class="cf-cursor" aria-hidden="true"></span></div><span class="cf-ml">Task Planning Flow Architecture</span></div>
-</div></div></section></body></html>
+</div></div></section><script>(() => {
+  const stage = document.querySelector('.cf-stage');
+  function fit() {
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    // A hidden iframe has no drawable viewport; resize will refit it when shown.
+    if (!width || !height) return;
+    const scale = Math.min(width / 1280, height / 720);
+    stage.style.width = (width / scale) + 'px';
+    stage.style.height = (height / scale) + 'px';
+    stage.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+})();</script></body></html>

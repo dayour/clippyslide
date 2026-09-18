@@ -33,11 +33,25 @@ slides and inlined in the packaged deck. Do not substitute the separate light
 PowerPoint preset or apply the theme only to the viewer. The planner viewer also
 stays dark regardless of the operating-system color preference.
 
+The planner also uses a **viewport-filling canvas**. Its 1280x720 reference
+controls a single uniform text/graphics scale; the layout expands along the
+other axis to fill wide or tall browser frames. Only the brand deck's intentional
+22-unit terminal inset remains. There is no second fixed-ratio frame, extra
+viewer border, cropped content, or stretched typography. Individual slide HTML
+files and the packaged deck use the same resize behavior, including when embedded
+in an iframe.
+Mouse and keyboard events inside the responsive slide iframe also reach the
+viewer controls. `H` pins or unpins the bar; moving the pointer over slide content
+reveals it without requiring a click on the page background.
+
 The planner content is stored in the generator; its original HTML path is
 provenance, not a build dependency. Visual review must compare **all eight**
 rendered slides with the brand deck, including the overview, function labels,
 question-card identifiers, and schema table. A slide loading successfully does
 not establish theme fidelity, readability, or freedom from clipping.
+Review at the reference 1280x720 size **and** non-16:9 sizes such as 1800x900
+and 1024x768, plus a compact viewport. Confirm the canvas reaches all four
+viewport edges, the terminal has even gutters, and all text and controls fit.
 
 ## The deck registry
 
@@ -93,7 +107,8 @@ terminate the `<script>` block early.
 | `H` | Pin the control bar |
 | `Escape` | Close the Library |
 
-The 1280×720 stage scales to fit any viewport. The control bar is a top scrim
+Fixed-layout decks contain-scale their 1280x720 stage; the planner instead fills
+the available viewport as described above. The control bar is a top scrim
 that stays hidden until the pointer moves and fades again after a short idle, so
 it never competes with slide content. Clicking the left or right edge of the
 stage navigates; those click-zones start below the bar so they cannot swallow

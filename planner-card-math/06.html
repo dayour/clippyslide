@@ -3,7 +3,8 @@
 <link rel="stylesheet" href="../design-system/clippyflow.css">
 <link rel="stylesheet" href="../design-system/clippyflow-terminal.css">
 <style>
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--cf-navy-deep);color:var(--cf-fg)}
+*{box-sizing:border-box}html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:var(--cf-navy-deep);color:var(--cf-fg)}
+.cf-stage{position:absolute;top:0;left:0;transform-origin:top left}
 .planner-body{display:flex;flex-direction:column;gap:24px;min-height:0;--cf-win-pad:30px 38px 24px}
 .planner-head{flex:0 0 auto;min-width:0}
 .planner-title{font-size:42px;line-height:1.1;max-width:100%;margin:12px 0 14px}
@@ -54,4 +55,18 @@ code{font-family:var(--cf-mono);font-size:.88em;color:var(--clippy-cyan-br)}
 <div class="cf-panel planner-card"><span class="cf-chip">C1 / Direct</span><h2>Direct planning lane</h2><div class="sequence">c1t1 to c1t3</div><p>Ask three standard questions covering objective, constraints, and success criteria: <code>c1:q1/3</code>, <code>c1:q2/3</code>, <code>c1:q3/3</code>.</p><span class="cf-ml">Objective / Constraints / Success</span></div>
 <div class="cf-panel planner-card"><span class="cf-chip">D / Alternate entry</span><h2>Planning tile click</h2><div class="sequence">d1 to d4</div><p>A guided-plan tile starts B2 directly. Other preset templates prefill the brief and reuse <code>e1</code>, <code>e2</code>, and <code>e3</code>.</p><span class="cf-ml">Prefill / Classify / Route</span></div></div></div>
 <div class="planner-foot"><div class="cf-prompt">plan --direct C1 --or preset D<span class="cf-cursor" aria-hidden="true"></span></div><span class="cf-ml">Task Planning Flow Architecture</span></div>
-</div></div></section></body></html>
+</div></div></section><script>(() => {
+  const stage = document.querySelector('.cf-stage');
+  function fit() {
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    // A hidden iframe has no drawable viewport; resize will refit it when shown.
+    if (!width || !height) return;
+    const scale = Math.min(width / 1280, height / 720);
+    stage.style.width = (width / scale) + 'px';
+    stage.style.height = (height / scale) + 'px';
+    stage.style.transform = 'scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+})();</script></body></html>
