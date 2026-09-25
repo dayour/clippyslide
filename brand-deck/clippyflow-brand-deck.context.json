@@ -3,7 +3,19 @@
   "version": "1.0",
   "created": "2026-06-12",
   "canvas": { "w": 1280, "h": 720, "ratio": "16:9", "safe_margin_px": 22 },
-  "concept": "Retro-nostalgic MODERN TERMINAL that renders tiles and cards. Every slide is a polished TUI window (titlebar + traffic-light dots + mono meta) wrapping the Clippyflow spectrum brand. Boundaries enforced via flex/grid inside .cf-win-body (no free-floating absolute overflow).",
+  "concept": "Retro-nostalgic MODERN TERMINAL that renders tiles and cards. Every slide is a polished TUI window (titlebar + traffic-light dots + layer tabs + mono meta) wrapping the Clippyflow spectrum brand. Boundaries enforced via flex/grid inside .cf-win-body (no free-floating absolute overflow).",
+  "header": {
+    "regions": ["dots", "layers", "title", "meta"],
+    "layers": {
+      "component": "cf-layers",
+      "law": "one active layer; nitrous rim = selection (structure); cyan dot = active identity (meaning); inactive dots stay dim",
+      "items": [
+        { "id": "flow", "label": "Clippyflow – Flow", "active": true },
+        { "id": "deck", "label": "Brand Deck · 11 slides" },
+        { "id": "repo", "label": "github.com/dayour" }
+      ]
+    }
+  },
   "design_law": "Spectrum = data/meaning (cyan 186 / blue 206 / purple 257 / magenta 291 / green 142). Nitrous blue (214) = STRUCTURE ONLY (rims, focus, scrollbars, dividers, cursor, underlines). CTA fill = cyan 186 brighter, never nitrous. No raw hex in components.",
   "typography": {
     "display_sans": "Segoe UI Variable / Segoe UI",

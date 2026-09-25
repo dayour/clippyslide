@@ -73,6 +73,7 @@
     "cf-accent-left", "cf-title", "cf-title.white", "cf-kicker", "cf-h2.under",
     "cf-label", "cf-body", "cf-mono", "cf-pill.cyan", "cf-pill.purple", "cf-pill.magenta", "cf-pill.nitrous",
     "cf-tile", "cf-orx", "cf-divider", "cf-swatch", "cf-chip", "cf-badge", "cf-agentcard",
+    "cf-layers", "cf-layer", "cf-layer.active", "cf-layer-add",
     "cf-env.dev", "cf-env.sandbox", "cf-env.prod", "cf-health", "cf-scroll", "cf-focusable"
   ],
   "rules": [

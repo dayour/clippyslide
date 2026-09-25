@@ -46,6 +46,19 @@ Never both.
 Mono, dim, with one full-contrast focus segment via `<b>`. Path form encouraged
 (`clippyflow · ~/design-system/header.css`).
 
+### Layers — `.cf-layers` / `.cf-layer`
+Composable card layers in the terminal window bar (`.cf-win-bar`), sitting
+immediately after the traffic lights. Distinct from document tabs: a layer is a
+surface of the same card (Flow, deck, repo), not a second window.
+
+| State | Class | Signal |
+| --- | --- | --- |
+| Active | `.active` | **nitrous** pill rim + glow (the one selected layer) and a **cyan** identity dot |
+| Default | — | dim label, dim dot, no rim |
+| Add | `.cf-layer-add` | `+`, dim until hover (nitrous) |
+
+Exactly one `.active`. Inactive dots stay grey — a spectrum hue here would fake a second selection.
+
 ### Tabs — `.cfh-tabs` / `.cfh-tab`
 Open surfaces. States:
 

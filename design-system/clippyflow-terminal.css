@@ -32,10 +32,52 @@
 .cf-win-dots i:nth-child(1){ background:var(--clippy-magenta);  box-shadow:0 0 8px hsla(291,100%,58%,.6); }
 .cf-win-dots i:nth-child(2){ background:var(--clippy-cyan-br);  box-shadow:0 0 8px hsla(186,100%,52%,.6); }
 .cf-win-dots i:nth-child(3){ background:var(--clippy-green-br); box-shadow:0 0 8px hsla(142,71%,48%,.6); }
-.cf-win-title{ color:var(--cf-fg-soft); letter-spacing:.3px; }
+.cf-win-title{ color:var(--cf-fg-soft); letter-spacing:.3px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:0 1 auto; }
 .cf-win-title b{ color:var(--cf-fg); font-weight:600; }
-.cf-win-meta{ margin-left:auto; color:var(--cf-fg-dim); letter-spacing:.3px; display:flex; gap:16px; }
+.cf-win-meta{ margin-left:auto; color:var(--cf-fg-dim); letter-spacing:.3px; display:flex; gap:16px; flex:0 0 auto; }
 .cf-win-meta .on{ color:var(--clippy-green-br); }
+
+/* -- Layer tab selector ----------------------------------------------------
+   Composable card layers live in the header, immediately after the traffic
+   lights. One .active per strip. Nitrous rim = which layer is selected
+   (structure). Cyan dot = the active layer's identity (meaning). Inactive
+   dots stay dim — never a second lit hue.
+     <nav class="cf-layers" aria-label="layers">
+       <span class="cf-layer active"><i></i><span class="t">Clippyflow – Flow</span><span class="x">×</span></span>
+       <span class="cf-layer"><i></i><span class="t">Brand Deck · 11 slides</span><span class="x">×</span></span>
+       <span class="cf-layer-add">+</span>
+     </nav>
+   ------------------------------------------------------------------------ */
+.cf-layers{
+  display:flex; align-items:center; gap:10px; min-width:0; flex:1 1 auto;
+}
+.cf-layer{
+  display:flex; align-items:center; gap:8px; max-width:228px; min-width:0;
+  height:28px; padding:0 11px 0 10px; border-radius:8px;
+  font-size:12.5px; color:var(--cf-fg-dim); letter-spacing:.1px;
+  background:transparent; border:1px solid transparent;
+}
+.cf-layer i{
+  width:8px; height:8px; border-radius:50%; flex:0 0 auto;
+  background:var(--cf-fg-dim);
+}
+.cf-layer .t{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.cf-layer .x{ color:var(--cf-fg-dim); margin-left:1px; font-size:13px; line-height:1; }
+.cf-layer.active{
+  color:var(--cf-fg);
+  border-color:var(--nitrous);
+  background:hsla(214,100%,60%,.07);
+  box-shadow:0 0 0 1px var(--nitrous-glow), 0 0 14px var(--nitrous-glow);
+}
+.cf-layer.active i{
+  background:var(--clippy-cyan-br);
+  box-shadow:0 0 6px hsla(186,100%,52%,.75);
+}
+.cf-layer-add{
+  flex:0 0 auto; color:var(--cf-fg-dim); font-size:16px; line-height:1; padding:0 2px;
+}
+.cf-layer-add:hover{ color:var(--nitrous); }
+
 .cf-win-body{ position:relative; flex:1 1 auto; padding:var(--cf-win-pad, 34px 40px); overflow:hidden; }
 
 /* -- Window variants ------------------------------------------------------
