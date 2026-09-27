@@ -59,6 +59,8 @@ surface of the same card (Flow, deck, repo), not a second window.
 
 Exactly one `.active`. Inactive dots stay grey — a spectrum hue here would fake a second selection.
 
+Each layer is a link. Close is a sibling button and does not follow the link. `+` opens the header spec. On brand-deck slides, `brand-deck/layers.js` rewrites the Flow href to the current slide, opens Brand Deck at the top window, and injects `‹` / `›` around the slide counter. Arrow keys move focus inside the strip; Left/Right outside the strip walk slides.
+
 ### Tabs — `.cfh-tabs` / `.cfh-tab`
 Open surfaces. States:
 
