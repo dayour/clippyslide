@@ -1,0 +1,274 @@
+{
+  "schemaVersion": "1.0.0",
+  "card": {
+    "id": "clippyside-fde",
+    "title": "ClippySide",
+    "subtitle": "clippycard --layers",
+    "theme": "clippyflow",
+    "version": "1.0.0",
+    "sourceTemplate": "fde_template_edited_2026-09-27T10-11-19.html"
+  },
+  "activeLayer": "flow",
+  "header": {
+    "tabs": [
+      { "id": "flow", "title": "Clippyflow – Flow", "page": "home", "signal": "cyan", "active": true },
+      { "id": "deck", "title": "Brand Deck · 11 slides", "href": "../brand-deck/clippyflow-brand-clippydeck.html", "target": "_top", "signal": "dim" },
+      { "id": "schema", "title": "Layer schema", "page": "schema", "signal": "purple" }
+    ],
+    "add": { "label": "+", "href": "../brand-deck/clippyflow-header-spec.html", "title": "Open header spec" },
+    "toggles": [
+      { "id": "sidebar", "title": "Toggle sidepane", "glyph": "side", "control": "sidebar", "signal": "nitrous", "functions": ["toggleSidebar"] },
+            { "id": "record", "title": "Yumlog session", "glyph": "rec", "control": "record", "signal": "magenta", "functions": ["toggleYumlog", "startYumlog", "stopYumlog", "logYumlogEvent", "generateYumlogContent", "saveYumlogRecording", "saveYumlogFile", "getSearchCount", "getUniquePages"] },
+            { "id": "search", "title": "Search", "glyph": "find", "control": "search", "signal": "cyan", "functions": ["openSearch", "closeSearch", "performSearch", "searchAllDocuments", "extractTitle", "highlightText", "navigateToSearchResult", "debounce"] },
+            { "id": "theme", "title": "Spectrum bloom", "glyph": "bloom", "control": "theme", "signal": "purple", "functions": ["toggleTheme", "loadTheme"] },
+            { "id": "print", "title": "Print", "glyph": "print", "control": "print", "signal": "dim", "functions": [] },
+            { "id": "slides", "title": "Slide view", "glyph": "grid", "control": "slides", "signal": "nitrous", "functions": ["toggleSlideView", "renderSlideView", "renderNormalView", "scrollToSlide", "copySlideText", "copySlideAsImage"] },
+            { "id": "chat", "title": "Assistant", "glyph": "chat", "control": "chat", "signal": "cyan", "functions": ["toggleChatPanel", "toggleChatPin"] },
+            { "id": "edit", "title": "Unlock to edit", "glyph": "edit", "control": "edit", "signal": "orange", "functions": ["toggleEditMode", "enableContentEditing", "disableContentEditing", "preventClickInEditMode"] },
+            { "id": "download", "title": "Download edited card", "glyph": "save", "control": "download", "signal": "green", "functions": ["downloadEditedTemplate", "showDownloadNotification"] }
+    ]
+  },
+  "sidepane": {
+    "width": 280,
+    "sections": [
+      {
+        "id": "home",
+        "title": "ClippySide",
+        "collapsible": false,
+        "items": [
+          { "id": "landing", "title": "Card home", "page": "home", "signal": "cyan" }
+        ]
+      },
+      {
+        "id": "layers",
+        "title": "Layers",
+        "collapsible": true,
+        "collapsed": false,
+        "items": [
+          { "id": "header", "title": "Header", "page": "header", "signal": "nitrous" },
+          { "id": "sidepane", "title": "Sidepane", "page": "sidepane", "signal": "purple" },
+          { "id": "toggles", "title": "Toggles", "page": "toggles", "signal": "orange" },
+          { "id": "implementation", "title": "Implementation", "page": "implementation", "signal": "green" }
+        ]
+      },
+      {
+        "id": "framework",
+        "title": "Framework",
+        "collapsible": true,
+        "collapsed": false,
+        "items": [
+          { "id": "schema-nav", "title": "Layer schema", "page": "schema", "signal": "purple" },
+          { "id": "functions-nav", "title": "Function index", "page": "functions", "signal": "cyan" },
+          { "id": "assistant-nav", "title": "Assistant", "page": "assistant", "signal": "magenta" }
+        ]
+      }
+    ]
+  },
+  "pages": [
+    {
+      "id": "home",
+      "title": "ClippySide",
+      "kicker": "CLIPPYCARD",
+      "crumb": ["ClippySide", "Home"],
+      "blocks": [
+        { "kind": "kicker", "text": "LAYER SCHEMA" },
+        { "kind": "heading", "level": 1, "text": "A sidepane card, in ClippyFlow." },
+        { "kind": "prose", "text": "Same shell as the FDE template: sticky header, collapsible sidepane, main document, on-this-page rail, search, assistant, edit lock, and download. Restyled on the ClippyFlow token system. Nitrous rims structure. Spectrum hues mark meaning." },
+        { "kind": "chips", "items": ["header", "sidepane", "toggles", "implementation", "assistant", "schema"] },
+        { "kind": "heading", "level": 2, "text": "How to edit" },
+        { "kind": "prose", "text": "Unlock edits from the header. Titles, sidepane labels, and prose become editable. The schema page accepts a full layer document and re-renders the shell. Download writes the edited card as HTML. Nothing here calls a remote model or stores a credential." }
+      ]
+    },
+    {
+      "id": "header",
+      "title": "Header",
+      "kicker": "REGION",
+      "crumb": ["ClippySide", "Header"],
+      "blocks": [
+        { "kind": "kicker", "text": "CF-WIN-BAR" },
+        { "kind": "heading", "level": 1, "text": "Header layers" },
+        { "kind": "prose", "text": "Traffic lights, then the composable layer strip, then the command title, then toggles and the live badge. Exactly one .active tab. Close is a sibling button and does not follow the link. Flow stays on this card. Brand Deck opens the deck shell at the top window." },
+        { "kind": "table", "headers": ["Slot", "Source", "Signal"], "rows": [["dots", "cf-win-dots", "spectrum"], ["tabs", "cf-layers", "nitrous rim, cyan dot"], ["title", "nav-title", "fg"], ["toggles", "nav-actions", "per control"], ["progress", "scroll-progress", "nitrous"]] }
+      ]
+    },
+    {
+      "id": "sidepane",
+      "title": "Sidepane",
+      "kicker": "REGION",
+      "crumb": ["ClippySide", "Sidepane"],
+      "blocks": [
+        { "kind": "kicker", "text": "ASIDE" },
+        { "kind": "heading", "level": 1, "text": "Sidepane" },
+        { "kind": "prose", "text": "Fixed under the header. Sections collapse. Items navigate pages and rewrite the breadcrumb. The in-pane outline tracks headings in the main document. Collapsing the pane expands main, matching toggleSidebar." },
+        { "kind": "table", "headers": ["Feature", "Functions"], "rows": [["Section fold", "toggleSidebarSection"], ["Navigate", "navigateToPage, showLandingPage, showMarkdownPage, getPageName, updateBreadcrumb"], ["Outline", "generateTOC, generateTOCSidebar, observeTOCSidebarScroll"]] }
+      ]
+    },
+    {
+      "id": "toggles",
+      "title": "Toggles",
+      "kicker": "HEADER",
+      "crumb": ["ClippySide", "Toggles"],
+      "blocks": [
+        { "kind": "kicker", "text": "NAV-ACTIONS" },
+        { "kind": "heading", "level": 1, "text": "Header toggles" },
+        { "kind": "prose", "text": "Each FDE header button is a toggle in the schema. Theme does not flip to a light Microsoft canvas. ClippyFlow stays dark. The theme control toggles spectrum bloom, which is what loadTheme and toggleTheme mean on this card." },
+        { "kind": "table", "headers": ["Control", "Source functions"], "rows": [["sidebar", "toggleSidebar"], ["record", "toggleYumlog, startYumlog, stopYumlog, logYumlogEvent, generateYumlogContent, saveYumlogRecording, saveYumlogFile"], ["search", "openSearch, closeSearch, performSearch, searchAllDocuments"], ["theme", "toggleTheme, loadTheme"], ["slides", "toggleSlideView, renderSlideView, renderNormalView, scrollToSlide, copySlideText, copySlideAsImage"], ["edit", "toggleEditMode, enableContentEditing, disableContentEditing"], ["download", "downloadEditedTemplate, showDownloadNotification"]] }
+      ]
+    },
+    {
+      "id": "implementation",
+      "title": "Implementation",
+      "kicker": "MAIN",
+      "crumb": ["ClippySide", "Implementation"],
+      "blocks": [
+        { "kind": "kicker", "text": "PAGES" },
+        { "kind": "heading", "level": 1, "text": "Implementation surface" },
+        { "kind": "prose", "text": "The source main region renders markdown pages, code blocks, a table of contents, and per-agent config, guide, and chat slots. This card keeps that shape and fills it with the layer contract instead of a customer policy corpus." },
+        { "kind": "heading", "level": 2, "text": "Page render" },
+        { "kind": "prose", "text": "renderMarkdown, renderNormalView, and renderSlideView choose the body. postProcessContent and wrapCodeBlock decorate code. copyCode copies a block. Slide view turns h2 sections into cards." },
+        { "kind": "heading", "level": 2, "text": "Agent slots" },
+        { "kind": "prose", "text": "Source pages agent1, agent2, and agent3 each expose config, guide, and chat. renderAgentChatPage, initializeAgentChat, sendAgentMessage, sendAgentPrompt, and syncAgentModel own that slot. exportAgentConfig and addAgentAssistantSection attach a builder footer. Those slots are features of the implementation layer, not a second theme." }
+      ]
+    },
+    {
+      "id": "assistant",
+      "title": "Assistant",
+      "kicker": "OVERLAY",
+      "crumb": ["ClippySide", "Assistant"],
+      "blocks": [
+        { "kind": "kicker", "text": "LOCAL" },
+        { "kind": "heading", "level": 1, "text": "Assistant, without credentials" },
+        { "kind": "prose", "text": "The source has three chat surfaces: the pinned chat panel (AIChat), the floating Caddy window (CaddyAIChat), and per-agent chat. Their remote call methods are catalogued and excluded. This card answers from the layer index only." },
+        { "kind": "chips", "items": ["toggleChatPanel", "toggleCaddyChat", "positionCaddyWindow", "local reply"] }
+      ]
+    },
+    {
+      "id": "schema",
+      "title": "Layer schema",
+      "kicker": "EDIT",
+      "crumb": ["ClippySide", "Schema"],
+      "blocks": [
+        { "kind": "kicker", "text": "JSON" },
+        { "kind": "heading", "level": 1, "text": "Edit the layer document" },
+        { "kind": "prose", "text": "Apply re-renders header tabs, toggles, sidepane, and pages from the document. Invalid JSON is refused. Download saves the rendered card, including your edits." },
+        { "kind": "schema" }
+      ]
+    },
+    {
+      "id": "functions",
+      "title": "Function index",
+      "kicker": "INDEX",
+      "crumb": ["ClippySide", "Functions"],
+      "blocks": [
+        { "kind": "kicker", "text": "SOURCE MAP" },
+        { "kind": "heading", "level": 1, "text": "Every catalogued function" },
+        { "kind": "prose", "text": "Grouped by the layer that owns it. The inner debounce closure executedFunction is not a feature. Credentialed model calls are listed under excluded, not wired." }
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "id": "app",
+      "title": "App",
+      "region": "main",
+      "signal": "nitrous",
+      "summary": "Boot and shared utilities.",
+      "sourceIds": ["main-container"],
+      "features": [
+        { "id": "boot", "title": "Boot", "summary": "Construct assistants, bind controls, load theme, show the landing page.", "functions": ["initializeApp", "setupEventListeners"] },
+        { "id": "progress", "title": "Scroll progress", "summary": "Nitrous bar under the header.", "signal": "nitrous", "functions": ["updateScrollProgress"] },
+        { "id": "debounce", "title": "Debounce", "summary": "Search input wait. executedFunction is the inner timer closure.", "functions": ["debounce"] }
+      ]
+    },
+    {
+      "id": "header",
+      "title": "Header",
+      "region": "header",
+      "signal": "nitrous",
+      "summary": "Sticky window bar. Dots, layer tabs, title, toggles, version.",
+      "sourceIds": ["top-nav", "scroll-progress"],
+      "features": [
+        { "id": "tabs", "title": "Layer tabs", "summary": "One active pill. Nitrous rim, cyan identity dot.", "signal": "cyan", "functions": [] },
+        { "id": "sidebar-toggle", "title": "Sidepane toggle", "signal": "nitrous", "functions": ["toggleSidebar"] },
+        { "id": "yumlog", "title": "Yumlog", "summary": "User-started session log. Mic only after the record control is clicked.", "signal": "magenta", "functions": ["toggleYumlog", "startYumlog", "stopYumlog", "logYumlogEvent", "generateYumlogContent", "saveYumlogRecording", "saveYumlogFile", "getSearchCount", "getUniquePages"] },
+        { "id": "search", "title": "Search", "signal": "cyan", "functions": ["openSearch", "closeSearch", "performSearch", "searchAllDocuments", "extractTitle", "highlightText", "navigateToSearchResult"] },
+        { "id": "theme", "title": "Theme", "summary": "Source flips data-theme. This card toggles spectrum bloom and stays on ClippyFlow dark.", "signal": "purple", "functions": ["toggleTheme", "loadTheme"] },
+        { "id": "print", "title": "Print", "functions": [] },
+        { "id": "slides", "title": "Slide view", "signal": "nitrous", "functions": ["toggleSlideView", "renderNormalView", "renderSlideView", "scrollToSlide", "copySlideText", "copySlideAsImage"] },
+        { "id": "chat-toggle", "title": "Chat panel", "signal": "cyan", "functions": ["toggleChatPanel", "toggleChatPin"] },
+        { "id": "edit", "title": "Edit lock", "signal": "orange", "functions": ["toggleEditMode", "enableContentEditing", "disableContentEditing", "preventClickInEditMode"] },
+        { "id": "download", "title": "Download", "signal": "green", "functions": ["downloadEditedTemplate", "showDownloadNotification"] }
+      ]
+    },
+    {
+      "id": "sidepane",
+      "title": "Sidepane",
+      "region": "sidepane",
+      "signal": "purple",
+      "summary": "Sectioned navigation plus the in-pane outline.",
+      "sourceIds": ["sidebar", "toc-sidebar", "breadcrumb"],
+      "features": [
+        { "id": "sections", "title": "Sections", "functions": ["toggleSidebarSection"] },
+        { "id": "navigate", "title": "Navigation", "functions": ["navigateToPage", "showLandingPage", "showMarkdownPage", "getPageName", "updateBreadcrumb"] },
+        { "id": "outline", "title": "On this page", "functions": ["generateTOC", "generateTOCSidebar", "observeTOCSidebarScroll"] }
+      ]
+    },
+    {
+      "id": "implementation",
+      "title": "Implementation",
+      "region": "main",
+      "signal": "green",
+      "summary": "Document body, code blocks, and agent config / guide / chat slots.",
+      "sourceIds": ["markdown-content", "landing-page"],
+      "features": [
+        { "id": "markdown", "title": "Markdown body", "functions": ["renderMarkdown", "postProcessContent", "wrapCodeBlock", "copyCode"] },
+        { "id": "agent-slots", "title": "Agent slots", "summary": "Config, guide, and chat per agent. Content is a slot, not a copied customer corpus.", "functions": ["renderAgentChatPage", "initializeAgentChat", "sendAgentMessage", "sendAgentPrompt", "syncAgentModel", "openAgentChat", "openAgentChatWithPrompt", "exportAgentConfig", "addAgentAssistantSection", "resetAgentChatOverrides"] }
+      ]
+    },
+    {
+      "id": "toc",
+      "title": "TOC rail",
+      "region": "toc",
+      "signal": "dim",
+      "summary": "Right-hand outline. Same generator as the in-pane outline.",
+      "sourceIds": ["toc-panel", "toc-list"],
+      "features": [
+        { "id": "rail", "title": "Right rail", "functions": ["generateTOC", "observeTOCSidebarScroll"] }
+      ]
+    },
+    {
+      "id": "search-overlay",
+      "title": "Search overlay",
+      "region": "overlay",
+      "signal": "cyan",
+      "summary": "Panel plus scrim. Overlay click closes search.",
+      "sourceIds": ["search-panel", "search-input", "search-results", "overlay"],
+      "features": [
+        { "id": "query", "title": "Query", "functions": ["performSearch", "searchAllDocuments", "navigateToSearchResult"] }
+      ]
+    },
+    {
+      "id": "assistant",
+      "title": "Assistant",
+      "region": "floating",
+      "signal": "magenta",
+      "summary": "Chat panel and draggable Caddy bubble. Remote model methods are excluded.",
+      "sourceIds": ["chat-panel", "caddy-chat-window", "floating-chat-btn"],
+      "features": [
+        {
+          "id": "panel",
+          "title": "Chat panel",
+          "methods": ["AIChat.send", "AIChat.sendSuggestion", "AIChat.addMessage", "AIChat.clearChat", "AIChat.buildSystemPrompt", "AIChat.showTyping", "AIChat.hideTyping", "AIChat.addError", "AIChat.getModelConfig"],
+          "excluded": "AIChat.callGitHubCopilot, AIChat.callAzureOpenAI, and any embedded token or endpoint key are not part of this card."
+        },
+        {
+          "id": "caddy",
+          "title": "Caddy bubble",
+          "functions": ["initializeCaddy", "toggleCaddyChat", "positionCaddyWindow", "sendCaddyMessage", "clearCaddyChat", "startCaddyDrag", "doCaddyDrag", "stopCaddyDrag", "loadCaddyPosition", "saveCaddyPosition"],
+          "methods": ["CaddyAIChat.send", "CaddyAIChat.addMessage", "CaddyAIChat.clear", "CaddyAIChat.showTyping", "CaddyAIChat.hideTyping", "CaddyAIChat.formatMarkdown"],
+          "excluded": "CaddyAIChat.callGitHubCopilot and CaddyAIChat.callAzureOpenAI are catalogued only. No key is copied."
+        }
+      ]
+    }
+  ]
+}

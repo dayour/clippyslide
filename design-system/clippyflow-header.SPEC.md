@@ -61,6 +61,8 @@ Exactly one `.active`. Inactive dots stay grey — a spectrum hue here would fak
 
 Each layer is a link. Close is a sibling button and does not follow the link. `+` opens the header spec. On brand-deck slides, `brand-deck/layers.js` rewrites the Flow href to the current slide, opens Brand Deck at the top window, and injects `‹` / `›` around the slide counter. Arrow keys move focus inside the strip; Left/Right outside the strip walk slides.
 
+ClippySide (`clippyside/clippyside-card.html`) is the app-shell card: header, sidepane, toggles, main, toc rail, search, and assistant. Its contract is `design-system/clippycard.layers.schema.json`. The FDE template is chunked into `design-system/clippycard.fde.layers.json`. Nitrous still means structure. Remote model credentials from a source template are never copied into the card.
+
 ### Tabs — `.cfh-tabs` / `.cfh-tab`
 Open surfaces. States:
 

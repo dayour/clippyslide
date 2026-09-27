@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClippySide — ClippyCard</title>
+<link rel="stylesheet" href="../design-system/clippyflow.css">
+<link rel="stylesheet" href="../design-system/clippyflow-terminal.css">
+<style>
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--cf-bg); color: var(--cf-fg); font-family: var(--cf-font);
+    color-scheme: dark; -webkit-font-smoothing: antialiased;
+  }
+  body.bloom .cs-app {
+    background:
+      radial-gradient(54% 64% at 4% 0%, hsla(291,100%,58%,.28) 0%, transparent 56%),
+      radial-gradient(64% 74% at 52% 18%, hsla(186,100%,54%,.14) 0%, transparent 62%),
+      radial-gradient(58% 70% at 100% 100%, hsla(142,71%,48%,.22) 0%, transparent 56%);
+  }
+  .cs-app { min-height: 100vh; display: flex; flex-direction: column; }
+  .cs-bar {
+    position: sticky; top: 0; z-index: 30; height: 52px; flex: 0 0 52px;
+    background: hsla(200,16%,8%,.92); backdrop-filter: blur(8px);
+      overflow-x: auto;
+    }
+    .cs-toggles { flex: 0 0 auto; }
+    .cs-bar .cf-win-title { flex: 0 1 220px; }
+  .cs-toggles { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+  .cs-toggle, .cs-save {
+    appearance: none; border: 1px solid transparent; background: transparent;
+    color: var(--cf-fg-dim); font: 12px/1 var(--cf-mono); height: 28px; min-width: 28px;
+    padding: 0 8px; border-radius: 7px; cursor: pointer;
+  }
+  .cs-toggle:hover, .cs-save:hover { color: var(--cf-fg); border-color: var(--nitrous-tint); }
+  .cs-toggle.on { color: var(--cf-fg); border-color: var(--nitrous); box-shadow: 0 0 12px var(--nitrous-glow); }
+  .cs-toggle.rec { color: var(--clippy-magenta); border-color: hsla(291,100%,58%,.7); }
+  .cs-save { color: var(--clippy-green-br); }
+  .cs-ver {
+    margin-left: 8px; padding: 3px 7px; border-radius: 6px;
+    background: hsla(186,100%,52%,.16); color: var(--clippy-cyan-br);
+    font: 11px/1.2 var(--cf-mono);
+  }
+  .cs-progress { height: 2px; background: var(--nitrous); width: 0; box-shadow: 0 0 8px var(--nitrous-glow); }
+  .cs-shell { flex: 1; display: grid; grid-template-columns: 280px minmax(0,1fr) 240px; min-height: 0; }
+  .cs-shell.side-off { grid-template-columns: 0 minmax(0,1fr) 240px; }
+  .cs-shell.side-off .cs-side { overflow: hidden; border: 0; }
+  .cs-side, .cs-toc {
+    background: var(--cf-surface-2); overflow: auto; padding: 14px 0 40px;
+    border-right: 1px solid var(--nitrous-tint);
+  }
+  .cs-toc { border-right: 0; border-left: 1px solid var(--nitrous-tint); padding: 18px 16px 40px; }
+  .cs-sec { margin: 0 8px 8px; }
+  .cs-sec h2, .cs-toc h2 {
+    margin: 0; padding: 8px 10px; font: 600 11px/1.3 var(--cf-mono);
+    letter-spacing: .08em; text-transform: uppercase; color: var(--cf-fg-dim);
+    cursor: pointer; display: flex; justify-content: space-between;
+  }
+  .cs-sec.collapsed .cs-items { display: none; }
+  #side-toc a, .cs-item, .cs-toc a {
+    display: block; margin: 1px 0; padding: 7px 10px 7px 14px; border-radius: 8px;
+    color: var(--cf-fg-soft); text-decoration: none; font-size: 13.5px; cursor: pointer;
+    border: 1px solid transparent;
+  }
+  .cs-item.active, .cs-toc a.on {
+    color: var(--cf-fg); border-color: var(--nitrous);
+    background: hsla(214,100%,60%,.08); box-shadow: 0 0 12px var(--nitrous-glow);
+  }
+  .cs-item i {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    margin-right: 8px; background: var(--cf-fg-dim); vertical-align: 1px;
+  }
+  .cs-item.active i { background: var(--clippy-cyan-br); box-shadow: 0 0 6px hsla(186,100%,52%,.7); }
+  .cs-main { overflow: auto; padding: 28px 40px 88px; }
+  .cs-crumb { font: 12px var(--cf-mono); color: var(--cf-fg-dim); margin-bottom: 18px; }
+  .cs-crumb b { color: var(--cf-fg-soft); font-weight: 500; }
+  .cs-kicker { font: 600 12px var(--cf-mono); letter-spacing: .16em; color: var(--clippy-cyan-br); }
+  .cs-main h1 {
+    margin: 8px 0 12px; font-size: 40px; line-height: 1.05; font-weight: 650;
+    background: var(--cf-grad-title); -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+  .cs-main h2 { margin: 28px 0 8px; font-size: 22px; color: var(--cf-fg); }
+  .cs-main p { max-width: 68ch; color: var(--cf-fg-soft); line-height: 1.55; }
+  .cs-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+  .cs-chips span, .cs-fn {
+    border: 1px solid var(--nitrous-tint); border-radius: 999px; padding: 4px 10px;
+    font: 12px var(--cf-mono); color: var(--cf-fg-soft);
+  }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 8px; font-size: 13.5px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--nitrous-tint); vertical-align: top; }
+  th { color: var(--cf-fg-dim); font: 600 11px var(--cf-mono); letter-spacing: .06em; text-transform: uppercase; }
+  pre {
+    background: var(--cf-surface-3); border: 1px solid var(--nitrous-tint); border-radius: 10px;
+    padding: 12px 14px; overflow: auto; font: 12.5px/1.45 var(--cf-mono); color: var(--cf-fg-soft);
+  }
+  textarea.cs-schema {
+    width: 100%; min-height: 420px; resize: vertical; box-sizing: border-box;
+    background: var(--cf-navy-deep); color: var(--cf-fg); border: 1px solid var(--nitrous-rim);
+    border-radius: 10px; padding: 12px; font: 12px/1.45 var(--cf-mono);
+  }
+  .cs-apply {
+    margin-top: 10px; appearance: none; border: 1px solid var(--nitrous); background: hsla(214,100%,60%,.12);
+    color: var(--cf-fg); border-radius: 8px; padding: 8px 14px; font: 13px var(--cf-font); cursor: pointer;
+  }
+  .cs-note { color: var(--clippy-orange); font: 12.5px var(--cf-mono); }
+  body.edit .cs-edit { outline: 1px dashed var(--nitrous-tint); outline-offset: 3px; }
+  .cs-slides { display: grid; gap: 16px; }
+  .cs-slide {
+    border: 1.5px solid var(--nitrous-rim); border-radius: 16px; background: var(--cf-surface);
+    padding: 22px 24px; box-shadow: var(--cf-glow-nitrous);
+  }
+  .cs-overlay, .cs-search, .cs-chat, .cs-caddy { position: fixed; z-index: 40; }
+  .cs-overlay { inset: 0; background: hsla(206,30%,5%,.55); display: none; }
+  .cs-overlay.on { display: block; }
+  .cs-search, .cs-chat {
+    top: 68px; right: 24px; width: min(420px, calc(100vw - 32px));
+    background: var(--cf-surface); border: 1.5px solid var(--nitrous-rim);
+    border-radius: 14px; box-shadow: var(--cf-glow-nitrous); display: none; padding: 12px;
+  }
+  .cs-search.on, .cs-chat.on { display: block; }
+  .cs-search input, .cs-chat textarea, .cs-caddy-win textarea {
+    width: 100%; box-sizing: border-box; border: 1px solid var(--nitrous-tint); border-radius: 8px;
+    background: var(--cf-navy-deep); color: var(--cf-fg); padding: 8px 10px; font: 14px var(--cf-font);
+  }
+  .cs-hit { padding: 8px; border-radius: 8px; cursor: pointer; }
+  .cs-hit:hover { background: hsla(214,100%,60%,.08); }
+  .cs-hit b { color: var(--clippy-cyan-br); font-weight: 600; }
+  .cs-log { max-height: 280px; overflow: auto; margin: 8px 0; }
+  .cs-log div { padding: 6px 2px; border-bottom: 1px solid var(--nitrous-tint); font-size: 13.5px; white-space: pre-wrap; }
+  .cs-caddy {
+    position: fixed; z-index: 42; right: 22px; bottom: 22px; width: 46px; height: 46px; border-radius: 50%;
+    border: 1.5px solid var(--nitrous); background: var(--cf-surface); color: var(--clippy-cyan-br);
+    box-shadow: var(--cf-glow-nitrous); cursor: grab; font: 600 13px var(--cf-mono);
+  }
+  .cs-caddy-win {
+    position: fixed; z-index: 41; width: 320px; display: none;
+    background: var(--cf-surface); border: 1.5px solid var(--nitrous-rim); border-radius: 14px;
+    box-shadow: var(--cf-glow-nitrous); padding: 10px;
+  }
+  .cs-caddy-win.on { display: block; }
+  .cs-toast {
+    position: fixed; z-index: 50; right: 20px; bottom: 78px; display: none;
+    background: hsla(142,71%,40%,.9); color: #04140c; border-radius: 8px; padding: 8px 12px;
+    font: 12.5px var(--cf-mono);
+  }
+  @media print {
+    .cs-bar, .cs-side, .cs-toc, .cs-caddy, .cs-caddy-win, .cs-search, .cs-chat, .cs-overlay { display: none !important; }
+    .cs-shell { display: block; }
+  }
+</style>
+</head>
+<body>
+<div class="cs-app">
+  <header class="cf-win-bar cs-bar">
+    <span class="cf-win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <nav class="cf-layers" id="layers" aria-label="layers"></nav>
+    <span class="cf-win-title"><b class="cs-edit" id="card-title">ClippySide</b> <span id="card-sub">--layers</span></span>
+    <div class="cs-toggles" id="toggles"></div>
+    <span class="cs-ver" id="card-ver">v1.0.0</span>
+  </header>
+  <div class="cs-progress" id="progress"></div>
+  <div class="cs-shell" id="shell">
+    <aside class="cs-side" id="side"></aside>
+    <main class="cs-main" id="main"></main>
+    <aside class="cs-toc" id="toc"></aside>
+  </div>
+</div>
+<div class="cs-overlay" id="overlay"></div>
+<div class="cs-search" id="search" role="dialog" aria-label="Search">
+  <input id="search-input" type="search" placeholder="Search layers and functions">
+  <div id="search-results"></div>
+</div>
+<aside class="cs-chat" id="chat" aria-label="Assistant">
+  <div class="cs-log" id="chat-log"></div>
+  <textarea id="chat-input" rows="2" placeholder="Ask the layer index"></textarea>
+</aside>
+<div class="cs-caddy-win" id="caddy-win">
+  <div class="cs-log" id="caddy-log"></div>
+  <textarea id="caddy-input" rows="2" placeholder="Ask Caddy about this card"></textarea>
+</div>
+<button class="cs-caddy" id="caddy" type="button" title="Caddy">C</button>
+<div class="cs-toast" id="toast"></div>
+<script type="application/json" id="card-data">{
+  "schemaVersion": "1.0.0",
+  "card": {
+    "id": "clippyside-fde",
+    "title": "ClippySide",
+    "subtitle": "clippycard --layers",
+    "theme": "clippyflow",
+    "version": "1.0.0",
+    "sourceTemplate": "fde_template_edited_2026-09-27T10-11-19.html"
+  },
+  "activeLayer": "flow",
+  "header": {
+    "tabs": [
+      { "id": "flow", "title": "Clippyflow – Flow", "page": "home", "signal": "cyan", "active": true },
+      { "id": "deck", "title": "Brand Deck · 11 slides", "href": "../brand-deck/clippyflow-brand-clippydeck.html", "target": "_top", "signal": "dim" },
+      { "id": "schema", "title": "Layer schema", "page": "schema", "signal": "purple" }
+    ],
+    "add": { "label": "+", "href": "../brand-deck/clippyflow-header-spec.html", "title": "Open header spec" },
+    "toggles": [
+      { "id": "sidebar", "title": "Toggle sidepane", "glyph": "side", "control": "sidebar", "signal": "nitrous", "functions": ["toggleSidebar"] },
+            { "id": "record", "title": "Yumlog session", "glyph": "rec", "control": "record", "signal": "magenta", "functions": ["toggleYumlog", "startYumlog", "stopYumlog", "logYumlogEvent", "generateYumlogContent", "saveYumlogRecording", "saveYumlogFile", "getSearchCount", "getUniquePages"] },
+            { "id": "search", "title": "Search", "glyph": "find", "control": "search", "signal": "cyan", "functions": ["openSearch", "closeSearch", "performSearch", "searchAllDocuments", "extractTitle", "highlightText", "navigateToSearchResult", "debounce"] },
+            { "id": "theme", "title": "Spectrum bloom", "glyph": "bloom", "control": "theme", "signal": "purple", "functions": ["toggleTheme", "loadTheme"] },
+            { "id": "print", "title": "Print", "glyph": "print", "control": "print", "signal": "dim", "functions": [] },
+            { "id": "slides", "title": "Slide view", "glyph": "grid", "control": "slides", "signal": "nitrous", "functions": ["toggleSlideView", "renderSlideView", "renderNormalView", "scrollToSlide", "copySlideText", "copySlideAsImage"] },
+            { "id": "chat", "title": "Assistant", "glyph": "chat", "control": "chat", "signal": "cyan", "functions": ["toggleChatPanel", "toggleChatPin"] },
+            { "id": "edit", "title": "Unlock to edit", "glyph": "edit", "control": "edit", "signal": "orange", "functions": ["toggleEditMode", "enableContentEditing", "disableContentEditing", "preventClickInEditMode"] },
+            { "id": "download", "title": "Download edited card", "glyph": "save", "control": "download", "signal": "green", "functions": ["downloadEditedTemplate", "showDownloadNotification"] }
+    ]
+  },
+  "sidepane": {
+    "width": 280,
+    "sections": [
+      {
+        "id": "home",
+        "title": "ClippySide",
+        "collapsible": false,
+        "items": [
+          { "id": "landing", "title": "Card home", "page": "home", "signal": "cyan" }
+        ]
+      },
+      {
+        "id": "layers",
+        "title": "Layers",
+        "collapsible": true,
+        "collapsed": false,
+        "items": [
+          { "id": "header", "title": "Header", "page": "header", "signal": "nitrous" },
+          { "id": "sidepane", "title": "Sidepane", "page": "sidepane", "signal": "purple" },
+          { "id": "toggles", "title": "Toggles", "page": "toggles", "signal": "orange" },
+          { "id": "implementation", "title": "Implementation", "page": "implementation", "signal": "green" }
+        ]
+      },
+      {
+        "id": "framework",
+        "title": "Framework",
+        "collapsible": true,
+        "collapsed": false,
+        "items": [
+          { "id": "schema-nav", "title": "Layer schema", "page": "schema", "signal": "purple" },
+          { "id": "functions-nav", "title": "Function index", "page": "functions", "signal": "cyan" },
+          { "id": "assistant-nav", "title": "Assistant", "page": "assistant", "signal": "magenta" }
+        ]
+      }
+    ]
+  },
+  "pages": [
+    {
+      "id": "home",
+      "title": "ClippySide",
+      "kicker": "CLIPPYCARD",
+      "crumb": ["ClippySide", "Home"],
+      "blocks": [
+        { "kind": "kicker", "text": "LAYER SCHEMA" },
+        { "kind": "heading", "level": 1, "text": "A sidepane card, in ClippyFlow." },
+        { "kind": "prose", "text": "Same shell as the FDE template: sticky header, collapsible sidepane, main document, on-this-page rail, search, assistant, edit lock, and download. Restyled on the ClippyFlow token system. Nitrous rims structure. Spectrum hues mark meaning." },
+        { "kind": "chips", "items": ["header", "sidepane", "toggles", "implementation", "assistant", "schema"] },
+        { "kind": "heading", "level": 2, "text": "How to edit" },
+        { "kind": "prose", "text": "Unlock edits from the header. Titles, sidepane labels, and prose become editable. The schema page accepts a full layer document and re-renders the shell. Download writes the edited card as HTML. Nothing here calls a remote model or stores a credential." }
+      ]
+    },
+    {
+      "id": "header",
+      "title": "Header",
+      "kicker": "REGION",
+      "crumb": ["ClippySide", "Header"],
+      "blocks": [
+        { "kind": "kicker", "text": "CF-WIN-BAR" },
+        { "kind": "heading", "level": 1, "text": "Header layers" },
+        { "kind": "prose", "text": "Traffic lights, then the composable layer strip, then the command title, then toggles and the live badge. Exactly one .active tab. Close is a sibling button and does not follow the link. Flow stays on this card. Brand Deck opens the deck shell at the top window." },
+        { "kind": "table", "headers": ["Slot", "Source", "Signal"], "rows": [["dots", "cf-win-dots", "spectrum"], ["tabs", "cf-layers", "nitrous rim, cyan dot"], ["title", "nav-title", "fg"], ["toggles", "nav-actions", "per control"], ["progress", "scroll-progress", "nitrous"]] }
+      ]
+    },
+    {
+      "id": "sidepane",
+      "title": "Sidepane",
+      "kicker": "REGION",
+      "crumb": ["ClippySide", "Sidepane"],
+      "blocks": [
+        { "kind": "kicker", "text": "ASIDE" },
+        { "kind": "heading", "level": 1, "text": "Sidepane" },
+        { "kind": "prose", "text": "Fixed under the header. Sections collapse. Items navigate pages and rewrite the breadcrumb. The in-pane outline tracks headings in the main document. Collapsing the pane expands main, matching toggleSidebar." },
+        { "kind": "table", "headers": ["Feature", "Functions"], "rows": [["Section fold", "toggleSidebarSection"], ["Navigate", "navigateToPage, showLandingPage, showMarkdownPage, getPageName, updateBreadcrumb"], ["Outline", "generateTOC, generateTOCSidebar, observeTOCSidebarScroll"]] }
+      ]
+    },
+    {
+      "id": "toggles",
+      "title": "Toggles",
+      "kicker": "HEADER",
+      "crumb": ["ClippySide", "Toggles"],
+      "blocks": [
+        { "kind": "kicker", "text": "NAV-ACTIONS" },
+        { "kind": "heading", "level": 1, "text": "Header toggles" },
+        { "kind": "prose", "text": "Each FDE header button is a toggle in the schema. Theme does not flip to a light Microsoft canvas. ClippyFlow stays dark. The theme control toggles spectrum bloom, which is what loadTheme and toggleTheme mean on this card." },
+        { "kind": "table", "headers": ["Control", "Source functions"], "rows": [["sidebar", "toggleSidebar"], ["record", "toggleYumlog, startYumlog, stopYumlog, logYumlogEvent, generateYumlogContent, saveYumlogRecording, saveYumlogFile"], ["search", "openSearch, closeSearch, performSearch, searchAllDocuments"], ["theme", "toggleTheme, loadTheme"], ["slides", "toggleSlideView, renderSlideView, renderNormalView, scrollToSlide, copySlideText, copySlideAsImage"], ["edit", "toggleEditMode, enableContentEditing, disableContentEditing"], ["download", "downloadEditedTemplate, showDownloadNotification"]] }
+      ]
+    },
+    {
+      "id": "implementation",
+      "title": "Implementation",
+      "kicker": "MAIN",
+      "crumb": ["ClippySide", "Implementation"],
+      "blocks": [
+        { "kind": "kicker", "text": "PAGES" },
+        { "kind": "heading", "level": 1, "text": "Implementation surface" },
+        { "kind": "prose", "text": "The source main region renders markdown pages, code blocks, a table of contents, and per-agent config, guide, and chat slots. This card keeps that shape and fills it with the layer contract instead of a customer policy corpus." },
+        { "kind": "heading", "level": 2, "text": "Page render" },
+        { "kind": "prose", "text": "renderMarkdown, renderNormalView, and renderSlideView choose the body. postProcessContent and wrapCodeBlock decorate code. copyCode copies a block. Slide view turns h2 sections into cards." },
+        { "kind": "heading", "level": 2, "text": "Agent slots" },
+        { "kind": "prose", "text": "Source pages agent1, agent2, and agent3 each expose config, guide, and chat. renderAgentChatPage, initializeAgentChat, sendAgentMessage, sendAgentPrompt, and syncAgentModel own that slot. exportAgentConfig and addAgentAssistantSection attach a builder footer. Those slots are features of the implementation layer, not a second theme." }
+      ]
+    },
+    {
+      "id": "assistant",
+      "title": "Assistant",
+      "kicker": "OVERLAY",
+      "crumb": ["ClippySide", "Assistant"],
+      "blocks": [
+        { "kind": "kicker", "text": "LOCAL" },
+        { "kind": "heading", "level": 1, "text": "Assistant, without credentials" },
+        { "kind": "prose", "text": "The source has three chat surfaces: the pinned chat panel (AIChat), the floating Caddy window (CaddyAIChat), and per-agent chat. Their remote call methods are catalogued and excluded. This card answers from the layer index only." },
+        { "kind": "chips", "items": ["toggleChatPanel", "toggleCaddyChat", "positionCaddyWindow", "local reply"] }
+      ]
+    },
+    {
+      "id": "schema",
+      "title": "Layer schema",
+      "kicker": "EDIT",
+      "crumb": ["ClippySide", "Schema"],
+      "blocks": [
+        { "kind": "kicker", "text": "JSON" },
+        { "kind": "heading", "level": 1, "text": "Edit the layer document" },
+        { "kind": "prose", "text": "Apply re-renders header tabs, toggles, sidepane, and pages from the document. Invalid JSON is refused. Download saves the rendered card, including your edits." },
+        { "kind": "schema" }
+      ]
+    },
+    {
+      "id": "functions",
+      "title": "Function index",
+      "kicker": "INDEX",
+      "crumb": ["ClippySide", "Functions"],
+      "blocks": [
+        { "kind": "kicker", "text": "SOURCE MAP" },
+        { "kind": "heading", "level": 1, "text": "Every catalogued function" },
+        { "kind": "prose", "text": "Grouped by the layer that owns it. The inner debounce closure executedFunction is not a feature. Credentialed model calls are listed under excluded, not wired." }
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "id": "app",
+      "title": "App",
+      "region": "main",
+      "signal": "nitrous",
+      "summary": "Boot and shared utilities.",
+      "sourceIds": ["main-container"],
+      "features": [
+        { "id": "boot", "title": "Boot", "summary": "Construct assistants, bind controls, load theme, show the landing page.", "functions": ["initializeApp", "setupEventListeners"] },
+        { "id": "progress", "title": "Scroll progress", "summary": "Nitrous bar under the header.", "signal": "nitrous", "functions": ["updateScrollProgress"] },
+        { "id": "debounce", "title": "Debounce", "summary": "Search input wait. executedFunction is the inner timer closure.", "functions": ["debounce"] }
+      ]
+    },
+    {
+      "id": "header",
+      "title": "Header",
+      "region": "header",
+      "signal": "nitrous",
+      "summary": "Sticky window bar. Dots, layer tabs, title, toggles, version.",
+      "sourceIds": ["top-nav", "scroll-progress"],
+      "features": [
+        { "id": "tabs", "title": "Layer tabs", "summary": "One active pill. Nitrous rim, cyan identity dot.", "signal": "cyan", "functions": [] },
+        { "id": "sidebar-toggle", "title": "Sidepane toggle", "signal": "nitrous", "functions": ["toggleSidebar"] },
+        { "id": "yumlog", "title": "Yumlog", "summary": "User-started session log. Mic only after the record control is clicked.", "signal": "magenta", "functions": ["toggleYumlog", "startYumlog", "stopYumlog", "logYumlogEvent", "generateYumlogContent", "saveYumlogRecording", "saveYumlogFile", "getSearchCount", "getUniquePages"] },
+        { "id": "search", "title": "Search", "signal": "cyan", "functions": ["openSearch", "closeSearch", "performSearch", "searchAllDocuments", "extractTitle", "highlightText", "navigateToSearchResult"] },
+        { "id": "theme", "title": "Theme", "summary": "Source flips data-theme. This card toggles spectrum bloom and stays on ClippyFlow dark.", "signal": "purple", "functions": ["toggleTheme", "loadTheme"] },
+        { "id": "print", "title": "Print", "functions": [] },
+        { "id": "slides", "title": "Slide view", "signal": "nitrous", "functions": ["toggleSlideView", "renderNormalView", "renderSlideView", "scrollToSlide", "copySlideText", "copySlideAsImage"] },
+        { "id": "chat-toggle", "title": "Chat panel", "signal": "cyan", "functions": ["toggleChatPanel", "toggleChatPin"] },
+        { "id": "edit", "title": "Edit lock", "signal": "orange", "functions": ["toggleEditMode", "enableContentEditing", "disableContentEditing", "preventClickInEditMode"] },
+        { "id": "download", "title": "Download", "signal": "green", "functions": ["downloadEditedTemplate", "showDownloadNotification"] }
+      ]
+    },
+    {
+      "id": "sidepane",
+      "title": "Sidepane",
+      "region": "sidepane",
+      "signal": "purple",
+      "summary": "Sectioned navigation plus the in-pane outline.",
+      "sourceIds": ["sidebar", "toc-sidebar", "breadcrumb"],
+      "features": [
+        { "id": "sections", "title": "Sections", "functions": ["toggleSidebarSection"] },
+        { "id": "navigate", "title": "Navigation", "functions": ["navigateToPage", "showLandingPage", "showMarkdownPage", "getPageName", "updateBreadcrumb"] },
+        { "id": "outline", "title": "On this page", "functions": ["generateTOC", "generateTOCSidebar", "observeTOCSidebarScroll"] }
+      ]
+    },
+    {
+      "id": "implementation",
+      "title": "Implementation",
+      "region": "main",
+      "signal": "green",
+      "summary": "Document body, code blocks, and agent config / guide / chat slots.",
+      "sourceIds": ["markdown-content", "landing-page"],
+      "features": [
+        { "id": "markdown", "title": "Markdown body", "functions": ["renderMarkdown", "postProcessContent", "wrapCodeBlock", "copyCode"] },
+        { "id": "agent-slots", "title": "Agent slots", "summary": "Config, guide, and chat per agent. Content is a slot, not a copied customer corpus.", "functions": ["renderAgentChatPage", "initializeAgentChat", "sendAgentMessage", "sendAgentPrompt", "syncAgentModel", "openAgentChat", "openAgentChatWithPrompt", "exportAgentConfig", "addAgentAssistantSection", "resetAgentChatOverrides"] }
+      ]
+    },
+    {
+      "id": "toc",
+      "title": "TOC rail",
+      "region": "toc",
+      "signal": "dim",
+      "summary": "Right-hand outline. Same generator as the in-pane outline.",
+      "sourceIds": ["toc-panel", "toc-list"],
+      "features": [
+        { "id": "rail", "title": "Right rail", "functions": ["generateTOC", "observeTOCSidebarScroll"] }
+      ]
+    },
+    {
+      "id": "search-overlay",
+      "title": "Search overlay",
+      "region": "overlay",
+      "signal": "cyan",
+      "summary": "Panel plus scrim. Overlay click closes search.",
+      "sourceIds": ["search-panel", "search-input", "search-results", "overlay"],
+      "features": [
+        { "id": "query", "title": "Query", "functions": ["performSearch", "searchAllDocuments", "navigateToSearchResult"] }
+      ]
+    },
+    {
+      "id": "assistant",
+      "title": "Assistant",
+      "region": "floating",
+      "signal": "magenta",
+      "summary": "Chat panel and draggable Caddy bubble. Remote model methods are excluded.",
+      "sourceIds": ["chat-panel", "caddy-chat-window", "floating-chat-btn"],
+      "features": [
+        {
+          "id": "panel",
+          "title": "Chat panel",
+          "methods": ["AIChat.send", "AIChat.sendSuggestion", "AIChat.addMessage", "AIChat.clearChat", "AIChat.buildSystemPrompt", "AIChat.showTyping", "AIChat.hideTyping", "AIChat.addError", "AIChat.getModelConfig"],
+          "excluded": "AIChat.callGitHubCopilot, AIChat.callAzureOpenAI, and any embedded token or endpoint key are not part of this card."
+        },
+        {
+          "id": "caddy",
+          "title": "Caddy bubble",
+          "functions": ["initializeCaddy", "toggleCaddyChat", "positionCaddyWindow", "sendCaddyMessage", "clearCaddyChat", "startCaddyDrag", "doCaddyDrag", "stopCaddyDrag", "loadCaddyPosition", "saveCaddyPosition"],
+          "methods": ["CaddyAIChat.send", "CaddyAIChat.addMessage", "CaddyAIChat.clear", "CaddyAIChat.showTyping", "CaddyAIChat.hideTyping", "CaddyAIChat.formatMarkdown"],
+          "excluded": "CaddyAIChat.callGitHubCopilot and CaddyAIChat.callAzureOpenAI are catalogued only. No key is copied."
+        }
+      ]
+    }
+  ]
+}</script>
+<script>
+(function () {
+  var card = JSON.parse(document.getElementById("card-data").textContent);
+  var pageId = "home";
+  var editOn = false;
+  var slideOn = false;
+  var recording = false;
+  var log = [];
+  var recStarted = 0;
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function toast(msg) {
+    var el = $("toast");
+    el.textContent = msg;
+    el.style.display = "block";
+    setTimeout(function () { el.style.display = "none"; }, 1800);
+  }
+  function pageById(id) {
+    return (card.pages || []).filter(function (p) { return p.id === id; })[0] || card.pages[0];
+  }
+  function allFunctions() {
+    var rows = [];
+    (card.layers || []).forEach(function (layer) {
+      (layer.features || []).forEach(function (feature) {
+        (feature.functions || []).forEach(function (name) {
+          rows.push({ layer: layer.title, feature: feature.title, name: name, kind: "function" });
+        });
+        (feature.methods || []).forEach(function (name) {
+          rows.push({ layer: layer.title, feature: feature.title, name: name, kind: "method" });
+        });
+      });
+    });
+    return rows;
+  }
+  function renderTabs() {
+    var tabs = (card.header && card.header.tabs) || [];
+    $("layers").innerHTML = tabs.map(function (tab) {
+      var active = tab.id === card.activeLayer ? " active" : "";
+      var href = tab.href || "#" + (tab.page || "home");
+      var target = tab.target ? ' target="' + esc(tab.target) + '"' : "";
+      var rel = tab.target === "_blank" ? ' rel="noopener noreferrer"' : "";
+      return '<div class="cf-layer' + active + '" data-layer="' + esc(tab.id) + '">' +
+        '<a href="' + esc(href) + '"' + target + rel + ' data-page="' + esc(tab.page || "") + '"><i></i><span class="t">' + esc(tab.title) + '</span></a>' +
+        '<button class="x" type="button" aria-label="Close ' + esc(tab.title) + '">×</button></div>';
+    }).join("") + (card.header.add ? '<a class="cf-layer-add" href="' + esc(card.header.add.href || "#") + '">' + esc(card.header.add.label || "+") + '</a>' : "");
+    $("card-title").textContent = card.card.title;
+    $("card-sub").textContent = card.card.subtitle || "";
+    $("card-ver").textContent = "v" + (card.card.version || "1.0.0");
+  }
+  function renderToggles() {
+    $("toggles").innerHTML = (card.header.toggles || []).map(function (t) {
+      var cls = t.control === "download" ? "cs-save" : "cs-toggle";
+      return '<button class="' + cls + '" type="button" data-control="' + esc(t.control) + '" title="' + esc(t.title) + '">' + esc(t.glyph || t.title) + '</button>';
+    }).join("");
+  }
+  function renderSide() {
+    $("side").innerHTML = (card.sidepane.sections || []).map(function (sec) {
+      var collapsed = sec.collapsed ? " collapsed" : "";
+      var items = (sec.items || []).map(function (item) {
+        var on = item.page === pageId ? " active" : "";
+        return '<div class="cs-item' + on + '" data-page="' + esc(item.page) + '"><i></i><span class="cs-edit">' + esc(item.title) + '</span></div>';
+      }).join("");
+      return '<section class="cs-sec' + collapsed + '"><h2 class="cs-edit">' + esc(sec.title) + "</h2><div class=\"cs-items\">" + items + "</div></section>";
+    }).join("") + '<section class="cs-sec"><h2>On this page</h2><div id="side-toc"></div></section>';
+  }
+  function blockHtml(block) {
+    if (block.kind === "kicker") return '<div class="cs-kicker">' + esc(block.text) + "</div>";
+    if (block.kind === "heading") return "<h" + (block.level || 2) + ' class="cs-edit">' + esc(block.text) + "</h" + (block.level || 2) + ">";
+    if (block.kind === "prose") return '<p class="cs-edit">' + esc(block.text) + "</p>";
+    if (block.kind === "chips") return '<div class="cs-chips">' + (block.items || []).map(function (item) { return "<span>" + esc(item) + "</span>"; }).join("") + "</div>";
+    if (block.kind === "code") return "<pre><code>" + esc(block.text) + "</code></pre>";
+    if (block.kind === "table") {
+      var head = "<tr>" + (block.headers || []).map(function (h) { return "<th>" + esc(h) + "</th>"; }).join("") + "</tr>";
+      var body = (block.rows || []).map(function (row) {
+        return "<tr>" + row.map(function (cell) { return '<td class="cs-edit">' + esc(cell) + "</td>"; }).join("") + "</tr>";
+      }).join("");
+      return "<table><thead>" + head + "</thead><tbody>" + body + "</tbody></table>";
+    }
+    if (block.kind === "schema") {
+      return '<textarea class="cs-schema" id="schema-editor" spellcheck="false"></textarea><div><button class="cs-apply" id="schema-apply" type="button">Apply schema</button> <span class="cs-note" id="schema-msg"></span></div>';
+    }
+    return "";
+  }
+  function renderMain() {
+    var page = pageById(pageId);
+    var crumb = (page.crumb || [page.title]).map(function (part, i, all) {
+      return i === all.length - 1 ? "<b>" + esc(part) + "</b>" : esc(part);
+    }).join(" / ");
+    var body = (page.blocks || []).map(blockHtml).join("");
+    if (page.id === "functions") body += functionTable();
+    $("main").innerHTML = '<div class="cs-crumb">' + crumb + '</div><article id="doc">' + body + "</article>";
+    if (slideOn) toSlides();
+    if ($("schema-editor")) $("schema-editor").value = JSON.stringify(card, null, 2);
+    renderOutline();
+    if (editOn) armEdit();
+  }
+  function functionTable() {
+    var rows = allFunctions().map(function (row) {
+      return "<tr><td>" + esc(row.layer) + "</td><td>" + esc(row.feature) + '</td><td><span class="cs-fn">' + esc(row.name) + "</span></td><td>" + esc(row.kind) + "</td></tr>";
+    }).join("");
+    return "<table><thead><tr><th>Layer</th><th>Feature</th><th>Name</th><th>Kind</th></tr></thead><tbody>" + rows + "</tbody></table>";
+  }
+  function renderOutline() {
+    var heads = $("doc") ? $("doc").querySelectorAll("h1, h2") : [];
+    var html = "";
+    Array.prototype.forEach.call(heads, function (head, i) {
+      if (!head.id) head.id = "h-" + i;
+      html += '<a href="#' + head.id + '">' + esc(head.textContent) + "</a>";
+    });
+    $("toc").innerHTML = "<h2>On this page</h2>" + html;
+    var sideToc = $("side-toc");
+    if (sideToc) sideToc.innerHTML = html;
+  }
+  function show(id) {
+    pageId = id;
+    renderSide();
+    renderMain();
+    $("main").scrollTop = 0;
+  }
+  function armEdit() {
+    document.querySelectorAll(".cs-edit").forEach(function (el) {
+      el.setAttribute("contenteditable", "true");
+      el.setAttribute("spellcheck", "true");
+    });
+  }
+  function disarmEdit() {
+    document.querySelectorAll("[contenteditable]").forEach(function (el) {
+      el.removeAttribute("contenteditable");
+    });
+  }
+  function toggleEdit() {
+    editOn = !editOn;
+    document.body.classList.toggle("edit", editOn);
+    if (editOn) armEdit(); else disarmEdit();
+    mark("edit", editOn);
+  }
+  function mark(control, on) {
+    var btn = document.querySelector('[data-control="' + control + '"]');
+    if (btn) btn.classList.toggle("on", !!on);
+  }
+  function toSlides() {
+    var doc = $("doc");
+    if (!doc) return;
+    var nodes = Array.prototype.slice.call(doc.children);
+    var slides = [];
+    var current = null;
+    nodes.forEach(function (node) {
+      if (node.tagName === "H2" || node.tagName === "H1" || !current) {
+        current = document.createElement("section");
+        current.className = "cs-slide";
+        slides.push(current);
+      }
+      current.appendChild(node);
+    });
+    doc.innerHTML = "";
+    slides.forEach(function (slide) { doc.appendChild(slide); });
+  }
+  function answer(q) {
+    var query = q.toLowerCase();
+    var hits = allFunctions().filter(function (row) {
+      return (row.name + " " + row.feature + " " + row.layer).toLowerCase().indexOf(query) >= 0;
+    }).slice(0, 6);
+    if (!hits.length) return "No layer function matches that. Try header, sidepane, yumlog, or renderMarkdown.";
+    return hits.map(function (row) { return row.layer + " / " + row.feature + " — " + row.name; }).join("\n");
+  }
+  function pushLog(box, who, text) {
+    var line = document.createElement("div");
+    line.textContent = who + ": " + text;
+    box.appendChild(line);
+    box.scrollTop = box.scrollHeight;
+  }
+  function download() {
+    var was = editOn;
+    if (was) toggleEdit();
+    $("card-data").textContent = JSON.stringify(card);
+    var blob = new Blob(["<!DOCTYPE html>\n" + document.documentElement.outerHTML], { type: "text/html" });
+    var a = document.createElement("a");
+    var stamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+    a.href = URL.createObjectURL(blob);
+    a.download = "clippyside-card-" + stamp + ".html";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(a.href);
+    toast("Downloaded");
+    if (was) toggleEdit();
+  }
+  function applySchema() {
+    var msg = $("schema-msg");
+    try {
+      var next = JSON.parse($("schema-editor").value);
+      if (!next.card || !next.header || !next.pages || !next.layers) throw new Error("Missing card, header, pages, or layers.");
+      card = next;
+      $("card-data").textContent = JSON.stringify(card);
+      renderTabs();
+      renderToggles();
+      if (!pageById(pageId)) pageId = card.pages[0].id;
+      show(pageId);
+      msg.textContent = "Applied.";
+    } catch (err) {
+      msg.textContent = err.message;
+    }
+  }
+  function search(q) {
+    var query = q.trim().toLowerCase();
+    var box = $("search-results");
+    if (!query) { box.innerHTML = ""; return; }
+    var hits = [];
+    (card.pages || []).forEach(function (page) {
+      if ((page.title + JSON.stringify(page.blocks || "")).toLowerCase().indexOf(query) >= 0) {
+        hits.push({ page: page.id, title: page.title, where: "page" });
+      }
+    });
+    allFunctions().forEach(function (row) {
+      if (row.name.toLowerCase().indexOf(query) >= 0) hits.push({ page: "functions", title: row.name, where: row.layer });
+    });
+    box.innerHTML = hits.slice(0, 20).map(function (hit) {
+      return '<div class="cs-hit" data-page="' + esc(hit.page) + '"><b>' + esc(hit.title) + "</b><div>" + esc(hit.where) + "</div></div>";
+    }).join("") || '<div class="cs-hit">No results</div>';
+  }
+  function startRec() {
+    recording = true;
+    recStarted = Date.now();
+    log = ["SESSION_START " + new Date().toISOString()];
+    mark("record", true);
+    var btn = document.querySelector('[data-control="record"]');
+    if (btn) btn.classList.add("rec");
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+        stream.getTracks().forEach(function (track) { track.stop(); });
+        log.push("MIC_GRANTED");
+      }).catch(function () { log.push("MIC_DENIED"); });
+    }
+    toast("Recording session");
+  }
+  function stopRec() {
+    recording = false;
+    mark("record", false);
+    var btn = document.querySelector('[data-control="record"]');
+    if (btn) btn.classList.remove("rec");
+    log.push("SESSION_STOP pages=" + (card.pages || []).length + " ms=" + (Date.now() - recStarted));
+    var blob = new Blob([log.join("\n") + "\n"], { type: "text/plain" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "clippyside-session-" + new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19) + ".txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  document.addEventListener("click", function (event) {
+    var tab = event.target.closest && event.target.closest(".cf-layer a");
+    if (tab && tab.getAttribute("data-page")) {
+      event.preventDefault();
+      card.activeLayer = tab.closest(".cf-layer").getAttribute("data-layer");
+      renderTabs();
+      show(tab.getAttribute("data-page"));
+      return;
+    }
+    var closer = event.target.closest && event.target.closest(".cf-layer .x");
+    if (closer) {
+      event.preventDefault();
+      var id = closer.closest(".cf-layer").getAttribute("data-layer");
+      card.header.tabs = card.header.tabs.filter(function (item) { return item.id !== id; });
+      if (card.activeLayer === id && card.header.tabs[0]) {
+        card.activeLayer = card.header.tabs[0].id;
+        if (card.header.tabs[0].page) pageId = card.header.tabs[0].page;
+      }
+      renderTabs();
+      show(pageId);
+      return;
+    }
+    var item = event.target.closest && event.target.closest(".cs-item");
+    if (item && !editOn) { show(item.getAttribute("data-page")); return; }
+    var head = event.target.closest && event.target.closest(".cs-sec h2");
+    if (head && head.parentElement.querySelector(".cs-items") && !editOn) {
+      head.parentElement.classList.toggle("collapsed");
+      return;
+    }
+    var control = event.target.closest && event.target.closest("[data-control]");
+    if (control) {
+      var name = control.getAttribute("data-control");
+      if (name === "sidebar") {
+        $("shell").classList.toggle("side-off");
+        mark("sidebar", $("shell").classList.contains("side-off"));
+      } else if (name === "search") {
+        $("search").classList.toggle("on");
+        $("overlay").classList.toggle("on", $("search").classList.contains("on"));
+        if ($("search").classList.contains("on")) $("search-input").focus();
+      } else if (name === "theme") {
+        document.body.classList.toggle("bloom");
+        mark("theme", document.body.classList.contains("bloom"));
+      } else if (name === "print") {
+        window.print();
+      } else if (name === "slides") {
+        slideOn = !slideOn;
+        mark("slides", slideOn);
+        renderMain();
+      } else if (name === "chat") {
+        $("chat").classList.toggle("on");
+        mark("chat", $("chat").classList.contains("on"));
+      } else if (name === "edit") {
+        toggleEdit();
+      } else if (name === "download") {
+        download();
+      } else if (name === "record") {
+        if (recording) stopRec(); else startRec();
+      }
+      return;
+    }
+    if (event.target.id === "schema-apply") applySchema();
+    if (event.target.id === "overlay") {
+      $("search").classList.remove("on");
+      $("overlay").classList.remove("on");
+    }
+    var hit = event.target.closest && event.target.closest(".cs-hit");
+    if (hit && hit.getAttribute("data-page")) {
+      show(hit.getAttribute("data-page"));
+      $("search").classList.remove("on");
+      $("overlay").classList.remove("on");
+    }
+  });
+  $("search-input").addEventListener("input", function () { search(this.value); });
+  function bindAsk(input, box) {
+    input.addEventListener("keydown", function (event) {
+      if (event.key !== "Enter" || event.shiftKey) return;
+      event.preventDefault();
+      var q = input.value.trim();
+      if (!q) return;
+      pushLog(box, "you", q);
+      pushLog(box, "card", answer(q));
+      input.value = "";
+      if (recording) log.push("ASK " + q);
+    });
+  }
+  bindAsk($("chat-input"), $("chat-log"));
+  bindAsk($("caddy-input"), $("caddy-log"));
+  $("caddy").addEventListener("click", function () {
+    var win = $("caddy-win");
+    win.classList.toggle("on");
+    if (win.classList.contains("on")) {
+      var rect = $("caddy").getBoundingClientRect();
+      win.style.left = Math.max(12, rect.left - 280) + "px";
+      win.style.top = Math.max(64, rect.top - 220) + "px";
+      $("caddy-input").focus();
+    }
+  });
+  $("main").addEventListener("scroll", function () {
+    var el = $("main");
+    var height = el.scrollHeight - el.clientHeight;
+    $("progress").style.width = (height > 0 ? (el.scrollTop / height) * 100 : 0) + "%";
+  });
+
+  renderTabs();
+  renderToggles();
+  show("home");
+  pushLog($("chat-log"), "card", "Local layer index. No remote model.");
+  pushLog($("caddy-log"), "caddy", "Ask for a function name.");
+})();
+</script>
+</body>
+</html>
