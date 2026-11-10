@@ -4,6 +4,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SOURCE = 'C:\\Users\\dayour\\Microsoft\\Darbot - FY27\\Documents\\planner_card_math.html';
 const CLIPPYFLOW_CSS = fs.readFileSync(path.join(ROOT, 'design-system', 'clippyflow.css'), 'utf8');
+const BRAND_BLACKGRID_CSS = fs.readFileSync(path.join(ROOT, 'brand-deck', 'blackgrid.css'), 'utf8');
 
 /* Packaged decks are copied into the Docusaurus static tree so GitHub Pages
    serves them alongside the wiki. */
@@ -201,6 +202,10 @@ ${responsive ? `@media(max-width:640px){
 header{gap:6px;padding:0 8px}header .brand{display:none}header .title{min-width:0;max-width:none}
 #library{padding:12px}.lib-panel{padding:16px}.lib-grid{grid-template-columns:minmax(0,1fr)}
 }` : ''}
+${deckId === 'brand-deck' ? `${BRAND_BLACKGRID_CSS}
+main{background:var(--cp-grid-background);background-size:28px 28px}
+#stage,iframe{background:transparent}
+header .brand{color:var(--cp-link)}` : ''}
 </style></head><body><main><div id="stage"><iframe id="frame" title="Slide"></iframe></div></main>
 <button class="zone prev" id="zonePrev" aria-label="Previous slide"></button><button class="zone next" id="zoneNext" aria-label="Next slide"></button>
 <header id="controls"><span class="brand">ClippyDeck</span><span class="title" id="title"></span><button id="prev" aria-label="Previous">&lsaquo;</button><span class="count" id="count"></span><button id="next" aria-label="Next">&rsaquo;</button><span class="sep"></span><button id="full">Present</button><button id="lib">Library</button></header>
@@ -385,6 +390,13 @@ function deckFile(id) {
   return d.file;
 }
 
+function buildBrandDeck() {
+  const brand = JSON.parse(fs.readFileSync(path.join(ROOT, 'brand-deck', 'clippyflow-brand-deck.context.json'), 'utf8'));
+  return packageDeck('brand-deck',
+    brand.slides.map(s => ({ file: `${s.id}.html`, title: s.title, fallback: `${s.id}.png` })),
+    deckFile('brand-deck'), brand.name, 'brand-deck');
+}
+
 /* Library page for the Docusaurus wiki — generated from the same DECKS
    registry as the in-deck Library overlay, so the two cannot drift. */
 function writeLibraryDoc(counts) {
@@ -456,10 +468,7 @@ function buildAllDecks() {
     deckIndex.slides.map(s => ({ file: s.file, title: `Slide ${s.n}`, fallback: `${String(s.n).padStart(2, '0')}.png` })),
     deckFile('deck'), deckIndex.title, 'deck');
 
-  const brand = JSON.parse(fs.readFileSync(path.join(ROOT, 'brand-deck', 'clippyflow-brand-deck.context.json'), 'utf8'));
-  counts['brand-deck'] = packageDeck('brand-deck',
-    brand.slides.map(s => ({ file: `${s.id}.html`, title: s.title, fallback: `${s.id}.png` })),
-    deckFile('brand-deck'), brand.name, 'brand-deck');
+  counts['brand-deck'] = buildBrandDeck();
 
   const atl = JSON.parse(fs.readFileSync(path.join(ROOT, 'atlassian-connectors', 'deck.context.json'), 'utf8'));
   counts['atlassian-connectors'] = packageDeck('atlassian-connectors',
@@ -481,7 +490,8 @@ if (require.main === module) {
   const args = process.argv.slice(2);
   if (args.length === 0) buildAllDecks();
   else if (args.length === 1 && args[0] === '--planner-only') buildPlannerDeck();
-  else throw new Error('Usage: node generator/build-clippydecks.js [--planner-only]');
+  else if (args.length === 1 && args[0] === '--brand-only') buildBrandDeck();
+  else throw new Error('Usage: node generator/build-clippydecks.js [--planner-only|--brand-only]');
 }
 
 module.exports = { plannerSlides, presentation, inlineHtml };

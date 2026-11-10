@@ -1,0 +1,76 @@
+:root,
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #0f0f0f;
+  --cp-bg-elevated: #181818;
+  --cp-surface: rgba(24, 24, 24, .80);
+  --cp-surface-soft: rgba(31, 31, 31, .82);
+  --cp-border: #3d3d3d;
+  --cp-border-strong: #737373;
+  --cp-text: #e7edf7;
+  --cp-text-muted: #b1bdc9;
+  --cp-text-soft: #b1bdc9;
+  --cp-accent: #0047ab;
+  --cp-accent-hover: #669bff;
+  --cp-accent-soft: rgba(0, 71, 171, .12);
+  --cp-accent-fg: #ffffff;
+  --cp-link: #669bff;
+  --cp-overlay: rgba(15, 15, 15, .90);
+  --cp-panel: rgba(24, 24, 24, .86);
+  --cp-panel-strong: rgba(24, 24, 24, .97);
+  --cp-highlight: rgba(0, 71, 171, .12);
+  --cp-sheen: rgba(255, 255, 255, .04);
+  --cp-shadow: 0 16px 40px rgba(0, 0, 0, .24);
+  --cp-grid: rgba(255, 255, 255, .06);
+  --cp-grid-background:
+    linear-gradient(var(--cp-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cp-grid) 1px, transparent 1px),
+    var(--cp-bg);
+  --clippy-purple: var(--cp-accent);
+  --clippy-magenta: var(--cp-link);
+  --cf-navy: var(--cp-bg-elevated);
+  --cf-navy-deep: var(--cp-bg);
+  --cf-surface: var(--cp-surface);
+  --cf-surface-2: var(--cp-surface-soft);
+  --cf-surface-3: var(--cp-panel);
+  --cf-grad-spectrum: linear-gradient(100deg, var(--cp-link), var(--cp-accent));
+  --cf-grad-title: linear-gradient(92deg, var(--cp-text), var(--cp-link));
+  --cf-bg: var(--cp-grid-background);
+  --cf-glow-spectrum: var(--cp-shadow);
+}
+
+.cf-stage,
+.cf-stage--hero {
+  background: var(--cf-bg);
+  background-size: 28px 28px;
+}
+
+.cf-win,
+.cf-win.spectrum,
+.cf-panel,
+.cf-panel.spectrum {
+  background: var(--cp-surface);
+  border-color: var(--cp-border);
+  box-shadow: var(--cp-shadow);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.cf-panel::before,
+.cf-panel.spectrum::before {
+  background: none;
+}
+
+.cf-win-bar {
+  background: linear-gradient(180deg, var(--cp-sheen), transparent);
+}
+
+.cf-pill.purple,
+.cf-pill.magenta {
+  background: var(--cp-accent-soft);
+  border-color: var(--cp-border);
+}
+
+.cf-win-dots i:first-child {
+  box-shadow: none;
+}

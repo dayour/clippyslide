@@ -57,6 +57,26 @@ test('planner viewer uses fixed ClippyFlow tokens, not OS-selected gray and pink
   assert.doesNotMatch(viewer, /prefers-color-scheme|#fd8ea1|#3d3b3a/i);
 });
 
+test('brand packaging applies the black grid theme to the viewer and every embedded slide only', () => {
+  const file = 'clippyflow-brand-clippydeck.html';
+  const local = fs.readFileSync(path.join(ROOT, 'brand-deck', file), 'utf8');
+  const published = fs.readFileSync(path.join(ROOT, 'website', 'static', 'decks', file), 'utf8');
+  assert.equal(local, published);
+  const reference = JSON.parse(fs.readFileSync(path.join(ROOT, 'brand-deck', 'clippyflow-brand-deck.context.json'), 'utf8'));
+  const payload = JSON.parse(local.match(/const slides=(.*);let index=0;/)[1]);
+  assert.equal(payload.length, reference.slides.length);
+  assert.match(local, /main\{background:var\(--cp-grid-background\);background-size:28px 28px\}/);
+  payload.forEach((slide, i) => {
+    const source = inlineHtml(path.join(ROOT, 'brand-deck', `${reference.slides[i].id}.html`));
+    assert.equal(Buffer.from(slide.data, 'base64').toString('utf8'), source);
+    assert.ok(source.indexOf('--cp-bg: #0f0f0f') > source.indexOf('.cf-win.spectrum'));
+    assert.match(source, /--cp-surface: rgba\(24, 24, 24, \.80\)/);
+    assert.match(source, /--clippy-purple: var\(--cp-accent\)/);
+    assert.doesNotMatch(source, /<link\b|class="cf-env (?:dev|sandbox|prod)"/);
+  });
+  assert.doesNotMatch(presentation('Other deck', [], 'deck'), /--cp-grid-background|#0f0f0f/);
+});
+
 test('responsive viewer fills the viewport without a second scaling or border layer', () => {
   const viewer = presentation('Planning', [], 'planner-card-math', true, true);
   assert.match(viewer, /data-layout="responsive"/);
