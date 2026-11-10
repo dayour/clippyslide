@@ -5,6 +5,7 @@ const ROOT = path.join(__dirname, '..');
 const SOURCE = 'C:\\Users\\dayour\\Microsoft\\Darbot - FY27\\Documents\\planner_card_math.html';
 const CLIPPYFLOW_CSS = fs.readFileSync(path.join(ROOT, 'design-system', 'clippyflow.css'), 'utf8');
 const BRAND_BLACKGRID_CSS = fs.readFileSync(path.join(ROOT, 'brand-deck', 'blackgrid.css'), 'utf8');
+const COE_BLACKGRID_CSS = `${BRAND_BLACKGRID_CSS}\n${fs.readFileSync(path.join(ROOT, 'deck', 'blackgrid.css'), 'utf8')}`;
 
 /* Packaged decks are copied into the Docusaurus static tree so GitHub Pages
    serves them alongside the wiki. */
@@ -202,7 +203,7 @@ ${responsive ? `@media(max-width:640px){
 header{gap:6px;padding:0 8px}header .brand{display:none}header .title{min-width:0;max-width:none}
 #library{padding:12px}.lib-panel{padding:16px}.lib-grid{grid-template-columns:minmax(0,1fr)}
 }` : ''}
-${deckId === 'brand-deck' ? `${BRAND_BLACKGRID_CSS}
+${deckId === 'brand-deck' || deckId === 'deck' ? `${deckId === 'deck' ? COE_BLACKGRID_CSS : BRAND_BLACKGRID_CSS}
 main{background:var(--cp-grid-background);background-size:28px 28px}
 #stage,iframe{background:transparent}
 header .brand{color:var(--cp-link)}` : ''}
@@ -236,7 +237,15 @@ function packageDeck(dirName, specs, outputName, title, deckId, clippyflow = fal
   const dir = path.join(ROOT, dirName);
   const slides = specs.map((spec, i) => {
     const file = path.resolve(dir, spec.file);
-    if (fs.existsSync(file)) return { title: spec.title || path.basename(spec.file, '.html'), html: inlineHtml(file) };
+    if (fs.existsSync(file)) {
+      let html = inlineHtml(file);
+      if (deckId === 'deck') {
+        html = html.replace(/<div class="cf-accent-left"[^>]*><\/div>/g, '')
+          .replace(/class="cf-env (?:dev|sandbox|prod)"/g, 'class="cf-env"')
+          .replace('</head>', `<style>${COE_BLACKGRID_CSS}</style></head>`);
+      }
+      return { title: spec.title || path.basename(spec.file, '.html'), html };
+    }
     const png = path.resolve(dir, spec.fallback || `${String(i + 1).padStart(2, '0')}.png`);
     if (fs.existsSync(png)) return { title: spec.title || `Slide ${i + 1}`, html: imageSlide(png, spec.title || `Slide ${i + 1}`) };
     throw new Error(`Missing slide source and fallback: ${file}`);
@@ -397,6 +406,13 @@ function buildBrandDeck() {
     deckFile('brand-deck'), brand.name, 'brand-deck');
 }
 
+function buildCoeDeck() {
+  const index = JSON.parse(fs.readFileSync(path.join(ROOT, 'deck', 'index.json'), 'utf8'));
+  return packageDeck('deck',
+    index.slides.map(s => ({ file: s.file, title: `Slide ${s.n}`, fallback: `${String(s.n).padStart(2, '0')}.png` })),
+    deckFile('deck'), index.title, 'deck');
+}
+
 /* Library page for the Docusaurus wiki — generated from the same DECKS
    registry as the in-deck Library overlay, so the two cannot drift. */
 function writeLibraryDoc(counts) {
@@ -463,10 +479,7 @@ once.
 
 function buildAllDecks() {
   const counts = {};
-  const deckIndex = JSON.parse(fs.readFileSync(path.join(ROOT, 'deck', 'index.json'), 'utf8'));
-  counts['deck'] = packageDeck('deck',
-    deckIndex.slides.map(s => ({ file: s.file, title: `Slide ${s.n}`, fallback: `${String(s.n).padStart(2, '0')}.png` })),
-    deckFile('deck'), deckIndex.title, 'deck');
+  counts['deck'] = buildCoeDeck();
 
   counts['brand-deck'] = buildBrandDeck();
 
@@ -491,7 +504,8 @@ if (require.main === module) {
   if (args.length === 0) buildAllDecks();
   else if (args.length === 1 && args[0] === '--planner-only') buildPlannerDeck();
   else if (args.length === 1 && args[0] === '--brand-only') buildBrandDeck();
-  else throw new Error('Usage: node generator/build-clippydecks.js [--planner-only|--brand-only]');
+  else if (args.length === 1 && args[0] === '--coe-only') buildCoeDeck();
+  else throw new Error('Usage: node generator/build-clippydecks.js [--planner-only|--brand-only|--coe-only]');
 }
 
 module.exports = { plannerSlides, presentation, inlineHtml };

@@ -1,0 +1,20 @@
+.cf-stage--title,
+.cf-stage--glow {
+  background: var(--cf-bg);
+  background-size: 28px 28px;
+}
+
+.cf-panel.hero,
+.cf-panel.blue,
+.cf-panel.white,
+.cf-greenpanel,
+.shot {
+  background: var(--cp-surface);
+  border-color: var(--cp-border);
+  box-shadow: var(--cp-shadow);
+}
+
+.cf-pill.mag {
+  background: var(--cp-accent-soft);
+  border-color: var(--cp-border);
+}

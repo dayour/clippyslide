@@ -75,7 +75,29 @@ test('brand packaging applies the black grid theme to the viewer and every embed
     assert.match(source, /--clippy-purple: var\(--cp-accent\)/);
     assert.doesNotMatch(source, /<link\b|class="cf-env (?:dev|sandbox|prod)"/);
   });
-  assert.doesNotMatch(presentation('Other deck', [], 'deck'), /--cp-grid-background|#0f0f0f/);
+  assert.doesNotMatch(presentation('Other deck', [], 'atlassian-connectors'), /--cp-grid-background|#0f0f0f/);
+});
+
+test('CoE packaging themes all 24 editable slides without altering the shared orchestration source', () => {
+  const normalize = text => text.replace(/\r\n/g, '\n');
+  const file = 'coe-framework-clippydeck.html';
+  const local = fs.readFileSync(path.join(ROOT, 'deck', file), 'utf8');
+  const published = fs.readFileSync(path.join(ROOT, 'website', 'static', 'decks', file), 'utf8');
+  assert.equal(normalize(local), normalize(published));
+  assert.match(local, /main\{background:var\(--cp-grid-background\);background-size:28px 28px\}/);
+  const payload = JSON.parse(local.match(/const slides=(.*);let index=0;/)[1]);
+  assert.equal(payload.length, 24);
+  payload.forEach((slide, i) => {
+    assert.equal(slide.title, `Slide ${i + 1}`);
+    const html = Buffer.from(slide.data, 'base64').toString('utf8');
+    assert.match(html, /--cp-surface: rgba\(24, 24, 24, \.80\)/);
+    assert.match(html, /\.cf-stage--title,\s*\.cf-stage--glow/);
+    assert.ok(html.indexOf('--cp-bg: #0f0f0f') > html.lastIndexOf('</script>'));
+    assert.doesNotMatch(html, /<link\b|<img\b|class="cf-accent-left"|class="cf-env (?:dev|sandbox|prod)"/);
+  });
+  const shared = inlineHtml(path.join(ROOT, 'slides-clippyflow', '07-orchestration.html'));
+  assert.match(shared, /class="cf-accent-left"/);
+  assert.doesNotMatch(shared, /--cp-grid-background/);
 });
 
 test('responsive viewer fills the viewport without a second scaling or border layer', () => {
